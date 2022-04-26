@@ -18,10 +18,6 @@ public class SpentController {
     @Autowired
     private SpentIBusiness spentBusiness;
 
-    public SpentController(SpentIBusiness spentBusiness) {
-        this.spentBusiness = spentBusiness;
-    }
-
     @PostMapping("/new")
     public Spent newSpent(@RequestBody Spent spent){
         return spentBusiness.addSpent(spent);

@@ -21,10 +21,11 @@ const CreateAccount = () => {
   };
 
   const createNewAccount = (e) => {
+    console.log("Start to create new account")
     e.preventDefault();
     AccountService.postNewUser(user)
     .then((response) => {
-      console.log(response + " : New account created");
+      console.log(response.data);
       navigate("/displaySpents");
     })
     .catch((error) => {
