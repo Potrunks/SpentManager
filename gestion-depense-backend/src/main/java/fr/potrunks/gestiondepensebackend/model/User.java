@@ -13,5 +13,6 @@ public class User {
     private String firstNameUser;
     private String mailUser;
     private String passwordUser;
+    private String secondPasswordUser;
     private String saltUser;
 }
