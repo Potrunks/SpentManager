@@ -37,7 +37,9 @@ public class SpentBusiness implements SpentIBusiness {
                 .map(spent -> new Spent(
                         spent.getIdSpent(),
                         spent.getValueSpent(),
-                        spent.getDateSpent()))
+                        spent.getDateSpent(),
+                        spent.getNameSpent(),
+                        spent.getCommentSpent()))
                 .collect(Collectors.toList());
         return spents;
     }
