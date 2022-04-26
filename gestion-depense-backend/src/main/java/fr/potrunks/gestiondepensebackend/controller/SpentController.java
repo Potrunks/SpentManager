@@ -12,7 +12,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/gestiondepense/spent/")
+@RequestMapping("/spentmanager/spent/")
 public class SpentController {
 
     @Autowired

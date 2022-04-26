@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AccountService from "../../services/AccountService";
 
 const CreateAccount = () => {
   const [user, setUser] = useState({
@@ -19,8 +20,16 @@ const CreateAccount = () => {
     setUser({ ...user, [e.target.name]: value });
   };
 
-  const castNewAccount = (e) => {
+  const createNewAccount = (e) => {
     e.preventDefault();
+    AccountService.postNewUser(user)
+    .then((response) => {
+      console.log(response + " : New account created");
+      navigate("/displaySpents");
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   };
 
   const clearInput = (e) => {
@@ -90,7 +99,7 @@ const CreateAccount = () => {
           </div>
         </div>
         <div>
-          <button onClick={castNewAccount}>Create</button>
+          <button onClick={createNewAccount}>Create</button>
           <button onClick={clearInput}>Clear</button>
           <button onClick={() => navigate("/")}>Cancel</button>
         </div>
