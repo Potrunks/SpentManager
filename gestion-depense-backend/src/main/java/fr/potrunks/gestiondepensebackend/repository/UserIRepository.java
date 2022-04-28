@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserIRepository extends JpaRepository<UserEntity, Long> {
+
+    UserEntity findByAdministratorTrue();
+    UserEntity findByMailUser(String mailUser);
 }

@@ -23,6 +23,8 @@ public class UserEntity {
     private String passwordUser;
     @Column(name = "salt_user")
     private String saltUser;
+    @Column(name="administrator_user")
+    private Boolean administrator;
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.PERSIST)
     private List<DebtEntity> debtEntityList;
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.PERSIST)

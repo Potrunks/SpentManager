@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SPENT_API_BASE_URL = "http://localhost:8080/gestiondepense/spent";
+const SPENT_API_BASE_URL = "http://localhost:8080/spentmanager/spent";
 
 class SpentService {
   newSpent(spent) {
