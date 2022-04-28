@@ -6,6 +6,7 @@ import DisplaySpents from "./components/spent/DisplaySpents";
 import ModifySpent from "./components/spent/ModifySpent";
 import Navbar from "./components/UI/Navbar";
 import "./style/navbar.css";
+import "./style/form.css";
 
 function App() {
   return (
