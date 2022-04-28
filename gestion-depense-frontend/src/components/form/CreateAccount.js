@@ -4,13 +4,12 @@ import AccountService from "../../services/AccountService";
 
 const CreateAccount = () => {
   const [user, setUser] = useState({
-    idUser: "",
     lastNameUser: "",
     firstNameUser: "",
     mailUser: "",
     passwordUser: "",
     secondPasswordUser: "",
-    saltUser: "",
+    adminPassword: "",
   });
 
   const navigate = useNavigate();
@@ -21,28 +20,33 @@ const CreateAccount = () => {
   };
 
   const createNewAccount = (e) => {
-    console.log("Start to create new account")
     e.preventDefault();
-    AccountService.postNewUser(user)
-    .then((response) => {
-      console.log(response.data);
-      navigate("/displaySpents");
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    console.log("Start to create new account");
+    if (AccountService.verifyIntegrityNewAccount(user) === true) {
+      AccountService.postNewUser(user)
+        .then((response) => {
+          if (response.data.newAccountAdded === true) {
+            console.log("New account created");
+            navigate("/displaySpents");
+          } else {
+            console.log("New account canceled : See log of API app");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const clearInput = (e) => {
     e.preventDefault();
     setUser({
-      idUser: "",
       lastNameUser: "",
       firstNameUser: "",
       mailUser: "",
       passwordUser: "",
       secondPasswordUser: "",
-      saltUser: "",
+      adminPassword: "",
     });
   };
 
@@ -95,6 +99,15 @@ const CreateAccount = () => {
               type="password"
               name="secondPasswordUser"
               value={user.secondPasswordUser}
+              onChange={(e) => handleChange(e)}
+            ></input>
+          </div>
+          <div>
+            <span>Administrator Password</span>
+            <input
+              type="password"
+              name="adminPassword"
+              value={user.adminPassword}
               onChange={(e) => handleChange(e)}
             ></input>
           </div>

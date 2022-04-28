@@ -1,6 +1,6 @@
 package fr.potrunks.gestiondepensebackend.controller;
 
-import fr.potrunks.gestiondepensebackend.business.UserIBusiness;
+import fr.potrunks.gestiondepensebackend.business.AccountIBusiness;
 import fr.potrunks.gestiondepensebackend.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,16 @@ import java.util.Map;
 public class AccountController {
 
     @Autowired
-    private UserIBusiness userBusiness;
+    private AccountIBusiness accountBusiness;
 
     @PostMapping("/new")
-    public String createNewAccount(@RequestBody User user) {
-        log.info("Start to create a new account");
-        userBusiness.addUser(user);
-        log.info("Return the user to the front app");
-        return "New account successfully created";
+    public ResponseEntity<Map<String, Boolean>> createNewAccount(@RequestBody User user) {
+        log.info("Start create new account from createNewAccount of AccountController");
+        Map<String, Boolean> response = new HashMap<>();
+        Boolean newAccountAdded = false;
+        newAccountAdded = accountBusiness.addNewAccount(user);
+        response.put("newAccountAdded", newAccountAdded);
+        log.info("Return response to the front app");
+        return ResponseEntity.ok(response);
     }
 }
