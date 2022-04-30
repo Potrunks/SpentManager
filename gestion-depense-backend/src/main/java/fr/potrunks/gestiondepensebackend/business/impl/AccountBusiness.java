@@ -7,11 +7,13 @@ import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.Random;
 
 @Slf4j
@@ -25,7 +27,7 @@ public class AccountBusiness implements AccountIBusiness {
     public Boolean addNewAccount(User user) {
         log.info("Start to add new account from addNewAccount of AccountBusiness");
         UserEntity userEntity = new UserEntity();
-        if(verifyAdminPassword(user) && !verifyMailExist(user.getMailUser())) {
+        if (verifyAdminPassword(user) && !verifyMailExist(user.getMailUser())) {
             BeanUtils.copyProperties(user, userEntity);
             userEntity.setSaltUser(saltGenerator());
             userEntity.setPasswordUser(hashedPassword(userEntity.getPasswordUser() + userEntity.getSaltUser()));
@@ -38,9 +40,24 @@ public class AccountBusiness implements AccountIBusiness {
         return false;
     }
 
+    @Override
+    public Map<String, Boolean> authentication(User user, Map<String, Boolean> response) {
+        log.info("Start authentication from AccountBusiness for user {}", user.getMailUser());
+        Boolean mailExisted = verifyMailExist(user.getMailUser());
+        response.put("mailExisted", mailExisted);
+        if (mailExisted) {
+            log.info("Start to get user from database corresponding to {}", user.getMailUser());
+            UserEntity userEntity = userRepository.findByMailUser(user.getMailUser());
+            String inputPassword = hashedPassword(user.getPasswordUser() + userEntity.getSaltUser());
+            Boolean authenticated = verifyPassword(inputPassword, userEntity.getPasswordUser());
+            response.put("authenticated", authenticated);
+        }
+        return response;
+    }
+
     private Boolean verifyMailExist(String mailUser) {
         log.info("Start to verify if mail already exist in database");
-        if(userRepository.findByMailUser(mailUser) != null){
+        if (userRepository.findByMailUser(mailUser) != null) {
             log.warn("The mail {} already exist", mailUser);
             return true;
         }

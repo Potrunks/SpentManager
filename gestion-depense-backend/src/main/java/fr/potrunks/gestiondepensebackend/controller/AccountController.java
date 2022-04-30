@@ -23,9 +23,17 @@ public class AccountController {
     public ResponseEntity<Map<String, Boolean>> createNewAccount(@RequestBody User user) {
         log.info("Start create new account from createNewAccount of AccountController");
         Map<String, Boolean> response = new HashMap<>();
-        Boolean newAccountAdded = false;
-        newAccountAdded = accountBusiness.addNewAccount(user);
+        Boolean newAccountAdded = accountBusiness.addNewAccount(user);
         response.put("newAccountAdded", newAccountAdded);
+        log.info("Return response to the front app");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/connect")
+    public ResponseEntity<Map<String, Boolean>> connectAccount(@RequestBody User user) {
+        log.info("Start to attempt the account connection for user : {}", user.getMailUser());
+        Map<String, Boolean> response = new HashMap<>();
+        response = accountBusiness.authentication(user, response);
         log.info("Return response to the front app");
         return ResponseEntity.ok(response);
     }
