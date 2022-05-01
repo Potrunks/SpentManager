@@ -19,6 +19,13 @@ class InputTestService {
     document.getElementById("API-error-box").style.display = "none";
   }
 
+  resetMailAndPasswordError() {
+    document.getElementById("mailUser").classList.remove("error");
+    document.getElementById("passwordUser").classList.remove("error");
+    document.getElementById("mailUser").placeholder = "";
+    document.getElementById("passwordUser").placeholder = "";
+  }
+
   verifyIntegrityNewAccount(user) {
     this.resetAllError();
     if (
@@ -31,6 +38,30 @@ class InputTestService {
       return true;
     }
     return false;
+  }
+
+  verifyIntegrityLogin(user) {
+    this.resetMailAndPasswordError();
+    if (this.inputFieldNotEmptyForLogin(user) === true) {
+      return true;
+    }
+    return false;
+  }
+
+  inputFieldNotEmptyForLogin(user) {
+    if ((user.mailUser.length && user.passwordUser.length) === 0) {
+      if (user.mailUser.length === 0) {
+        document.getElementById("mailUser").classList.add("error");
+        document.getElementById("mailUser").placeholder = "Input required";
+      }
+      if (user.passwordUser.length === 0) {
+        document.getElementById("passwordUser").classList.add("error");
+        document.getElementById("passwordUser").placeholder = "Input required";
+      }
+      return false;
+    } else {
+      return true;
+    }
   }
 
   inputFieldNotEmpty(user) {

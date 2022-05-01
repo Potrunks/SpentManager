@@ -8,6 +8,7 @@ class SpentService {
   }
 
   getSpentsFromBackend() {
+    console.log("Get all the spents from the data base")
     return axios.get(SPENT_API_BASE_URL + "/getall");
   }
 
