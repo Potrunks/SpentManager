@@ -3,6 +3,7 @@ package fr.potrunks.gestiondepensebackend.controller;
 import fr.potrunks.gestiondepensebackend.business.SpentIBusiness;
 import fr.potrunks.gestiondepensebackend.model.Spent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +14,19 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/spentmanager/spent/")
+@Scope(value="request")
 public class SpentController {
 
     @Autowired
     private SpentIBusiness spentBusiness;
 
     @PostMapping("/new")
-    public Spent newSpent(@RequestBody Spent spent){
+    public Spent newSpent(@RequestBody Spent spent) {
         return spentBusiness.addSpent(spent);
     }
 
     @GetMapping("/getall")
-    public List<Spent> fetchSpents(){
+    public List<Spent> fetchSpents() {
         return spentBusiness.getSpents();
     }
 

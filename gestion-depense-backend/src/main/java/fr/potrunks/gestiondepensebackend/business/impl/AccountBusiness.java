@@ -7,7 +7,6 @@ import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -41,7 +40,7 @@ public class AccountBusiness implements AccountIBusiness {
     }
 
     @Override
-    public Map<String, Boolean> authentication(User user, Map<String, Boolean> response) {
+    public Map<String, Object> authentication(User user, Map<String, Object> response) {
         log.info("Start authentication from AccountBusiness for user {}", user.getMailUser());
         Boolean mailExisted = verifyMailExist(user.getMailUser());
         response.put("mailExisted", mailExisted);
@@ -53,6 +52,15 @@ public class AccountBusiness implements AccountIBusiness {
             response.put("authenticated", authenticated);
         }
         return response;
+    }
+
+    @Override
+    public UserEntity getUserByMailUser(User user) {
+        log.info("Start to get user {}", user.getMailUser());
+        UserEntity userEntity;
+        userEntity = userRepository.findByMailUser(user.getMailUser());
+        log.info("User {} find successfully", userEntity.getMailUser());
+        return userEntity;
     }
 
     private Boolean verifyMailExist(String mailUser) {

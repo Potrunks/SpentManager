@@ -4,6 +4,7 @@ import fr.potrunks.gestiondepensebackend.business.AccountIBusiness;
 import fr.potrunks.gestiondepensebackend.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/spentmanager/account/")
+@Scope(value="session")
 public class AccountController {
 
     @Autowired
@@ -30,10 +32,13 @@ public class AccountController {
     }
 
     @PostMapping("/connect")
-    public ResponseEntity<Map<String, Boolean>> connectAccount(@RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> connectAccount(@RequestBody User user) {
         log.info("Start to attempt the account connection for user : {}", user.getMailUser());
-        Map<String, Boolean> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
         response = accountBusiness.authentication(user, response);
+        if ((Boolean) response.get("authenticated") == true) {
+            response.put("idUserConnected", accountBusiness.getUserByMailUser(user).getIdUser());
+        }
         log.info("Return response to the front app");
         return ResponseEntity.ok(response);
     }

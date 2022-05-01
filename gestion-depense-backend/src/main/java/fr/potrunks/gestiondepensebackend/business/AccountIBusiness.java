@@ -1,12 +1,14 @@
 package fr.potrunks.gestiondepensebackend.business;
 
+import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.User;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
 public interface AccountIBusiness {
     Boolean addNewAccount(User user);
 
-    Map<String, Boolean> authentication(User user, Map<String, Boolean> response);
+    Map<String, Object> authentication(User user, Map<String, Object> response);
+
+    UserEntity getUserByMailUser(User user);
 }

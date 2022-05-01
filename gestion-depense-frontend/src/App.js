@@ -7,6 +7,7 @@ import ModifySpent from "./components/spent/ModifySpent";
 import Navbar from "./components/UI/Navbar";
 import "./style/navbar.css";
 import "./style/form.css";
+import LoginAccount from "./components/form/LoginAccount";
 
 function App() {
   return (
@@ -14,9 +15,12 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route index element={<DisplaySpents />} />
-          <Route path="/" element={<DisplaySpents />} />
-          <Route path="/displaySpents" element={<DisplaySpents />} />
+          <Route index element={<LoginAccount />} />
+          <Route path="/" element={<LoginAccount />} />
+          <Route
+            path="/displaySpents/:idUserConnected"
+            element={<DisplaySpents />}
+          />
           <Route path="/addSpent" element={<AddSpent />} />
           <Route path="/modifySpent/:id" element={<ModifySpent />} />
           <Route path="/createAccount" element={<CreateAccount />} />

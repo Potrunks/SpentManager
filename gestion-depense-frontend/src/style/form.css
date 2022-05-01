@@ -37,6 +37,11 @@
   height: 48px;
 }
 
+.input-field input::placeholder {
+  color: red;
+  text-align: center;
+}
+
 .input-field input:focus {
   outline: none;
   border: 1px solid #06d6a0;
@@ -58,6 +63,7 @@
   border: none;
   height: 48px;
   background-color: #06d6a0;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .main-button-container button:active {
