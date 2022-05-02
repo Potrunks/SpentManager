@@ -21,14 +21,16 @@ const LoginAccount = () => {
       AccountService.postUserForLogIn(user)
         .then((response) => {
           if (response.data.mailExisted === false) {
-            console.log(
-              "The mail don't exist. Verify the input or create an account."
-            );
+            document.getElementById("API-error-box").firstChild.innerHTML =
+              "This mail have no account";
+            document.getElementById("API-error-box").style.display = "flex";
           } else {
             if (response.data.authenticated === false) {
-              console.log("Mail or password is incorrect");
+              document.getElementById("API-error-box").firstChild.innerHTML =
+                "Mail or password is not correct";
+              document.getElementById("API-error-box").style.display = "flex";
             } else {
-                console.log("User authenticated successfully")
+              console.log("User authenticated successfully");
               navigate(`/displaySpents/${response.data.idUserConnected}`);
             }
           }
@@ -56,7 +58,7 @@ const LoginAccount = () => {
           <span>Log In</span>
         </div>
         <div className="API-error-box" id="API-error-box">
-          <span>Mail already exist or admin password is invalid</span>
+          <span></span>
         </div>
         <div className="main-input-field" id="form">
           <div className="input-field">

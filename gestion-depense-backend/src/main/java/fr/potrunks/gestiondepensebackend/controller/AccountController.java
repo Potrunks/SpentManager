@@ -25,8 +25,7 @@ public class AccountController {
     public ResponseEntity<Map<String, Boolean>> createNewAccount(@RequestBody User user) {
         log.info("Start create new account from createNewAccount of AccountController");
         Map<String, Boolean> response = new HashMap<>();
-        Boolean newAccountAdded = accountBusiness.addNewAccount(user);
-        response.put("newAccountAdded", newAccountAdded);
+        response = accountBusiness.addNewAccount(user, response);
         log.info("Return response to the front app");
         return ResponseEntity.ok(response);
     }

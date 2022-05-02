@@ -23,42 +23,54 @@ public class AccountBusiness implements AccountIBusiness {
     private UserIRepository userRepository;
 
     @Override
-    public Boolean addNewAccount(User user) {
+    public Map<String, Boolean> addNewAccount(User user, Map<String, Boolean> response) {
         log.info("Start to add new account from addNewAccount of AccountBusiness");
+        Boolean newAccountAdded = false;
         UserEntity userEntity = new UserEntity();
-        if (verifyAdminPassword(user) && !verifyMailExist(user.getMailUser())) {
+        Boolean adminPasswordOK = verifyAdminPassword(user);
+        response.put("adminPasswordOK", adminPasswordOK);
+        Boolean mailAlreadyExist = verifyMailExist(user.getMailUser());
+        response.put("mailAlreadyExist", mailAlreadyExist);
+        if (adminPasswordOK && !mailAlreadyExist) {
             BeanUtils.copyProperties(user, userEntity);
             userEntity.setSaltUser(saltGenerator());
             userEntity.setPasswordUser(hashedPassword(userEntity.getPasswordUser() + userEntity.getSaltUser()));
             userEntity.setAdministrator(false);
             userEntity = userRepository.save(userEntity);
             log.info("New account User id {} successfully added", userEntity.getIdUser());
-            return true;
+            newAccountAdded = true;
+            response.put("newAccountAdded", newAccountAdded);
+            return response;
         }
         log.warn("Fail to add new account");
-        return false;
+        response.put("newAccountAdded", newAccountAdded);
+        return response;
     }
 
     @Override
     public Map<String, Object> authentication(User user, Map<String, Object> response) {
         log.info("Start authentication from AccountBusiness for user {}", user.getMailUser());
+        Boolean authenticated = false;
         Boolean mailExisted = verifyMailExist(user.getMailUser());
         response.put("mailExisted", mailExisted);
         if (mailExisted) {
             log.info("Start to get user from database corresponding to {}", user.getMailUser());
             UserEntity userEntity = userRepository.findByMailUser(user.getMailUser());
             String inputPassword = hashedPassword(user.getPasswordUser() + userEntity.getSaltUser());
-            Boolean authenticated = verifyPassword(inputPassword, userEntity.getPasswordUser());
+            authenticated = verifyPassword(inputPassword, userEntity.getPasswordUser());
             response.put("authenticated", authenticated);
+            log.info("{} is authenticated successfully", userEntity.getMailUser());
+            return response;
         }
+        response.put("authenticated", authenticated);
+        log.warn("{} fail to authenticate", user.getMailUser());
         return response;
     }
 
     @Override
     public UserEntity getUserByMailUser(User user) {
         log.info("Start to get user {}", user.getMailUser());
-        UserEntity userEntity;
-        userEntity = userRepository.findByMailUser(user.getMailUser());
+        UserEntity userEntity = userRepository.findByMailUser(user.getMailUser());
         log.info("User {} find successfully", userEntity.getMailUser());
         return userEntity;
     }
