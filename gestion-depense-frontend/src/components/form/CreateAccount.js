@@ -30,7 +30,15 @@ const CreateAccount = () => {
             console.log("New account created");
             navigate("/");
           } else {
-            document.getElementById("API-error-box").style.display = "flex";
+            if (response.data.adminPasswordOK === false) {
+              document.getElementById("API-error-box").firstChild.innerHTML =
+                "The admin password is not correct";
+              document.getElementById("API-error-box").style.display = "flex";
+            } else if (response.data.mailAlreadyExist === true) {
+              document.getElementById("API-error-box").firstChild.innerHTML =
+                "This mail have already an account";
+              document.getElementById("API-error-box").style.display = "flex";
+            }
           }
         })
         .catch((error) => {
@@ -58,7 +66,7 @@ const CreateAccount = () => {
           <span>New Account</span>
         </div>
         <div className="API-error-box" id="API-error-box">
-          <span>Mail already exist or admin password is invalid</span>
+          <span></span>
         </div>
         <div className="main-input-field" id="form">
           <div className="input-field">
