@@ -28,7 +28,7 @@ const CreateAccount = () => {
         .then((response) => {
           if (response.data.newAccountAdded === true) {
             console.log("New account created");
-            navigate("/displaySpents");
+            navigate("/");
           } else {
             document.getElementById("API-error-box").style.display = "flex";
           }
