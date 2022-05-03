@@ -8,6 +8,7 @@ import Navbar from "./components/UI/Navbar";
 import "./style/navbar.css";
 import "./style/form.css";
 import LoginAccount from "./components/form/LoginAccount";
+import Menu from "./components/UI/Menu";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route index element={<LoginAccount />} />
           <Route path="/" element={<LoginAccount />} />
+          <Route path="/menu/:idUserConnected" element={<Menu />} />
           <Route
             path="/displaySpents/:idUserConnected"
             element={<DisplaySpents />}
