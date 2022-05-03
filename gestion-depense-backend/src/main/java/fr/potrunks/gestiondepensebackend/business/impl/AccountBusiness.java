@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,14 +29,18 @@ public class AccountBusiness implements AccountIBusiness {
         Boolean newAccountAdded = false;
         UserEntity userEntity = new UserEntity();
         Boolean adminPasswordOK = verifyAdminPassword(user);
+        // Boolean adminPasswordOK = true;
         response.put("adminPasswordOK", adminPasswordOK);
         Boolean mailAlreadyExist = verifyMailExist(user.getMailUser());
         response.put("mailAlreadyExist", mailAlreadyExist);
         if (adminPasswordOK && !mailAlreadyExist) {
             BeanUtils.copyProperties(user, userEntity);
+            userEntity.setFirstNameUser(formatFirstName(user.getFirstNameUser()));
+            userEntity.setLastNameUser(formatLastName(user.getLastNameUser()));
             userEntity.setSaltUser(saltGenerator());
             userEntity.setPasswordUser(hashedPassword(userEntity.getPasswordUser() + userEntity.getSaltUser()));
             userEntity.setAdministrator(false);
+            // userEntity.setAdministrator(true);
             userEntity = userRepository.save(userEntity);
             log.info("New account User id {} successfully added", userEntity.getIdUser());
             newAccountAdded = true;
@@ -132,5 +137,15 @@ public class AccountBusiness implements AccountIBusiness {
         }
         log.info("The hashing is successfully finished");
         return passwordAndSalt;
+    }
+
+    public String formatFirstName(String firstNameToFormat) {
+        String firstNameFormatted = firstNameToFormat.substring(0, 1).toUpperCase() + firstNameToFormat.substring(1).toLowerCase();
+        return firstNameFormatted;
+    }
+
+    public String formatLastName(String lastNameToFormat) {
+        String lastNameFormatted = lastNameToFormat.toUpperCase();
+        return lastNameFormatted;
     }
 }
