@@ -16,7 +16,7 @@ public class PeriodSpentEntity {
     private Long idPeriodSpent;
     @Column(name = "start_date_period_spent")
     private LocalDate startDatePeriodSpent;
-    @Column(name = "edn_date_period_spent")
+    @Column(name = "end_date_period_spent")
     private LocalDate endDatePeriodSpent;
     @OneToMany(mappedBy = "periodSpentEntity", cascade = CascadeType.PERSIST)
     private List<SalaryEntity> salaryEntityList;
