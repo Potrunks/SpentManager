@@ -1,8 +1,10 @@
 package fr.potrunks.gestiondepensebackend.controller;
 
 import fr.potrunks.gestiondepensebackend.business.AccountIBusiness;
+import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,9 @@ public class AccountController {
         Map<String, Object> response = new HashMap<>();
         response = accountBusiness.authentication(user, response);
         if ((Boolean) response.get("authenticated") == true) {
-            response.put("idUserConnected", accountBusiness.getUserByMailUser(user).getIdUser());
+            UserEntity userEntity = accountBusiness.getUserByMailUser(user);
+            BeanUtils.copyProperties(userEntity, user);
+            response.put("idUserConnected", user.getIdUser());
         }
         log.info("Return response to the front app");
         return ResponseEntity.ok(response);

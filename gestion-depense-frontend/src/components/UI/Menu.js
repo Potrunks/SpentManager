@@ -1,8 +1,6 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 
 const Menu = () => {
-  const { idUserConnected } = useParams();
   return (
     <div className="app-main-container">
       <div className="main-form-container">

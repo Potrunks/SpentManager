@@ -31,7 +31,8 @@ const LoginAccount = () => {
               document.getElementById("API-error-box").style.display = "flex";
             } else {
               console.log("User authenticated successfully");
-              navigate(`/menu/${response.data.idUserConnected}`);
+              sessionStorage.setItem("idUserConnected", response.data.idUserConnected);
+              navigate(`/menu`);
             }
           }
         })

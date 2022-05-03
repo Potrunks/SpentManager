@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route index element={<LoginAccount />} />
           <Route path="/" element={<LoginAccount />} />
-          <Route path="/menu/:idUserConnected" element={<Menu />} />
+          <Route path="/menu" element={<Menu />} />
           <Route
             path="/displaySpents/:idUserConnected"
             element={<DisplaySpents />}
