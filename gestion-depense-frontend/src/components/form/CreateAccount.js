@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountService from "../../services/AccountService";
 import InputTestService from "../../services/InputTestService";
@@ -12,6 +12,11 @@ const CreateAccount = () => {
     secondPasswordUser: "",
     adminPassword: "",
   });
+
+  useEffect(() => {
+    sessionStorage.clear();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const navigate = useNavigate();
 

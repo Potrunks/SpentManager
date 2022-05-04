@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountService from "../../services/AccountService";
 import InputTestService from "../../services/InputTestService";
 
 const LoginAccount = () => {
+
   const [user, setUser] = useState({
     mailUser: "",
     passwordUser: "",
@@ -13,6 +14,11 @@ const LoginAccount = () => {
     const value = e.target.value;
     setUser({ ...user, [e.target.name]: value });
   };
+
+  useEffect(() => {
+    sessionStorage.clear();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const logIn = (e) => {
     e.preventDefault();

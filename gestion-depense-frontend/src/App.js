@@ -9,6 +9,7 @@ import "./style/navbar.css";
 import "./style/form.css";
 import LoginAccount from "./components/form/LoginAccount";
 import Menu from "./components/UI/Menu";
+import NewSpendingPeriod from "./components/form/NewSpendingPeriod";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route index element={<LoginAccount />} />
           <Route path="/" element={<LoginAccount />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/newSpendingPeriod" element={<NewSpendingPeriod />} />
           <Route
             path="/displaySpents/:idUserConnected"
             element={<DisplaySpents />}
