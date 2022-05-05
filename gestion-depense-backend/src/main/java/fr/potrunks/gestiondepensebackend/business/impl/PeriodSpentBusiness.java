@@ -36,6 +36,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
             periodSpentEntity = periodSpentRepository.save(periodSpentEntity);
             if (periodSpentEntity.getIdPeriodSpent() != null) {
                 periodSpentAdded = true;
+                response.put("idPeriodSpentCreated", periodSpentEntity.getIdPeriodSpent());
                 log.info("New spending period added successfully");
             } else {
                 log.warn("Error during addition of new spending period");
