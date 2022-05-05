@@ -4,12 +4,14 @@ import fr.potrunks.gestiondepensebackend.business.DebtIBusiness;
 import fr.potrunks.gestiondepensebackend.entity.DebtEntity;
 import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
+import fr.potrunks.gestiondepensebackend.repository.DebtIRepository;
 import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
 import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @Slf4j
@@ -20,6 +22,8 @@ public class DebtBusiness implements DebtIBusiness {
     private UserIRepository userRepository;
     @Autowired
     private PeriodSpentIRepository periodSpentRepository;
+    @Autowired
+    private DebtIRepository debtRepository;
 
     @Override
     public Map<String, Object> addNewDebt(Long idUserConnected, Long idPeriodSpentCreated, Map<String, Object> response) {
@@ -33,9 +37,14 @@ public class DebtBusiness implements DebtIBusiness {
             PeriodSpentEntity periodSpentEntity = periodSpentRepository.getById(idPeriodSpentCreated);
             if (periodSpentEntity != null) {
                 log.info("Period Spent id {} found successfully", idPeriodSpentCreated);
-                // set debt
                 DebtEntity debtEntity = setNewDebt(userEntity, periodSpentEntity);
-                // add debt to the DB
+                log.info("Start to add new debt in DB");
+                debtEntity = debtRepository.save(debtEntity);
+                if (debtEntity.getIdDebt() != null) {
+                    log.info("New debt id {} added successfully", debtEntity.getIdDebt());
+                    newDebtCreated = true;
+                    response.put("newDebtCreated", newDebtCreated);
+                }
             } else {
                 log.warn("Error during the search of period spent id {}", idPeriodSpentCreated);
             }
@@ -50,6 +59,10 @@ public class DebtBusiness implements DebtIBusiness {
     public DebtEntity setNewDebt(UserEntity userEntity, PeriodSpentEntity periodSpentEntity) {
         log.info("Start to set new debt");
         DebtEntity debtEntity = new DebtEntity();
+        debtEntity.setValueDebt(0f);
+        debtEntity.setDateDebt(LocalDate.now());
+        debtEntity.setPeriodSpentEntity(periodSpentEntity);
+        debtEntity.setUserEntity(userEntity);
         log.info("Set new debt finish");
         return debtEntity;
     }

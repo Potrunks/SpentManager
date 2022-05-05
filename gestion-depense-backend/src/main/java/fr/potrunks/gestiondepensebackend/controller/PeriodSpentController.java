@@ -34,7 +34,6 @@ public class PeriodSpentController {
             response = periodSpentBusiness.addNewPeriodSpent(idUserConnected, response);
             if ((Boolean) response.get("periodSpentAdded") == true) {
                 response = salaryBusiness.addNewSalary(idUserConnected, (Long) response.get("idPeriodSpentCreated"), salaryInput, response);
-                // Creer une dette
                 response = debtBusiness.addNewDebt(idUserConnected, (Long) response.get("idPeriodSpentCreated"), response);
             }
         }
