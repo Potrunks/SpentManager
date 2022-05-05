@@ -22,10 +22,9 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
     private PeriodSpentIRepository periodSpentRepository;
 
     @Override
-    public Map<String, Object> addNewPeriodSpent(Long idUserAddingPeriodSpent, Map<String, Object> responseForUI) {
-        // mettre une date de fin à la précédente spending period si il y en a une
-        log.info("Start adding new spending period");
-        Boolean periodSpentCreated = false;
+    public Map<String, Object> addNewPeriodSpent(Long idUserAddingPeriodSpent, Map<String, Object> response) {
+        log.info("Start adding new spending period in database");
+        Boolean periodSpentAdded = false;
         PeriodSpentEntity periodSpentEntity = new PeriodSpentEntity();
         log.info("Get user id : {}", idUserAddingPeriodSpent);
         UserEntity userEntity = userRepository.getById(idUserAddingPeriodSpent);
@@ -36,17 +35,17 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
             log.info("Adding new spending period in database created by id user : {}", idUserAddingPeriodSpent);
             periodSpentEntity = periodSpentRepository.save(periodSpentEntity);
             if (periodSpentEntity.getIdPeriodSpent() != null) {
-                periodSpentCreated = true;
+                periodSpentAdded = true;
                 log.info("New spending period added successfully");
             } else {
-                log.warn("Error during creation of new spending period");
+                log.warn("Error during addition of new spending period");
             }
         } else {
             log.warn("The id user {} is not found in data base", idUserAddingPeriodSpent);
         }
-        responseForUI.put("periodSpentCreated", periodSpentCreated);
+        response.put("periodSpentAdded", periodSpentAdded);
         log.info("End of addition new spending period");
-        return responseForUI;
+        return response;
     }
 
     @Override
