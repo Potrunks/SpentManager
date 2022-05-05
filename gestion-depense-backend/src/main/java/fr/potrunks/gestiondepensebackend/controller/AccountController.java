@@ -6,7 +6,6 @@ import fr.potrunks.gestiondepensebackend.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/spentmanager/account/")
-@Scope(value="session")
 public class AccountController {
 
     @Autowired
