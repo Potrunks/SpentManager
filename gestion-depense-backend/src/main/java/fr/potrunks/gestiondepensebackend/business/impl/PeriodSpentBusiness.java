@@ -52,14 +52,13 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
     @Override
     public Map<String, Object> closePeriodSpentInProgress(Map<String, Object> response) {
         log.info("Start to close the last period spent in progress");
-        Boolean periodSpentInProgressClosed = false;
+        Boolean periodSpentInProgressClosed = true;
         log.info("Start to find the period spent in progress");
         PeriodSpentEntity periodSpentEntity = periodSpentRepository.findByEndDatePeriodSpentIsNull();
-        if (periodSpentEntity.getIdPeriodSpent() != null) {
+        if (periodSpentEntity != null) {
             log.info("Period spent id {} in progress found", periodSpentEntity.getIdPeriodSpent());
             periodSpentEntity.setEndDatePeriodSpent(LocalDate.now());
             periodSpentRepository.save(periodSpentEntity);
-            periodSpentInProgressClosed = true;
             log.info("Period spent in progress closed successfully");
         } else {
             log.warn("Period spent in progress not found in database");

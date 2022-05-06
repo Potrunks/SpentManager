@@ -3,6 +3,7 @@ package fr.potrunks.gestiondepensebackend.controller;
 import fr.potrunks.gestiondepensebackend.business.DebtIBusiness;
 import fr.potrunks.gestiondepensebackend.business.PeriodSpentIBusiness;
 import fr.potrunks.gestiondepensebackend.business.SalaryIBusiness;
+import fr.potrunks.gestiondepensebackend.model.Salary;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class PeriodSpentController {
     @Autowired
     private DebtIBusiness debtBusiness;
 
-    @PostMapping("/new")
-    public ResponseEntity<Map<String, Object>> createNewPeriodSpent(@RequestBody Long idUserConnected, @RequestBody Float salaryInput) {
+    @PostMapping("/new/{idUserConnected}")
+    public ResponseEntity<Map<String, Object>> createNewPeriodSpent(@PathVariable Long idUserConnected, @RequestBody Salary salary) {
         log.info("Starting creation of a new period spent");
         Map<String, Object> response = new HashMap<>();
         Boolean periodSpentCreated = false;
@@ -33,8 +34,11 @@ public class PeriodSpentController {
         if ((Boolean) response.get("periodSpentInProgressClosed") == true) {
             response = periodSpentBusiness.addNewPeriodSpent(idUserConnected, response);
             if ((Boolean) response.get("periodSpentAdded") == true) {
-                response = salaryBusiness.addNewSalary(idUserConnected, (Long) response.get("idPeriodSpentCreated"), salaryInput, response);
+                response = salaryBusiness.addNewSalary(idUserConnected, (Long) response.get("idPeriodSpentCreated"), salary.getValueSalary(), response);
                 response = debtBusiness.addNewDebt(idUserConnected, (Long) response.get("idPeriodSpentCreated"), response);
+                if ((Boolean) response.get("newSalaryCreated") == true && (Boolean) response.get("newDebtCreated") == true) {
+                    periodSpentCreated = true;
+                }
             }
         }
         if (periodSpentCreated == false) {
