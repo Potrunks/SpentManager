@@ -4,6 +4,7 @@ import fr.potrunks.gestiondepensebackend.business.PeriodSpentIBusiness;
 import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
+import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
 import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
     private UserIRepository userRepository;
     @Autowired
     private PeriodSpentIRepository periodSpentRepository;
+    @Autowired
+    private SalaryIRepository salaryRepository;
 
     @Override
     public Map<String, Object> addNewPeriodSpent(Long idUserAddingPeriodSpent, Map<String, Object> response) {
@@ -52,18 +55,37 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
     @Override
     public Map<String, Object> closePeriodSpentInProgress(Map<String, Object> response) {
         log.info("Start to close the last period spent in progress");
-        Boolean periodSpentInProgressClosed = true;
+        Boolean periodSpentInProgressClosed = false;
         log.info("Start to find the period spent in progress");
         PeriodSpentEntity periodSpentEntity = periodSpentRepository.findByEndDatePeriodSpentIsNull();
         if (periodSpentEntity != null) {
             log.info("Period spent id {} in progress found", periodSpentEntity.getIdPeriodSpent());
-            periodSpentEntity.setEndDatePeriodSpent(LocalDate.now());
-            periodSpentRepository.save(periodSpentEntity);
-            log.info("Period spent in progress closed successfully");
+            response = verifyPeriodSpentInProgressIsClosable(periodSpentEntity, response);
+            if ((Boolean) response.get(("periodSpentInProgressIsClosable")) == true) {
+                log.info("Closing period spent in progress...");
+                periodSpentEntity.setEndDatePeriodSpent(LocalDate.now());
+                periodSpentRepository.save(periodSpentEntity);
+                periodSpentInProgressClosed = true;
+                log.info("Period spent in progress closed successfully");
+            }
         } else {
+            periodSpentInProgressClosed = true;
             log.warn("Period spent in progress not found in database");
         }
         response.put("periodSpentInProgressClosed", periodSpentInProgressClosed);
+        return response;
+    }
+
+    private Map<String, Object> verifyPeriodSpentInProgressIsClosable(PeriodSpentEntity periodSpentEntity, Map<String, Object> response) {
+        log.info("Verifying if Period Spent id {} is closable", periodSpentEntity.getIdPeriodSpent());
+        Boolean periodSpentInProgressIsClosable = false;
+        if (salaryRepository.countByPeriodSpentEntity(periodSpentEntity) > 1) {
+            log.info("Period Spent is closable");
+            periodSpentInProgressIsClosable = true;
+        } else {
+            log.warn("Period Spent not closable");
+        }
+        response.put("periodSpentInProgressIsClosable", periodSpentInProgressIsClosable);
         return response;
     }
 }

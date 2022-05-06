@@ -44,6 +44,10 @@ const NewSpendingPeriod = () => {
             console.log("New period spent created");
             // TO DO : go vers une page de succés
             navigate("/menu");
+          } else if (response.data.periodSpentInProgressIsClosable === false) {
+            document.getElementById("API-error-box").firstChild.innerHTML =
+              "Cannot create new Spending Period because there is only one salary on the Spending Period in progress";
+            document.getElementById("API-error-box").style.display = "flex";
           }
           // TO DO : message d'erreur personnalisé
         })

@@ -29,6 +29,7 @@ class InputTestService {
   resetNewSpendingPeriodFormError() {
     document.getElementById("valueSalary").classList.remove("error");
     document.getElementById("valueSalary").placeholder = "";
+    document.getElementById("API-error-box").style.display = "none";
   }
 
   verifyIntegrityNewAccount(user) {
