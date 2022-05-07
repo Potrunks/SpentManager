@@ -22,6 +22,9 @@ const Menu = () => {
           <button onClick={() => navigate("/newSpendingPeriod")}>
             New Spending Period
           </button>
+          <button>See Spents</button>
+          <button>New Spent</button>
+          <button>Configure Monthly Spent</button>
           <button onClick={() => navigate("/")}>Log Out</button>
         </div>
       </div>

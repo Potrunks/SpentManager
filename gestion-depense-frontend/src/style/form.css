@@ -54,12 +54,8 @@
   flex-direction: column;
 }
 
-.main-button-container button:nth-child(1),
-.main-button-container button:nth-child(2) {
-  margin-bottom: 8px;
-}
-
 .main-button-container button {
+  margin-bottom: 8px;
   border: none;
   height: 48px;
   background-color: #06d6a0;
