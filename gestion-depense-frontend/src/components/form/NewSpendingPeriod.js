@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import InputTestService from "../../services/InputTestService";
 import PeriodSpentService from "../../services/PeriodSpentService";
+import Confirm from "../Popup/Confirm";
 
 const NewSpendingPeriod = () => {
   const [salary, setSalary] = useState({
     valueSalary: "",
   });
+
+  const confirmMessage =
+    "Are you sure to create a new spending period ? This action will close the previous spending period in progress";
+
+  const [confirmPopup, setConfirmPopup] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -30,31 +36,36 @@ const NewSpendingPeriod = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const createNewSpendingPeriod = (e) => {
-    e.preventDefault();
-    // TO DO : pop-up de confirmation
-    console.log("Start to create a new spending period");
-    if (InputTestService.verifyIntegrityNewSpendingPeriod(salary) === true) {
-      PeriodSpentService.postNewPeriodSpent(
-        sessionStorage.getItem("idUserConnected"),
-        salary
-      )
-        .then((response) => {
-          if (response.data.periodSpentAdded === true) {
-            console.log("New period spent created");
-            // TO DO : go vers une page de succés
-            navigate("/menu");
-          } else if (response.data.periodSpentInProgressIsClosable === false) {
-            document.getElementById("API-error-box").firstChild.innerHTML =
-              "Cannot create new Spending Period because there is only one salary on the Spending Period in progress";
-            document.getElementById("API-error-box").style.display = "flex";
-          }
-          // TO DO : message d'erreur personnalisé
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+  const displayConfirmPopup = (e) => {
+    if (
+      InputTestService.verifyIntegrityNewSpendingPeriod(salary) === true &&
+      confirmPopup === false
+    ) {
+      setConfirmPopup(true);
     }
+  };
+
+  const createNewSpendingPeriod = (e) => {
+    //e.preventDefault();
+    setConfirmPopup(false);
+    console.log("Start to create a new spending period");
+    PeriodSpentService.postNewPeriodSpent(
+      sessionStorage.getItem("idUserConnected"),
+      salary
+    )
+      .then((response) => {
+        if (response.data.periodSpentAdded === true) {
+          console.log("New period spent created");
+          navigate("/success");
+        } else if (response.data.periodSpentInProgressIsClosable === false) {
+          document.getElementById("API-error-box").firstChild.innerHTML =
+            "Cannot create new Spending Period because there is only one salary on the Spending Period in progress";
+          document.getElementById("API-error-box").style.display = "flex";
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -80,11 +91,24 @@ const NewSpendingPeriod = () => {
           </div>
         </div>
         <div className="main-button-container">
-          <button onClick={createNewSpendingPeriod}>Create</button>
+          <button
+            onClick={() => {
+              displayConfirmPopup();
+            }}
+          >
+            Create
+          </button>
           <button onClick={clearInput}>Clear</button>
           <button onClick={() => navigate("/menu")}>Cancel</button>
         </div>
       </div>
+      {confirmPopup && (
+        <Confirm
+          parentSetConfirmPopup={setConfirmPopup}
+          parentCreateNewSpendingPeriod={createNewSpendingPeriod}
+          parentConfirmMessage={confirmMessage}
+        />
+      )}
     </div>
   );
 };
