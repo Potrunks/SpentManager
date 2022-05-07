@@ -1,12 +1,16 @@
 package fr.potrunks.gestiondepensebackend.business.impl;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class AccountBusinessTests {
+
+    @Autowired
+    private AccountBusiness accountBusiness;
 
     @Test
     public void withoutFirstCharUppercase_returnFirstCharUppercase() {
@@ -50,5 +54,17 @@ public class AccountBusinessTests {
             }
         }
         assertTrue(resultAttempted);
+    }
+
+    @Test
+    public void saltGeneratorInvoke_returnStringWithLenghtEqualThree() {
+        String result = accountBusiness.saltGenerator();
+        assertEquals(3, result.length());
+    }
+
+    @Test
+    public void stringNotHashed_returnStringHashed() {
+        String result = accountBusiness.hashedPassword("Trunks92!uqk");
+        assertEquals("��P��3���i���e\u0002���*�\u001A\u0019�+��ғ2\u0018�", result);
     }
 }
