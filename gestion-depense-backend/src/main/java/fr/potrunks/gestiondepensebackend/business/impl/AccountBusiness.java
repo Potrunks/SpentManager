@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -80,7 +79,7 @@ public class AccountBusiness implements AccountIBusiness {
         return userEntity;
     }
 
-    private Boolean verifyMailExist(String mailUser) {
+    public Boolean verifyMailExist(String mailUser) {
         log.info("Start to verify if mail already exist in database");
         if (userRepository.findByMailUser(mailUser) != null) {
             log.warn("The mail {} already exist", mailUser);
@@ -90,7 +89,7 @@ public class AccountBusiness implements AccountIBusiness {
         return false;
     }
 
-    private Boolean verifyAdminPassword(User user) {
+    public Boolean verifyAdminPassword(User user) {
         log.info("Start verification of administrator password in database against administrator password from UI");
         UserEntity userEntity = userRepository.findByAdministratorTrue();
         String passwordToVerify = hashedPassword(user.getAdminPassword() + userEntity.getSaltUser());
@@ -112,7 +111,7 @@ public class AccountBusiness implements AccountIBusiness {
         return false;
     }
 
-    private String saltGenerator() {
+    public String saltGenerator() {
         log.info("Start to generate a salt");
         Random random = new Random();
         String salt = "";
@@ -124,7 +123,7 @@ public class AccountBusiness implements AccountIBusiness {
         return salt;
     }
 
-    private String hashedPassword(String passwordAndSalt) {
+    public String hashedPassword(String passwordAndSalt) {
         log.info("Start to hash password and salt together");
         try {
             log.info("Initialization of the hashing");
