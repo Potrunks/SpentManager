@@ -26,6 +26,12 @@ class InputTestService {
     document.getElementById("passwordUser").placeholder = "";
   }
 
+  resetNewSpendingPeriodFormError() {
+    document.getElementById("valueSalary").classList.remove("error");
+    document.getElementById("valueSalary").placeholder = "";
+    document.getElementById("API-error-box").style.display = "none";
+  }
+
   verifyIntegrityNewAccount(user) {
     this.resetAllError();
     if (
@@ -46,6 +52,33 @@ class InputTestService {
       return true;
     }
     return false;
+  }
+
+  verifyIntegrityNewSpendingPeriod(salary) {
+    this.resetNewSpendingPeriodFormError();
+    if (this.inputFieldNotEmptyForNewSpendingPeriod(salary) === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  inputFieldNotEmptyForNewSpendingPeriod(salary) {
+    if (salary.valueSalary.length === 0 || salary.valueSalary === "0") {
+      if (salary.valueSalary.length === 0) {
+        document.getElementById("valueSalary").classList.add("error");
+        document.getElementById("valueSalary").placeholder = "Input required";
+      }
+      if (salary.valueSalary === "0") {
+        document.getElementById("valueSalary").value = "";
+        document.getElementById("valueSalary").classList.add("error");
+        document.getElementById("valueSalary").placeholder =
+          "Value cannot be 0";
+      }
+      return false;
+    } else {
+      return true;
+    }
   }
 
   inputFieldNotEmptyForLogin(user) {

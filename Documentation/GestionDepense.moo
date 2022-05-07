@@ -3848,7 +3848,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Creator>Potrunks</a:Creator>
 <a:ModificationDate>1650984946</a:ModificationDate>
 <a:Modifier>Potrunks</a:Modifier>
-<a:TargetModelURL>file:///C|/Users/Potrunks/WorkSpace/Java/11/IntelliJ IDEA/GestionDepense/Documentation/GestionDepense.mpd</a:TargetModelURL>
+<a:TargetModelURL>file:///C|/Users/Potrunks/WorkSpace/Java/11/IntelliJ IDEA/SpentManager/Documentation/GestionDepense.mpd</a:TargetModelURL>
 <a:TargetModelID>90D31F18-1D3F-4709-8479-15093838BA43</a:TargetModelID>
 <a:TargetModelClassID>CDE44E21-9669-11D1-9914-006097355D9B</a:TargetModelClassID>
 <c:SessionShortcuts>

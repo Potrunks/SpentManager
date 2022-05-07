@@ -7,7 +7,11 @@ import ModifySpent from "./components/spent/ModifySpent";
 import Navbar from "./components/UI/Navbar";
 import "./style/navbar.css";
 import "./style/form.css";
+import "./style/popup.css";
 import LoginAccount from "./components/form/LoginAccount";
+import Menu from "./components/UI/Menu";
+import NewSpendingPeriod from "./components/form/NewSpendingPeriod";
+import Success from "./components/page/Success";
 
 function App() {
   return (
@@ -17,13 +21,16 @@ function App() {
         <Routes>
           <Route index element={<LoginAccount />} />
           <Route path="/" element={<LoginAccount />} />
+          <Route path="/createAccount" element={<CreateAccount />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/newSpendingPeriod" element={<NewSpendingPeriod />} />
+          <Route path="/success" element={<Success />} />
           <Route
             path="/displaySpents/:idUserConnected"
             element={<DisplaySpents />}
           />
           <Route path="/addSpent" element={<AddSpent />} />
           <Route path="/modifySpent/:id" element={<ModifySpent />} />
-          <Route path="/createAccount" element={<CreateAccount />} />
         </Routes>
       </BrowserRouter>
     </>
