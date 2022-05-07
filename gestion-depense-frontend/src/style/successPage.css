@@ -1,0 +1,28 @@
+.page-container {
+  background-color: white;
+  width: 100%;
+  margin: 16px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.title-container {
+  margin: 8px 16px 0 16px;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.text-container {
+  padding: 16px;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-container img {
+    height: 128px;
+    width: 128px;
+}
