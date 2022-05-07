@@ -39,6 +39,7 @@ public class AccountController {
             UserEntity userEntity = accountBusiness.getUserByMailUser(user);
             BeanUtils.copyProperties(userEntity, user);
             response.put("idUserConnected", user.getIdUser());
+            response.put("firstNameUserConnected", user.getFirstNameUser());
         }
         log.info("Return response to the front app");
         return ResponseEntity.ok(response);
