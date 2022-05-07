@@ -38,6 +38,8 @@ const LoginAccount = () => {
             } else {
               console.log("User authenticated successfully");
               sessionStorage.setItem("idUserConnected", response.data.idUserConnected);
+              sessionStorage.setItem("firstNameUserConnected", response.data.firstNameUserConnected);
+              document.getElementById("main-app-title").innerHTML = "Welcome " + response.data.firstNameUserConnected;
               navigate(`/menu`);
             }
           }

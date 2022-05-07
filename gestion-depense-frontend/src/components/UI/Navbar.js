@@ -5,9 +5,9 @@ const Navbar = () => {
     return (
         <div className="main-navbar-container">
             <div className='main-navbar-app-title'>
-                <span>Spent Manager v1.0.0</span>
+                <span id='main-app-title'>Spent Manager v1.0.0</span>
             </div>
-            <img src={menuBurgerImage}></img>
+            <img src={menuBurgerImage} alt='Menu'></img>
         </div>
     )
 }
