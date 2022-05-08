@@ -34,12 +34,6 @@ public class SpentController {
 
     @PostMapping("/new")
     public ResponseEntity<Map<String, Object>> newSpent(@RequestBody Spent spent) {
-        /*
-        Chercher le user connecté
-        Chercher la spent category
-        Chercher la period spent en cours
-        Ajouter la nouvelle depense
-         */
         log.info("Creating new spent...");
         Map<String, Object> response = new HashMap<>();
         UserEntity userConnected;
