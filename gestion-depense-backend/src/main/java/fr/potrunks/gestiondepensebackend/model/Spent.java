@@ -15,4 +15,6 @@ public class Spent {
     private LocalDate dateSpent;
     private String nameSpent;
     private String commentSpent;
+    private Long idUserConnected;
+    private Long idSpentCategorySelected;
 }

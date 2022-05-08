@@ -14,7 +14,6 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/spentmanager/spent/")
-@Scope(value="request")
 public class SpentController {
 
     @Autowired
@@ -22,6 +21,12 @@ public class SpentController {
 
     @PostMapping("/new")
     public Spent newSpent(@RequestBody Spent spent) {
+        /*
+        Chercher le user connecté
+        Chercher la spent category
+        Chercher la period spent en cours
+        Ajouter la nouvelle depense
+         */
         return spentBusiness.addSpent(spent);
     }
 
