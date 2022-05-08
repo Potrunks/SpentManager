@@ -47,6 +47,7 @@ public class SpentController {
         PeriodSpentEntity periodSpentInProgress;
         SpentEntity newSpent;
         Boolean newSpentAdded = false;
+        Boolean periodSpentInProgressExist = true;
         userConnected = userIBusiness.findById(spent.getIdUserConnected());
         if (userConnected.getIdUser() != null) {
             spentCategorySelected = spentCategoryIBusiness.findById(spent.getIdSpentCategorySelected());
@@ -61,6 +62,7 @@ public class SpentController {
                         log.warn("Error during creation of the new spent");
                     }
                 } else {
+                    periodSpentInProgressExist = false;
                     log.warn("Error during searching period spent in progress");
                 }
             } else {
@@ -70,6 +72,7 @@ public class SpentController {
             log.warn("Error during searching user with id {}", spent.getIdUserConnected());
         }
         response.put("newSpentAdded", newSpentAdded);
+        response.put("periodSpentInProgressExist", periodSpentInProgressExist);
         return ResponseEntity.ok(response);
     }
 
