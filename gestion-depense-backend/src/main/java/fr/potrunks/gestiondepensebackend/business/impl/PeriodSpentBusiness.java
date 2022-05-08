@@ -76,6 +76,13 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         return response;
     }
 
+    @Override
+    public PeriodSpentEntity findInProgress() {
+        log.info("Searching period spent in progress");
+        PeriodSpentEntity periodSpentEntity = periodSpentRepository.findByEndDatePeriodSpentIsNull();
+        return periodSpentEntity;
+    }
+
     private Map<String, Object> verifyPeriodSpentInProgressIsClosable(PeriodSpentEntity periodSpentEntity, Map<String, Object> response) {
         log.info("Verifying if Period Spent id {} is closable", periodSpentEntity.getIdPeriodSpent());
         Boolean periodSpentInProgressIsClosable = false;

@@ -42,6 +42,7 @@ public class GestionDepenseBackendApplication {
 			categoryList.add("Multimedia");
 			categoryList.add("Restaurant");
 			categoryList.add("Tax");
+			categoryList.add("Other");
 			for (String category : categoryList
 				 ) {
 				SpentCategoryEntity spentCategoryEntity = new SpentCategoryEntity();
