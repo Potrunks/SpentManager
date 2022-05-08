@@ -1,11 +1,16 @@
 package fr.potrunks.gestiondepensebackend;
 
+import fr.potrunks.gestiondepensebackend.entity.SpentCategoryEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
+import fr.potrunks.gestiondepensebackend.repository.SpentCategoryIRepository;
 import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class GestionDepenseBackendApplication {
@@ -15,8 +20,9 @@ public class GestionDepenseBackendApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(UserIRepository userIRepository) {
+	CommandLineRunner run(UserIRepository userIRepository, SpentCategoryIRepository spentCategoryIRepository) {
 		return args -> {
+			// Add user
 			UserEntity userEntity = new UserEntity();
 			userEntity.setFirstNameUser("Alexis");
 			userEntity.setLastNameUser("ARRIAL");
@@ -25,6 +31,23 @@ public class GestionDepenseBackendApplication {
 			userEntity.setSaltUser("uqk");
 			userEntity.setAdministrator(true);
 			userIRepository.save(userEntity);
+
+			// Add spent category
+			List<String> categoryList = new ArrayList<>();
+			categoryList.add("Restaurant");
+			categoryList.add("Fast-Food");
+			categoryList.add("Gasoline");
+			categoryList.add("Grocery");
+			categoryList.add("Energy");
+			categoryList.add("Multimedia");
+			categoryList.add("Restaurant");
+			categoryList.add("Tax");
+			for (String category : categoryList
+				 ) {
+				SpentCategoryEntity spentCategoryEntity = new SpentCategoryEntity();
+				spentCategoryEntity.setNameSpentCategory(category);
+				spentCategoryIRepository.save(spentCategoryEntity);
+			}
 		};
 	}
 
