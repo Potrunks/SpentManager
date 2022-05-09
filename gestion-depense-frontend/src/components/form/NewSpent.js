@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import InputTestService from "../../services/InputTestService";
 import SpentCategoryService from "../../services/SpentCategoryService";
+import Confirm from "../Popup/Confirm";
 
 const NewSpent = () => {
   const [spent, setSpent] = useState({
@@ -12,33 +14,49 @@ const NewSpent = () => {
   });
   const [loading, setLoading] = useState(true);
   const [spentCategories, setSpentCategories] = useState(null);
+  const confirmMessage = "Are you sure to create a new spent ?";
+  const [confirmPopup, setConfirmPopup] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSpent({ ...spent, [e.target.name]: value });
   };
 
-  const createNewSpent = (e) => {
-    e.preventDefault();
-    if (InputTestService.verifyIntegrityNewSpent(spent) === true) {
-      console.log(spent);
+  const displayConfirmPopup = (e) => {
+    if (
+      InputTestService.verifyIntegrityNewSpent(spent) === true &&
+      confirmPopup === false
+    ) {
+      setConfirmPopup(true);
     }
   };
 
+  const createNewSpent = (e) => {
+    //e.preventDefault();
+    console.log(spent);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      console.log("Start loading...");
-      try {
-        const response = await SpentCategoryService.getAllSpentCategories();
-        setSpentCategories(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading(false);
-      console.log("Data loaded");
-    };
-    fetchData();
+    if (sessionStorage.getItem("idUserConnected") === null) {
+      console.log("User no connected");
+      navigate("/");
+    } else {
+      const fetchData = async () => {
+        setLoading(true);
+        console.log("Start loading...");
+        try {
+          const response = await SpentCategoryService.getAllSpentCategories();
+          setSpentCategories(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+        setLoading(false);
+        console.log("Data loaded");
+      };
+      fetchData();
+    }
   }, []);
 
   return (
@@ -109,11 +127,24 @@ const NewSpent = () => {
           </div>
         </div>
         <div className="main-button-container">
-          <button onClick={createNewSpent}>Create</button>
+          <button
+            onClick={(e) => {
+              displayConfirmPopup(e);
+            }}
+          >
+            Create
+          </button>
           <button>Clear</button>
           <button>Cancel</button>
         </div>
       </div>
+      {confirmPopup && (
+        <Confirm
+          parentSetConfirmPopup={setConfirmPopup}
+          parentMethodToConfirm={createNewSpent}
+          parentConfirmMessage={confirmMessage}
+        />
+      )}
     </div>
   );
 };

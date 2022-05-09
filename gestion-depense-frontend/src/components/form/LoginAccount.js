@@ -16,6 +16,7 @@ const LoginAccount = () => {
   };
 
   useEffect(() => {
+    document.getElementById("main-app-title").innerHTML = "Spent Manager v1.0.0";
     sessionStorage.clear();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

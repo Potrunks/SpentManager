@@ -105,7 +105,7 @@ const NewSpendingPeriod = () => {
       {confirmPopup && (
         <Confirm
           parentSetConfirmPopup={setConfirmPopup}
-          parentCreateNewSpendingPeriod={createNewSpendingPeriod}
+          parentMethodToConfirm={createNewSpendingPeriod}
           parentConfirmMessage={confirmMessage}
         />
       )}
