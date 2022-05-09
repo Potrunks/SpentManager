@@ -32,6 +32,55 @@ class InputTestService {
     document.getElementById("API-error-box").style.display = "none";
   }
 
+  resetNewSpentFormError() {
+    document.getElementById("valueSpent").classList.remove("error");
+    document.getElementById("valueSpent").placeholder = "";
+    document.getElementById("nameSpent").classList.remove("error");
+    document.getElementById("nameSpent").placeholder = "";
+    document
+      .getElementById("idSpentCategorySelected")
+      .classList.remove("error");
+    document.getElementById("idSpentCategorySelected").placeholder = "";
+    document.getElementById("API-error-box").style.display = "none";
+  }
+
+  verifyIntegrityNewSpent(spent) {
+    this.resetNewSpentFormError();
+    if (this.verifyIntegrityValueSpent(spent.valueSpent) === false) {
+      return false;
+    }
+    return true;
+  }
+
+  verifyIntegrityValueSpent(value) {
+    if (
+      this.valueSpentIsEmpty(value) === true ||
+      this.valueSpentIsZero(value) === true
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  valueSpentIsEmpty(value) {
+    if (value.length === 0) {
+      document.getElementById("valueSpent").classList.add("error");
+      document.getElementById("valueSpent").placeholder = "Input required";
+      return true;
+    }
+    return false;
+  }
+
+  valueSpentIsZero(value) {
+    if (value === "0") {
+      document.getElementById("valueSpent").value = "";
+      document.getElementById("valueSpent").classList.add("error");
+      document.getElementById("valueSpent").placeholder = "Value cannot be 0";
+      return true;
+    }
+    return false;
+  }
+
   verifyIntegrityNewAccount(user) {
     this.resetAllError();
     if (

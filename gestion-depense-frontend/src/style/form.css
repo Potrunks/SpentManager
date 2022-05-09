@@ -79,6 +79,7 @@
 
 .error {
   border: 1px solid red !important;
+  padding-left: 0 !important;
 }
 
 .API-error-box {

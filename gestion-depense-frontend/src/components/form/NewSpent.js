@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import InputTestService from "../../services/InputTestService";
 import SpentCategoryService from "../../services/SpentCategoryService";
 
 const NewSpent = () => {
@@ -19,7 +20,9 @@ const NewSpent = () => {
 
   const createNewSpent = (e) => {
     e.preventDefault();
-    console.log(spent);
+    if (InputTestService.verifyIntegrityNewSpent(spent) === true) {
+      console.log(spent);
+    }
   };
 
   useEffect(() => {
@@ -90,7 +93,7 @@ const NewSpent = () => {
                 onChange={(e) => handleChange(e)}
                 className="select-form"
               >
-                <option>Choose a category . . .</option>
+                <option id="idSpentCategorySelected">Choose a category . . .</option>
                 {spentCategories.map((spentCategory) => (
                   <option
                     key={spentCategory.idSpentCategory}
