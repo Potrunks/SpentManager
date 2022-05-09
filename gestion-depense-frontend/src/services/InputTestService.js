@@ -52,9 +52,7 @@ class InputTestService {
     if (
       this.verifyIntegrityValueSpent(spent.valueSpent) === false ||
       this.verifyIntegrityNameSpent(spent.nameSpent) === false ||
-      this.verifyIntegritySpentCategory(spent.idSpentCategorySelected) ===
-        false ||
-      this.verifyIntegrityCommentSpent(spent.commentSpent) === false
+      this.verifyIntegritySpentCategory(spent.idSpentCategorySelected) === false
     ) {
       return false;
     }
@@ -76,24 +74,6 @@ class InputTestService {
       return false;
     }
     return true;
-  }
-
-  verifyIntegrityCommentSpent(commentSpent) {
-    if (this.commentSpentIsOnlySpace(commentSpent) === true) {
-      return false;
-    }
-    return true;
-  }
-
-  commentSpentIsOnlySpace(commentSpent) {
-    if (!regexFullWhiteSpace.test(commentSpent) && commentSpent !== "") {
-      document.getElementById("commentSpent").value = "";
-      document.getElementById("commentSpent").classList.add("error");
-      document.getElementById("commentSpent").placeholder =
-        "Comment format invalid";
-      return true;
-    }
-    return false;
   }
 
   verifyIntegrityNameSpent(name) {
