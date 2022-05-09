@@ -34,6 +34,8 @@ class InputTestService {
   }
 
   resetNewSpentFormError() {
+    document.getElementById("commentSpent").classList.remove("error");
+    document.getElementById("commentSpent").placeholder = "";
     document.getElementById("valueSpent").classList.remove("error");
     document.getElementById("valueSpent").placeholder = "";
     document.getElementById("nameSpent").classList.remove("error");
@@ -49,11 +51,28 @@ class InputTestService {
     this.resetNewSpentFormError();
     if (
       (this.verifyIntegrityValueSpent(spent.valueSpent) ||
-        this.verifyIntegrityNameSpent(spent.nameSpent)) === false
+        this.verifyIntegrityNameSpent(spent.nameSpent) ||
+        this.verifyIntegrityCommentSpent(spent.commentSpent)) === false
     ) {
       return false;
     }
     return true;
+  }
+
+  verifyIntegrityCommentSpent(commentSpent) {
+    if (this.commentSpentIsOnlySpace(commentSpent) === true) {
+      return false;
+    }
+    return true;
+  }
+
+  commentSpentIsOnlySpace(commentSpent) {
+    if (!regexFullWhiteSpace.test(commentSpent)) {
+      document.getElementById("commentSpent").classList.add("error");
+      document.getElementById("commentSpent").placeholder = "Input required";
+      return true;
+    }
+    return false;
   }
 
   verifyIntegrityNameSpent(name) {
