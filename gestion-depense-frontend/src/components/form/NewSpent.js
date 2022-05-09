@@ -93,7 +93,9 @@ const NewSpent = () => {
                 onChange={(e) => handleChange(e)}
                 className="select-form"
               >
-                <option id="idSpentCategorySelected">Choose a category . . .</option>
+                <option value={""} id="idSpentCategorySelected">
+                  Choose a category . . .
+                </option>
                 {spentCategories.map((spentCategory) => (
                   <option
                     key={spentCategory.idSpentCategory}

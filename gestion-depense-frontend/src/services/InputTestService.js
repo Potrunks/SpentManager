@@ -50,10 +50,29 @@ class InputTestService {
   verifyIntegrityNewSpent(spent) {
     this.resetNewSpentFormError();
     if (
-      (this.verifyIntegrityValueSpent(spent.valueSpent) ||
-        this.verifyIntegrityNameSpent(spent.nameSpent) ||
-        this.verifyIntegrityCommentSpent(spent.commentSpent)) === false
+      this.verifyIntegrityValueSpent(spent.valueSpent) === false ||
+      this.verifyIntegrityNameSpent(spent.nameSpent) === false ||
+      this.verifyIntegritySpentCategory(spent.idSpentCategorySelected) ===
+        false ||
+      this.verifyIntegrityCommentSpent(spent.commentSpent) === false
     ) {
+      return false;
+    }
+    return true;
+  }
+
+  verifyIntegritySpentCategory(idSpentCategorySelected) {
+    if (this.idSpentCategoryIsSelected(idSpentCategorySelected) === true) {
+      return true;
+    }
+    return false;
+  }
+
+  idSpentCategoryIsSelected(idSpentCategorySelected) {
+    if (idSpentCategorySelected === "") {
+      document.getElementById("idSpentCategorySelected").classList.add("error");
+      document.getElementById("idSpentCategorySelected").placeholder =
+        "Input required";
       return false;
     }
     return true;
@@ -67,9 +86,11 @@ class InputTestService {
   }
 
   commentSpentIsOnlySpace(commentSpent) {
-    if (!regexFullWhiteSpace.test(commentSpent)) {
+    if (!regexFullWhiteSpace.test(commentSpent) && commentSpent !== "") {
+      document.getElementById("commentSpent").value = "";
       document.getElementById("commentSpent").classList.add("error");
-      document.getElementById("commentSpent").placeholder = "Input required";
+      document.getElementById("commentSpent").placeholder =
+        "Comment format invalid";
       return true;
     }
     return false;
