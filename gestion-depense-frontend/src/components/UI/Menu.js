@@ -23,7 +23,7 @@ const Menu = () => {
             New Spending Period
           </button>
           <button>See Spents</button>
-          <button>New Spent</button>
+          <button onClick={() => navigate("/newspent")}>New Spent</button>
           <button>Configure Monthly Spent</button>
           <button onClick={() => navigate("/")}>Log Out</button>
         </div>

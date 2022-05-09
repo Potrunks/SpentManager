@@ -21,20 +21,30 @@
   padding: 16px 16px 0px 16px;
 }
 
-.input-field {
+.input-field,
+.main-select-container {
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
 }
 
-.input-field span {
+.input-field span,
+.main-select-container span {
   margin-bottom: 8px;
   font-weight: 300;
 }
 
-.input-field input {
+.input-field input,
+.main-select-container select {
   border: 1px solid #5dffd4;
   height: 48px;
+  padding-left: 16px;
+}
+
+.loading-span {
+  text-align: center;
+  font-size: 24px;
+  color: red;
 }
 
 .input-field input::placeholder {
@@ -63,20 +73,20 @@
 }
 
 .main-button-container button:active {
-    background-color: white;
-    border: 1px solid #06d6a0;
+  background-color: white;
+  border: 1px solid #06d6a0;
 }
 
 .error {
-    border: 1px solid red !important;
+  border: 1px solid red !important;
 }
 
 .API-error-box {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    margin: 16px 16px 0 16px;
-    color: red;
-    font-weight: 300;
-    text-align: center;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 16px 0 16px;
+  color: red;
+  font-weight: 300;
+  text-align: center;
 }

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -70,12 +71,10 @@ public class SpentController {
         return ResponseEntity.ok(response);
     }
 
-    /*
     @GetMapping("/getall")
     public List<Spent> fetchSpents() {
         return spentBusiness.getSpents();
     }
-     */
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long id) {

@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const SPENT_CATEGORY_BASE_API_URL =
+const SPENT_CATEGORY_API_BASE_URL =
   "http://localhost:8080/spentmanager/spentcategory";
 
 class SpentCategoryService {
-  fetchSpentCategories() {
-    console.log("Send request to the API to fetch all spent categories");
-    return axios.get(SPENT_CATEGORY_BASE_API_URL + "/getall");
+  getAllSpentCategories() {
+    console.log("Send request to API to get all spent categories");
+    return axios.get(SPENT_CATEGORY_API_BASE_URL + "/getall");
   }
 }
 

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,7 +35,6 @@ public class SpentBusiness implements SpentIBusiness {
         return spent;
     }
 
-    /*
     @Override
     public List<Spent> getSpents() {
         List<SpentEntity> spentEntities = spentRepository.findAll();
@@ -44,11 +45,12 @@ public class SpentBusiness implements SpentIBusiness {
                         spent.getValueSpent(),
                         spent.getDateSpent(),
                         spent.getNameSpent(),
-                        spent.getCommentSpent()))
+                        spent.getCommentSpent(),
+                        null,
+                        null))
                 .collect(Collectors.toList());
         return spents;
     }
-     */
 
     @Override
     public Boolean deleteSpent(Long id) {

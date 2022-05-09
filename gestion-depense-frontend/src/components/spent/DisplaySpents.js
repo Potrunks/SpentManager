@@ -1,33 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SpentService from "../../services/SpentService";
 import RowOfSpent from "./RowOfSpent";
 
 const DisplaySpents = () => {
-  const { idUserConnected } = useParams();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [spents, setSpents] = useState(null);
-  const [user, setUser] = useState({
-    idUser: "",
-    lastNameUser: "",
-    firstNameUser: "",
-  });
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      console.log("Start loading...")
+      console.log("Start loading...");
       try {
-        console.log("Try to get data from database")
+        console.log("Try to get data from database");
         const response = await SpentService.getSpentsFromBackend();
         setSpents(response.data);
       } catch (error) {
         console.log(error);
       }
       setLoading(false);
-      console.log("Data loaded")
+      console.log("Data loaded");
     };
     fetchData();
   }, []);
@@ -45,11 +39,6 @@ const DisplaySpents = () => {
 
   return (
     <div>
-      <div>
-        <span>
-          Welcome {user.firstNameUser} {user.lastNameUser}
-        </span>
-      </div>
       <div>
         <button onClick={() => navigate("/addSpent")}>Add Spent</button>
       </div>

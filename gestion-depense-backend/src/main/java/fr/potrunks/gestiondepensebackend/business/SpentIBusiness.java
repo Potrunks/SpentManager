@@ -6,10 +6,12 @@ import fr.potrunks.gestiondepensebackend.entity.SpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.Spent;
 
+import java.util.List;
+
 public interface SpentIBusiness {
     Spent addSpent(Spent spent);
 
-    //List<Spent> getSpents();
+    List<Spent> getSpents();
 
     Boolean deleteSpent(Long id);
 

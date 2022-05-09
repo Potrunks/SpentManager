@@ -34,7 +34,6 @@ public class GestionDepenseBackendApplication {
 
 			// Add spent category
 			List<String> categoryList = new ArrayList<>();
-			categoryList.add("Restaurant");
 			categoryList.add("Fast-Food");
 			categoryList.add("Gasoline");
 			categoryList.add("Grocery");
