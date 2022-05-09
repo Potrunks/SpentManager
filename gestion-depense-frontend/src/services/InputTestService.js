@@ -2,6 +2,7 @@ const regexMailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const regexNameFormat = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
 const regexPasswordFormat =
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+const regexFullWhiteSpace = /.*\S.*/;
 class InputTestService {
   resetAllError() {
     document.getElementById("adminPassword").classList.remove("error");
@@ -46,16 +47,46 @@ class InputTestService {
 
   verifyIntegrityNewSpent(spent) {
     this.resetNewSpentFormError();
-    if (this.verifyIntegrityValueSpent(spent.valueSpent) === false) {
+    if (
+      (this.verifyIntegrityValueSpent(spent.valueSpent) ||
+        this.verifyIntegrityNameSpent(spent.nameSpent)) === false
+    ) {
       return false;
     }
     return true;
   }
 
+  verifyIntegrityNameSpent(name) {
+    if (
+      (this.nameSpentIsEmpty(name) || this.nameSpentIsOnlySpace(name)) === true
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  nameSpentIsEmpty(name) {
+    if (name.length === 0) {
+      document.getElementById("nameSpent").classList.add("error");
+      document.getElementById("nameSpent").placeholder = "Input required";
+      return true;
+    }
+    return false;
+  }
+
+  nameSpentIsOnlySpace(name) {
+    if (!regexFullWhiteSpace.test(name)) {
+      document.getElementById("nameSpent").value = "";
+      document.getElementById("nameSpent").classList.add("error");
+      document.getElementById("nameSpent").placeholder = "Name format invalid";
+      return true;
+    }
+    return false;
+  }
+
   verifyIntegrityValueSpent(value) {
     if (
-      this.valueSpentIsEmpty(value) === true ||
-      this.valueSpentIsZero(value) === true
+      (this.valueSpentIsEmpty(value) || this.valueSpentIsZero(value)) === true
     ) {
       return false;
     }
