@@ -4,8 +4,8 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{DFB21B67-C9C4-4B58-967E-9734B6333E43}" Loaded="No" Name="GestionDepense" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="GestionDepense.moo"/>
-		<Model Expanded="Yes" ID="{90D31F18-1D3F-4709-8479-15093838BA43}" Name="GestionDepense" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="GestionDepense.mpd"/>
+		<Model Expanded="Yes" ID="{DFB21B67-C9C4-4B58-967E-9734B6333E43}" Name="GestionDepense" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="GestionDepense.moo"/>
+		<Model Expanded="Yes" ID="{4AAB9395-0ADE-44FE-A435-880B232D1719}" Name="GestionDepense" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="GestionDepense.mpd"/>
 	</Local>
 	<BrowserModule Name="Référentiel"/>
 </Workspace>

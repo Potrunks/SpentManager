@@ -22,9 +22,11 @@ public class PeriodSpentEntity {
     private List<SalaryEntity> salaryEntityList;
     @OneToMany(mappedBy = "periodSpentEntity", cascade = CascadeType.PERSIST)
     private List<DebtEntity> debtEntityList;
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private UserEntity userEntity;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "association_user_periodspent",
+            joinColumns = @JoinColumn(name = "id_period_spent"),
+            inverseJoinColumns = @JoinColumn(name = "id_user"))
+    private List<UserEntity> userEntityList;
     @OneToMany(mappedBy = "periodSpentEntity", cascade = CascadeType.PERSIST)
     private List<SpentEntity> spentEntityList;
 }

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -33,7 +35,9 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         UserEntity userEntity = userRepository.getById(idUserAddingPeriodSpent);
         if (userEntity.getIdUser() != null) {
             log.info("User found successfully");
-            periodSpentEntity.setUserEntity(userEntity);
+            List<UserEntity> userEntityList = new ArrayList<>();
+            userEntityList.add(userEntity);
+            periodSpentEntity.setUserEntityList(userEntityList);
             periodSpentEntity.setStartDatePeriodSpent(LocalDate.now());
             log.info("Adding new spending period in database created by id user : {}", idUserAddingPeriodSpent);
             periodSpentEntity = periodSpentRepository.save(periodSpentEntity);
