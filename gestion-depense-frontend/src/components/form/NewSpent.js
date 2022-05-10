@@ -58,6 +58,17 @@ const NewSpent = () => {
       });
   };
 
+  const clearInput = (e) => {
+    e.preventDefault();
+    setSpent({
+      valueSpent: "",
+      nameSpent: "",
+      commentSpent: "",
+      idUserConnected: sessionStorage.getItem("idUserConnected"),
+      idSpentCategorySelected: "",
+    });
+  };
+
   useEffect(() => {
     if (sessionStorage.getItem("idUserConnected") === null) {
       console.log("User no connected");
@@ -127,13 +138,12 @@ const NewSpent = () => {
             {loading && <span className="loading-span">Loading...</span>}
             {!loading && (
               <select
+                id="idSpentCategorySelected"
                 name="idSpentCategorySelected"
                 onChange={(e) => handleChange(e)}
                 className="select-form"
               >
-                <option value={""} id="idSpentCategorySelected">
-                  Choose a category . . .
-                </option>
+                <option>Choose a category . . .</option>
                 {spentCategories.map((spentCategory) => (
                   <option
                     key={spentCategory.idSpentCategory}
@@ -154,8 +164,8 @@ const NewSpent = () => {
           >
             Create
           </button>
-          <button>Clear</button>
-          <button>Cancel</button>
+          <button onClick={clearInput}>Clear</button>
+          <button onClick={() => navigate("/menu")}>Cancel</button>
         </div>
       </div>
       {confirmPopup && (

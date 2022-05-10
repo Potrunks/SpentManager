@@ -82,6 +82,10 @@
   padding-left: 0 !important;
 }
 
+.select-error {
+  padding-left: 16px;
+}
+
 .API-error-box {
   display: none;
   justify-content: center;

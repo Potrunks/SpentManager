@@ -43,6 +43,9 @@ class InputTestService {
     document
       .getElementById("idSpentCategorySelected")
       .classList.remove("error");
+    document
+      .getElementById("idSpentCategorySelected")
+      .classList.remove("select-error");
     document.getElementById("idSpentCategorySelected").placeholder = "";
     document.getElementById("API-error-box").style.display = "none";
   }
@@ -69,8 +72,12 @@ class InputTestService {
   idSpentCategoryIsSelected(idSpentCategorySelected) {
     if (idSpentCategorySelected === "") {
       document.getElementById("idSpentCategorySelected").classList.add("error");
-      document.getElementById("idSpentCategorySelected").placeholder =
-        "Input required";
+      document
+        .getElementById("idSpentCategorySelected")
+        .classList.add("select-error");
+      document.getElementById(
+        "idSpentCategorySelected"
+      ).firstChild.textContent = "Selection required";
       return false;
     }
     return true;
