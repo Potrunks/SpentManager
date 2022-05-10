@@ -2,6 +2,7 @@ const regexMailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const regexNameFormat = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
 const regexPasswordFormat =
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+const regexFullWhiteSpace = /.*\S.*/;
 class InputTestService {
   resetAllError() {
     document.getElementById("adminPassword").classList.remove("error");
@@ -30,6 +31,112 @@ class InputTestService {
     document.getElementById("valueSalary").classList.remove("error");
     document.getElementById("valueSalary").placeholder = "";
     document.getElementById("API-error-box").style.display = "none";
+  }
+
+  resetNewSpentFormError() {
+    document.getElementById("commentSpent").classList.remove("error");
+    document.getElementById("commentSpent").placeholder = "";
+    document.getElementById("valueSpent").classList.remove("error");
+    document.getElementById("valueSpent").placeholder = "";
+    document.getElementById("nameSpent").classList.remove("error");
+    document.getElementById("nameSpent").placeholder = "";
+    document
+      .getElementById("idSpentCategorySelected")
+      .classList.remove("error");
+    document
+      .getElementById("idSpentCategorySelected")
+      .classList.remove("select-error");
+    document.getElementById("idSpentCategorySelected").placeholder = "";
+    document.getElementById("API-error-box").style.display = "none";
+  }
+
+  verifyIntegrityNewSpent(spent) {
+    this.resetNewSpentFormError();
+    if (
+      this.verifyIntegrityValueSpent(spent.valueSpent) === false ||
+      this.verifyIntegrityNameSpent(spent.nameSpent) === false ||
+      this.verifyIntegritySpentCategory(spent.idSpentCategorySelected) === false
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  verifyIntegritySpentCategory(idSpentCategorySelected) {
+    if (this.idSpentCategoryIsSelected(idSpentCategorySelected) === true) {
+      return true;
+    }
+    return false;
+  }
+
+  idSpentCategoryIsSelected(idSpentCategorySelected) {
+    if (idSpentCategorySelected === "") {
+      document.getElementById("idSpentCategorySelected").classList.add("error");
+      document
+        .getElementById("idSpentCategorySelected")
+        .classList.add("select-error");
+      document.getElementById(
+        "idSpentCategorySelected"
+      ).firstChild.textContent = "Selection required";
+      return false;
+    }
+    return true;
+  }
+
+  verifyIntegrityNameSpent(name) {
+    if (
+      (this.nameSpentIsEmpty(name) || this.nameSpentIsOnlySpace(name)) === true
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  nameSpentIsEmpty(name) {
+    if (name.length === 0) {
+      document.getElementById("nameSpent").classList.add("error");
+      document.getElementById("nameSpent").placeholder = "Input required";
+      return true;
+    }
+    return false;
+  }
+
+  nameSpentIsOnlySpace(name) {
+    if (!regexFullWhiteSpace.test(name)) {
+      document.getElementById("nameSpent").value = "";
+      document.getElementById("nameSpent").classList.add("error");
+      document.getElementById("nameSpent").placeholder = "Name format invalid";
+      return true;
+    }
+    return false;
+  }
+
+  verifyIntegrityValueSpent(value) {
+    if (
+      (this.valueSpentIsEmpty(value) || this.valueSpentIsZero(value)) === true
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  valueSpentIsEmpty(value) {
+    if (value.length === 0) {
+      document.getElementById("valueSpent").classList.add("error");
+      document.getElementById("valueSpent").placeholder = "Input required";
+      return true;
+    }
+    return false;
+  }
+
+  valueSpentIsZero(value) {
+    if (value === "0") {
+      document.getElementById("valueSpent").value = "";
+      document.getElementById("valueSpent").classList.add("error");
+      document.getElementById("valueSpent").placeholder = "Value cannot be 0";
+      return true;
+    }
+    return false;
   }
 
   verifyIntegrityNewAccount(user) {

@@ -1,9 +1,16 @@
 package fr.potrunks.gestiondepensebackend.controller;
 
+import fr.potrunks.gestiondepensebackend.business.PeriodSpentIBusiness;
+import fr.potrunks.gestiondepensebackend.business.SpentCategoryIBusiness;
 import fr.potrunks.gestiondepensebackend.business.SpentIBusiness;
+import fr.potrunks.gestiondepensebackend.business.UserIBusiness;
+import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
+import fr.potrunks.gestiondepensebackend.entity.SpentCategoryEntity;
+import fr.potrunks.gestiondepensebackend.entity.SpentEntity;
+import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.Spent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +21,54 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/spentmanager/spent/")
-@Scope(value="request")
+@Slf4j
 public class SpentController {
 
     @Autowired
     private SpentIBusiness spentBusiness;
+    @Autowired
+    private UserIBusiness userIBusiness;
+    @Autowired
+    private SpentCategoryIBusiness spentCategoryIBusiness;
+    @Autowired
+    private PeriodSpentIBusiness periodSpentIBusiness;
 
     @PostMapping("/new")
-    public Spent newSpent(@RequestBody Spent spent) {
-        return spentBusiness.addSpent(spent);
+    public ResponseEntity<Map<String, Object>> newSpent(@RequestBody Spent spent) {
+        log.info("Creating new spent...");
+        Map<String, Object> response = new HashMap<>();
+        UserEntity userConnected;
+        SpentCategoryEntity spentCategorySelected;
+        PeriodSpentEntity periodSpentInProgress;
+        SpentEntity newSpent;
+        Boolean newSpentAdded = false;
+        Boolean periodSpentInProgressExist = true;
+        userConnected = userIBusiness.findById(spent.getIdUserConnected());
+        if (userConnected.getIdUser() != null) {
+            spentCategorySelected = spentCategoryIBusiness.findById(spent.getIdSpentCategorySelected());
+            if (spentCategorySelected.getIdSpentCategory() != null) {
+                periodSpentInProgress = periodSpentIBusiness.findInProgress();
+                if (periodSpentInProgress != null) {
+                    newSpent = spentBusiness.create(userConnected, spentCategorySelected, periodSpentInProgress, spent);
+                    if (newSpent.getIdSpent() != null) {
+                        newSpentAdded = true;
+                        log.info("New spent created successfully");
+                    } else {
+                        log.warn("Error during creation of the new spent");
+                    }
+                } else {
+                    periodSpentInProgressExist = false;
+                    log.warn("Error during searching period spent in progress");
+                }
+            } else {
+                log.warn("Error during searching spent category with id {}", spent.getIdSpentCategorySelected());
+            }
+        } else {
+            log.warn("Error during searching user with id {}", spent.getIdUserConnected());
+        }
+        response.put("newSpentAdded", newSpentAdded);
+        response.put("periodSpentInProgressExist", periodSpentInProgressExist);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/getall")

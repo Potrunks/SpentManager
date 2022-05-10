@@ -2,7 +2,7 @@ import React from "react";
 
 const Confirm = ({
   parentSetConfirmPopup,
-  parentCreateNewSpendingPeriod,
+  parentMethodToConfirm,
   parentConfirmMessage,
 }) => {
   return (
@@ -14,7 +14,7 @@ const Confirm = ({
         <div className="main-button-container">
           <button
             onClick={() => {
-              parentCreateNewSpendingPeriod();
+              parentMethodToConfirm();
             }}
           >
             Confirm

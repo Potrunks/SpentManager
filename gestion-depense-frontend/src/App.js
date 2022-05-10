@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import CreateAccount from "./components/form/CreateAccount";
-import AddSpent from "./components/spent/AddSpent";
 import DisplaySpents from "./components/spent/DisplaySpents";
 import ModifySpent from "./components/spent/ModifySpent";
 import Navbar from "./components/UI/Navbar";
@@ -13,6 +12,7 @@ import LoginAccount from "./components/form/LoginAccount";
 import Menu from "./components/UI/Menu";
 import NewSpendingPeriod from "./components/form/NewSpendingPeriod";
 import Success from "./components/page/Success";
+import NewSpent from "./components/form/NewSpent";
 
 function App() {
   return (
@@ -26,11 +26,11 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/newSpendingPeriod" element={<NewSpendingPeriod />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/newspent" element={<NewSpent />} />
           <Route
-            path="/displaySpents/:idUserConnected"
+            path="/displaySpents"
             element={<DisplaySpents />}
           />
-          <Route path="/addSpent" element={<AddSpent />} />
           <Route path="/modifySpent/:id" element={<ModifySpent />} />
         </Routes>
       </BrowserRouter>
