@@ -5,6 +5,7 @@ import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.User;
 import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
+import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
 import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +23,8 @@ public class UserBusiness implements UserIBusiness {
     private UserIRepository userIRepository;
     @Autowired
     private PeriodSpentIRepository periodSpentIRepository;
+    @Autowired
+    private SalaryIRepository salaryIRepository;
 
     @Override
     public UserEntity findById(Long idUserConnected) {
@@ -45,16 +48,19 @@ public class UserBusiness implements UserIBusiness {
             log.warn("No user in period spent in progress");
             return null;
         }
-        return copyUserEntityListToUserList(userEntityList);
+        List<User> userList = copyUserEntityListToUserList(userEntityList, periodSpentInProgress);
+        return userList;
     }
 
-    private List<User> copyUserEntityListToUserList(List<UserEntity> userEntityList){
+    private List<User> copyUserEntityListToUserList(List<UserEntity> userEntityList, PeriodSpentEntity periodSpentEntity){
         log.info("Start to copy all propeties of userEntity object to user object");
         List<User> userList = new ArrayList<>();
         for (UserEntity userEntity: userEntityList
         ) {
             User user = new User();
             BeanUtils.copyProperties(userEntity, user);
+            log.info("Search the salary of the user id {} during the period spent id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
+            user.setValueSalary(salaryIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity).getValueSalary());
             userList.add(user);
         }
         return userList;
