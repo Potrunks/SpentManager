@@ -22,6 +22,7 @@ public class UserController {
 
     @GetMapping("/getusersbyperiodspentinprogress")
     public List<User> fetchUsersByPeriodSpentInProgress() {
+        log.info("Start to fetch all users in period spent in progress");
         return userIBusiness.getAllByPeriodSpentInProgress();
     }
 }
