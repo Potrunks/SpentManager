@@ -17,4 +17,5 @@ public class User {
     private Boolean administrator;
     private Float valueSalary;
     private Float valueDebt;
+    private Float valueSpents;
 }

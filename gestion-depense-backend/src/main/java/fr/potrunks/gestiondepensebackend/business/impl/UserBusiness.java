@@ -1,13 +1,12 @@
 package fr.potrunks.gestiondepensebackend.business.impl;
 
 import fr.potrunks.gestiondepensebackend.business.UserIBusiness;
+import fr.potrunks.gestiondepensebackend.entity.DebtEntity;
 import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
+import fr.potrunks.gestiondepensebackend.entity.SpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.User;
-import fr.potrunks.gestiondepensebackend.repository.DebtIRepository;
-import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
-import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
-import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
+import fr.potrunks.gestiondepensebackend.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,8 @@ public class UserBusiness implements UserIBusiness {
     private SalaryIRepository salaryIRepository;
     @Autowired
     private DebtIRepository debtIRepository;
+    @Autowired
+    private SpentIRepository spentIRepository;
 
     @Override
     public UserEntity findById(Long idUserConnected) {
@@ -66,8 +67,23 @@ public class UserBusiness implements UserIBusiness {
             user.setValueSalary(salaryIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity).getValueSalary());
             log.info("Search the debt of the user id {} during the period spent id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
             user.setValueDebt(debtIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity).getValueDebt());
+            user.setValueSpents(sumValueSpentsByUserAndPeriodSpent(userEntity, periodSpentEntity));
             userList.add(user);
         }
         return userList;
+    }
+
+    private Float sumValueSpentsByUserAndPeriodSpent(UserEntity userEntity, PeriodSpentEntity periodSpentEntity) {
+        log.info("Start to calculate the sum of all spent for user id {} and during period spent id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
+        Float sum = 0f;
+        List<SpentEntity> spentEntityList = spentIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity);
+        if (spentEntityList == null) {
+            return sum;
+        }
+        for (SpentEntity spentEntity: spentEntityList
+             ) {
+            sum += spentEntity.getValueSpent();
+        }
+        return sum;
     }
 }
