@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import InputTestService from "../../services/InputTestService";
 import SpentCategoryService from "../../services/SpentCategoryService";
+import SpentService from "../../services/SpentService";
 import Confirm from "../Popup/Confirm";
 
 const NewSpent = () => {
@@ -35,7 +36,26 @@ const NewSpent = () => {
 
   const createNewSpent = (e) => {
     //e.preventDefault();
-    console.log(spent);
+    setConfirmPopup(false);
+    console.log("Start to post a new spent for the API");
+    SpentService.newSpent(spent)
+      .then((response) => {
+        if (response.data.periodSpentInProgressExist === false) {
+          document.getElementById("API-error-box").firstChild.innerHTML =
+            "Cannot find a spending period in progress. Please create a new spending period.";
+          document.getElementById("API-error-box").style.display = "flex";
+        } else if (response.data.newSpentAdded === false) {
+          document.getElementById("API-error-box").firstChild.innerHTML =
+            "Problem during creation of the new spent. Please contact the administrator.";
+          document.getElementById("API-error-box").style.display = "flex";
+        } else {
+          console.log("New spent successfully added to the API");
+          navigate("/success");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {

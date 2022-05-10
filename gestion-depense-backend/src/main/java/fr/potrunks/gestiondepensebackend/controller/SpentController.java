@@ -48,7 +48,7 @@ public class SpentController {
             spentCategorySelected = spentCategoryIBusiness.findById(spent.getIdSpentCategorySelected());
             if (spentCategorySelected.getIdSpentCategory() != null) {
                 periodSpentInProgress = periodSpentIBusiness.findInProgress();
-                if (periodSpentInProgress.getIdPeriodSpent() != null) {
+                if (periodSpentInProgress != null) {
                     newSpent = spentBusiness.create(userConnected, spentCategorySelected, periodSpentInProgress, spent);
                     if (newSpent.getIdSpent() != null) {
                         newSpentAdded = true;
