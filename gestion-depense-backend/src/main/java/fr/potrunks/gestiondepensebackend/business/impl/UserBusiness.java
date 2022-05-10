@@ -45,15 +45,18 @@ public class UserBusiness implements UserIBusiness {
             log.warn("No user in period spent in progress");
             return null;
         }
-        List<User> userList = new ArrayList<>();
+        return copyUserEntityListToUserList(userEntityList);
+    }
+
+    private List<User> copyUserEntityListToUserList(List<UserEntity> userEntityList){
         log.info("Start to copy all propeties of userEntity object to user object");
+        List<User> userList = new ArrayList<>();
         for (UserEntity userEntity: userEntityList
-             ) {
+        ) {
             User user = new User();
             BeanUtils.copyProperties(userEntity, user);
             userList.add(user);
         }
-        log.info("Get all users in period spent in progress finished");
         return userList;
     }
 }
