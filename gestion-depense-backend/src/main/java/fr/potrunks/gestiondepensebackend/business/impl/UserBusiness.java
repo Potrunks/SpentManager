@@ -1,10 +1,7 @@
 package fr.potrunks.gestiondepensebackend.business.impl;
 
 import fr.potrunks.gestiondepensebackend.business.UserIBusiness;
-import fr.potrunks.gestiondepensebackend.entity.DebtEntity;
-import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
-import fr.potrunks.gestiondepensebackend.entity.SpentEntity;
-import fr.potrunks.gestiondepensebackend.entity.UserEntity;
+import fr.potrunks.gestiondepensebackend.entity.*;
 import fr.potrunks.gestiondepensebackend.model.User;
 import fr.potrunks.gestiondepensebackend.repository.*;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +26,8 @@ public class UserBusiness implements UserIBusiness {
     private DebtIRepository debtIRepository;
     @Autowired
     private SpentIRepository spentIRepository;
+    @Autowired
+    private SpentCategoryIRepository spentCategoryIRepository;
 
     @Override
     public UserEntity findById(Long idUserConnected) {
@@ -56,18 +55,20 @@ public class UserBusiness implements UserIBusiness {
         return userList;
     }
 
-    private List<User> copyUserEntityListToUserList(List<UserEntity> userEntityList, PeriodSpentEntity periodSpentEntity){
+    private List<User> copyUserEntityListToUserList(List<UserEntity> userEntityList, PeriodSpentEntity periodSpentEntity) {
         log.info("Start to copy all properties of userEntity object to user object");
         List<User> userList = new ArrayList<>();
-        for (UserEntity userEntity: userEntityList
+        for (UserEntity userEntity : userEntityList
         ) {
             User user = new User();
             BeanUtils.copyProperties(userEntity, user);
             log.info("Search the salary of the user id {} during the period spent id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
             user.setValueSalary(salaryIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity).getValueSalary());
-            log.info("Search the debt of the user id {} during the period spent id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
-            user.setValueDebt(debtIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity).getValueDebt());
             user.setValueSpents(sumValueSpentsByUserAndPeriodSpent(userEntity, periodSpentEntity));
+            user.setRateSpent(calculateRateSpent(user.getValueSalary(), user.getValueSpents()));
+            Float householdShare = calculateHouseholdShare(sumSalaryHousehold(periodSpentEntity), user.getValueSalary());
+            Float shareSpent = calculateShareSpent(sumSpentsDuringPeriodSpent(periodSpentEntity), householdShare);
+            user.setValueDebt(calculateDebt(shareSpent, user.getValueSpents(), calculateUserDepositDuringPeriodSpent(periodSpentEntity, userEntity)));
             userList.add(user);
         }
         return userList;
@@ -80,10 +81,75 @@ public class UserBusiness implements UserIBusiness {
         if (spentEntityList == null) {
             return sum;
         }
-        for (SpentEntity spentEntity: spentEntityList
-             ) {
+        for (SpentEntity spentEntity : spentEntityList
+        ) {
             sum += spentEntity.getValueSpent();
         }
         return sum;
+    }
+
+    private Float calculateRateSpent(Float salary, Float sumSpents) {
+        log.info("Calculating the rate of spent for this period spent...");
+        Float rateSpent = sumSpents * 100 / salary;
+        return rateSpent;
+    }
+
+    private Float sumSalaryHousehold(PeriodSpentEntity periodSpentEntity) {
+        log.info("Calculating all the salary in the household for the period spent id {}", periodSpentEntity.getIdPeriodSpent());
+        List<SalaryEntity> salaryEntityList = salaryIRepository.findByPeriodSpentEntity(periodSpentEntity);
+        Float sumSalaryHousehold = 0f;
+        for (SalaryEntity salary : salaryEntityList
+        ) {
+            sumSalaryHousehold += salary.getValueSalary();
+        }
+        return sumSalaryHousehold;
+    }
+
+    private Float calculateHouseholdShare(Float sumSalaryHousehold, Float salaryToEstimate) {
+        log.info("Calculating the household share...");
+        Float householdShare = salaryToEstimate * 100 / sumSalaryHousehold;
+        return householdShare;
+    }
+
+    private Float sumSpentsDuringPeriodSpent(PeriodSpentEntity periodSpentEntity) {
+        log.info("Calculating sum of all the spents during period spent id {}", periodSpentEntity.getIdPeriodSpent());
+        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Deposit");
+        List<SpentEntity> spentEntityList = spentIRepository.findByPeriodSpentEntityAndSpentCategoryEntityNot(periodSpentEntity, spentCategoryEntity);
+        Float sumSpentsDuringPeriodSpent = 0f;
+        if (spentEntityList == null) {
+            return sumSpentsDuringPeriodSpent;
+        }
+        for (SpentEntity spentEntity : spentEntityList
+        ) {
+            sumSpentsDuringPeriodSpent += spentEntity.getValueSpent();
+        }
+        return sumSpentsDuringPeriodSpent;
+    }
+
+    private Float calculateShareSpent(Float sumSpentsDuringPeriodSpent, Float householdShare) {
+        log.info("Calculating share spent...");
+        Float shareSpent = householdShare * sumSpentsDuringPeriodSpent / 100;
+        return shareSpent;
+    }
+
+    private Float calculateUserDepositDuringPeriodSpent(PeriodSpentEntity periodSpentEntity, UserEntity userEntity) {
+        log.info("Calculating all deposit during spent period id {}", periodSpentEntity.getIdPeriodSpent());
+        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Deposit");
+        List<SpentEntity> spentEntityList = spentIRepository.findByUserEntityAndPeriodSpentEntityAndSpentCategoryEntity(userEntity, periodSpentEntity, spentCategoryEntity);
+        Float sumDeposit = 0f;
+        if (spentEntityList == null) {
+            return sumDeposit;
+        }
+        for (SpentEntity spentEntity : spentEntityList
+        ) {
+            sumDeposit += spentEntity.getValueSpent();
+        }
+        return sumDeposit;
+    }
+
+    private Float calculateDebt(Float shareSpent, Float spentAlreadyPaid, Float deposit) {
+        log.info("Calculating debt...");
+        Float debt = (shareSpent - (spentAlreadyPaid - deposit)) - deposit;
+        return debt;
     }
 }
