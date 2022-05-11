@@ -93,6 +93,10 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
     public PeriodSpent getPeriodSpentInProgress() {
         log.info("Start to get period spent in progress");
         PeriodSpentEntity periodSpentEntityInProgress = periodSpentRepository.findByEndDatePeriodSpentIsNull();
+        if (periodSpentEntityInProgress == null) {
+            log.warn("No period spent in progress");
+            return null;
+        }
         PeriodSpent periodSpentInProgress = new PeriodSpent();
         BeanUtils.copyProperties(periodSpentEntityInProgress, periodSpentInProgress);
         periodSpentInProgress.setIdNextPeriodSpent(getIdNextPeriodSpent(periodSpentEntityInProgress));

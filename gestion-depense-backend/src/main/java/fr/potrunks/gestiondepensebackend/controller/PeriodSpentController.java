@@ -47,8 +47,9 @@ public class PeriodSpentController {
     }
 
     @GetMapping("/getInProgress")
-    public PeriodSpent fetchPeriodSpentInProgress() {
+    public ResponseEntity<PeriodSpent> fetchPeriodSpentInProgress() {
         log.info("Start to fetch period spent in progress");
-        return periodSpentBusiness.getPeriodSpentInProgress();
+        PeriodSpent periodSpentInProgress = periodSpentBusiness.getPeriodSpentInProgress();
+        return ResponseEntity.ok(periodSpentInProgress);
     }
 }
