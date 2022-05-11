@@ -11,7 +11,7 @@ import java.util.List;
 public interface SpentIBusiness {
     Spent addSpent(Spent spent);
 
-    List<Spent> getSpents();
+    List<Spent> getSpentsByPeriodSpentInProgress();
 
     Boolean deleteSpent(Long id);
 

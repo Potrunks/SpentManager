@@ -13,6 +13,7 @@ import Menu from "./components/UI/Menu";
 import NewSpendingPeriod from "./components/form/NewSpendingPeriod";
 import Success from "./components/page/Success";
 import NewSpent from "./components/form/NewSpent";
+import SpendingPeriodInProgress from "./components/display/SpendingPeriodInProgress";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/newSpendingPeriod" element={<NewSpendingPeriod />} />
           <Route path="/success" element={<Success />} />
           <Route path="/newspent" element={<NewSpent />} />
+          <Route path="/displayspendingperiodinprogress" element={<SpendingPeriodInProgress />} />
           <Route
             path="/displaySpents"
             element={<DisplaySpents />}
