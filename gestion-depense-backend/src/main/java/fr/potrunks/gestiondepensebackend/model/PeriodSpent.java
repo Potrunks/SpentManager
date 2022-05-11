@@ -13,4 +13,6 @@ public class PeriodSpent {
     private Long idPeriodSpent;
     private LocalDate startDatePeriodSpent;
     private LocalDate endDatePeriodSpent;
+    private Long idNextPeriodSpent;
+    private Long idPreviousPeriodSpent;
 }

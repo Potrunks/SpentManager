@@ -95,7 +95,27 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         PeriodSpentEntity periodSpentEntityInProgress = periodSpentRepository.findByEndDatePeriodSpentIsNull();
         PeriodSpent periodSpentInProgress = new PeriodSpent();
         BeanUtils.copyProperties(periodSpentEntityInProgress, periodSpentInProgress);
+        periodSpentInProgress.setIdNextPeriodSpent(getIdNextPeriodSpent(periodSpentEntityInProgress));
+        periodSpentInProgress.setIdPreviousPeriodSpent(getIdPreviousPeriodSpent(periodSpentEntityInProgress));
         return periodSpentInProgress;
+    }
+
+    private Long getIdPreviousPeriodSpent(PeriodSpentEntity periodSpentEntity) {
+        log.info("Start to get the id of the previous period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
+        PeriodSpentEntity previousPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentBefore(periodSpentEntity.getStartDatePeriodSpent());
+        if (previousPeriodSpentEntity == null) {
+            return null;
+        }
+        return previousPeriodSpentEntity.getIdPeriodSpent();
+    }
+
+    private Long getIdNextPeriodSpent(PeriodSpentEntity periodSpentEntity) {
+        log.info("Start to get the id of the next period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
+        PeriodSpentEntity nextPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentAfter(periodSpentEntity.getStartDatePeriodSpent());
+        if (nextPeriodSpentEntity == null) {
+            return null;
+        }
+        return nextPeriodSpentEntity.getIdPeriodSpent();
     }
 
     private Map<String, Object> verifyPeriodSpentInProgressIsClosable(PeriodSpentEntity periodSpentEntity, Map<String, Object> response) {
