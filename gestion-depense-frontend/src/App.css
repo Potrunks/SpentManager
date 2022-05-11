@@ -14,4 +14,10 @@ html, body, #root {
 .app-main-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+
+button {
+  font-weight: 300;
+  font-size: 20px;
 }
