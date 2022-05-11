@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import DateSpendingPeriodAndMore from "./DateSpendingPeriodAndMore";
 
 const SpendingPeriodInProgress = () => {
   return (
-    <div>SpendingPeriodInProgress</div>
-  )
-}
+    <div className="app-main-container">
+      <DateSpendingPeriodAndMore />
+    </div>
+  );
+};
 
-export default SpendingPeriodInProgress
+export default SpendingPeriodInProgress;

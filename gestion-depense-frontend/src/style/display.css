@@ -1,0 +1,16 @@
+.main-date-spending-period-container {
+    /*background-color: red;*/
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.main-date-spending-period-container span {
+    font-weight: 300;
+}
+
+.date-arrow {
+    width: 48px;
+    height: 48px;
+}
