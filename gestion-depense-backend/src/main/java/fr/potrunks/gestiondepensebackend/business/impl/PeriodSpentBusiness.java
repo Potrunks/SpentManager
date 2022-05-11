@@ -3,10 +3,12 @@ package fr.potrunks.gestiondepensebackend.business.impl;
 import fr.potrunks.gestiondepensebackend.business.PeriodSpentIBusiness;
 import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
+import fr.potrunks.gestiondepensebackend.model.PeriodSpent;
 import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
 import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
 import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +87,15 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         log.info("Searching period spent in progress");
         PeriodSpentEntity periodSpentEntity = periodSpentRepository.findByEndDatePeriodSpentIsNull();
         return periodSpentEntity;
+    }
+
+    @Override
+    public PeriodSpent getPeriodSpentInProgress() {
+        log.info("Start to get period spent in progress");
+        PeriodSpentEntity periodSpentEntityInProgress = periodSpentRepository.findByEndDatePeriodSpentIsNull();
+        PeriodSpent periodSpentInProgress = new PeriodSpent();
+        BeanUtils.copyProperties(periodSpentEntityInProgress, periodSpentInProgress);
+        return periodSpentInProgress;
     }
 
     private Map<String, Object> verifyPeriodSpentInProgressIsClosable(PeriodSpentEntity periodSpentEntity, Map<String, Object> response) {

@@ -2,6 +2,7 @@ package fr.potrunks.gestiondepensebackend.controller;
 
 import fr.potrunks.gestiondepensebackend.business.PeriodSpentIBusiness;
 import fr.potrunks.gestiondepensebackend.business.SalaryIBusiness;
+import fr.potrunks.gestiondepensebackend.model.PeriodSpent;
 import fr.potrunks.gestiondepensebackend.model.Salary;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,11 @@ public class PeriodSpentController {
         response.put("periodSpentCreated", periodSpentCreated);
         log.info("Return response to the front app");
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getInProgress")
+    public PeriodSpent fetchPeriodSpentInProgress() {
+        log.info("Start to fetch period spent in progress");
+        return periodSpentBusiness.getPeriodSpentInProgress();
     }
 }
