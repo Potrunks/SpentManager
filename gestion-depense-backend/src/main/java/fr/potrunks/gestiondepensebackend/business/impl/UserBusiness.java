@@ -23,8 +23,6 @@ public class UserBusiness implements UserIBusiness {
     @Autowired
     private SalaryIRepository salaryIRepository;
     @Autowired
-    private DebtIRepository debtIRepository;
-    @Autowired
     private SpentIRepository spentIRepository;
     @Autowired
     private SpentCategoryIRepository spentCategoryIRepository;
@@ -133,7 +131,7 @@ public class UserBusiness implements UserIBusiness {
     }
 
     private Float calculateUserDepositDuringPeriodSpent(PeriodSpentEntity periodSpentEntity, UserEntity userEntity) {
-        log.info("Calculating all deposit during spent period id {}", periodSpentEntity.getIdPeriodSpent());
+        log.info("Calculating deposit by user id {} during spent period id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
         SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Deposit");
         List<SpentEntity> spentEntityList = spentIRepository.findByUserEntityAndPeriodSpentEntityAndSpentCategoryEntity(userEntity, periodSpentEntity, spentCategoryEntity);
         Float sumDeposit = 0f;
