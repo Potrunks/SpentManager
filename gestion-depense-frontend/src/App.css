@@ -13,7 +13,6 @@ html, body, #root {
 
 .app-main-container {
   display: flex;
-  justify-content: center;
   flex-direction: column;
 }
 
