@@ -14,9 +14,9 @@
   height: 48px;
 }
 
-.users-display-main-container {
+.users-display-main-container, .spending-period-btn-main-container {
   background-color: white;
-  margin: 16px;
+  margin: 16px 16px 0 16px;
   border-radius: 4px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -63,10 +63,18 @@
     margin: 8px 16px 8px 16px;
 }
 
-.user-btn-command button {
+.spending-period-btn-main-container {
+  padding: 16px;
+}
+
+.user-btn-command button, .spending-period-btn-main-container button {
   border: none;
   width: 100%;
   height: 48px;
   background-color: #06d6a0;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.spending-period-btn-main-container button:nth-child(1), .spending-period-btn-main-container button:nth-child(2) {
+  margin-bottom: 8px;
 }

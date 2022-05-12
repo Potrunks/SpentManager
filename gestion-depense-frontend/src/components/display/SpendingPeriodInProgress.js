@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PeriodSpentService from "../../services/PeriodSpentService";
 import UserService from "../../services/UserService";
 import DateSpendingPeriodAndMore from "./DateSpendingPeriodAndMore";
+import SpendingPeriodBTNCommand from "./SpendingPeriodBTNCommand";
 import UsersInPeriodSpent from "./UsersInPeriodSpent";
 
 const SpendingPeriodInProgress = () => {
@@ -40,6 +41,7 @@ const SpendingPeriodInProgress = () => {
       {loading && <div>...Loading</div>}
       {!loading && <DateSpendingPeriodAndMore periodSpent={periodSpent} />}
       {!loading && <UsersInPeriodSpent users={users} />}
+      <SpendingPeriodBTNCommand />
     </div>
   );
 };
