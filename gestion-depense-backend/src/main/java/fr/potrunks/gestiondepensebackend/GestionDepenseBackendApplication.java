@@ -1,13 +1,7 @@
 package fr.potrunks.gestiondepensebackend;
 
-import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
-import fr.potrunks.gestiondepensebackend.entity.SalaryEntity;
-import fr.potrunks.gestiondepensebackend.entity.SpentCategoryEntity;
-import fr.potrunks.gestiondepensebackend.entity.UserEntity;
-import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
-import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
-import fr.potrunks.gestiondepensebackend.repository.SpentCategoryIRepository;
-import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
+import fr.potrunks.gestiondepensebackend.entity.*;
+import fr.potrunks.gestiondepensebackend.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +19,7 @@ public class GestionDepenseBackendApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(UserIRepository userIRepository, SpentCategoryIRepository spentCategoryIRepository, PeriodSpentIRepository periodSpentIRepository, SalaryIRepository salaryIRepository) {
+	CommandLineRunner run(UserIRepository userIRepository, SpentCategoryIRepository spentCategoryIRepository, PeriodSpentIRepository periodSpentIRepository, SalaryIRepository salaryIRepository, SpentIRepository spentIRepository) {
 		return args -> {
 			// Add user
 			UserEntity userEntity = new UserEntity();
@@ -70,7 +64,7 @@ public class GestionDepenseBackendApplication {
 			PeriodSpentEntity periodSpentEntity = new PeriodSpentEntity();
 			periodSpentEntity.setStartDatePeriodSpent(LocalDate.now());
 			periodSpentEntity.setUserEntityList(userEntityList);
-			periodSpentIRepository.save(periodSpentEntity);
+			periodSpentEntity = periodSpentIRepository.save(periodSpentEntity);
 			SalaryEntity salaryEntity = new SalaryEntity();
 			salaryEntity.setUserEntity(userEntity);
 			salaryEntity.setValueSalary(7000f);
@@ -83,6 +77,19 @@ public class GestionDepenseBackendApplication {
 			salaryEntity2.setPeriodSpentEntity(periodSpentEntity);
 			salaryEntity2.setDateSalary(LocalDate.now());
 			salaryIRepository.save(salaryEntity2);
+
+			// Add spents
+			List<SpentEntity> spentEntityList = new ArrayList<>();
+			SpentEntity spentEntity = new SpentEntity();
+			spentEntity.setValueSpent(100f);
+			spentEntity.setSpentCategoryEntity(spentCategoryIRepository.getById(1L));
+			spentEntity.setDateSpent(LocalDate.now());
+			spentEntity.setNameSpent("Mc DO");
+			spentEntity.setUserEntity(userEntity);
+			spentEntity.setCommentSpent("C pas bien");
+			spentEntity.setPeriodSpentEntity(periodSpentEntity);
+			spentEntityList.add(spentEntity);
+			spentIRepository.saveAll(spentEntityList);
 		};
 	}
 

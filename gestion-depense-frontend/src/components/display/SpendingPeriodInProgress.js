@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PeriodSpentService from "../../services/PeriodSpentService";
+import SpentService from "../../services/SpentService";
 import UserService from "../../services/UserService";
 import DateSpendingPeriodAndMore from "./DateSpendingPeriodAndMore";
 import SpendingPeriodBTNCommand from "./SpendingPeriodBTNCommand";
+import Spents from "./Spents";
 import UsersInPeriodSpent from "./UsersInPeriodSpent";
 
 const SpendingPeriodInProgress = () => {
   const navigate = useNavigate();
   const [periodSpent, setPeriodSpent] = useState(null);
   const [users, setUsers] = useState(null);
+  const [spents, setSpents] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,8 +27,10 @@ const SpendingPeriodInProgress = () => {
             await PeriodSpentService.getPeriodSpentInProgress();
           const responseUsers =
             await UserService.getUsersInPeriodSpentInProgress();
+            const responseSpents = await SpentService.getSpentsPeriodInProgress();
           setPeriodSpent(responsePeriodSpent.data);
           setUsers(responseUsers.data);
+          setSpents(responseSpents.data);
           console.log("Data fetched successfully");
           setLoading(false);
         } catch (error) {
@@ -42,6 +47,7 @@ const SpendingPeriodInProgress = () => {
       {!loading && <DateSpendingPeriodAndMore periodSpent={periodSpent} />}
       {!loading && <UsersInPeriodSpent users={users} />}
       <SpendingPeriodBTNCommand />
+      {!loading && <Spents spents={spents} />}
     </div>
   );
 };
