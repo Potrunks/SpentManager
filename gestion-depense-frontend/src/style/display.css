@@ -75,6 +75,11 @@
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.user-btn-command button:active, .spending-period-btn-main-container button:active, .spent-card-btn-command button:active {
+  background-color: white;
+  border: 1px solid #06d6a0;
+}
+
 .spending-period-btn-main-container button:nth-child(1), .spending-period-btn-main-container button:nth-child(2), .spent-card-btn-command button:nth-child(1) {
   margin-bottom: 8px;
 }
