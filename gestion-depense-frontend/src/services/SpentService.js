@@ -7,9 +7,9 @@ class SpentService {
     return axios.post(SPENT_API_BASE_URL + "/new", spent);
   }
 
-  getSpentsFromBackend() {
-    console.log("Get all the spents from the data base")
-    return axios.get(SPENT_API_BASE_URL + "/getall");
+  getSpentsPeriodInProgress() {
+    console.log("Get all the spents during period spent in progress")
+    return axios.get(SPENT_API_BASE_URL + "/getAllByPeriodSpentInProgress/");
   }
 
   deleteSpent(id) {

@@ -1,0 +1,80 @@
+.main-date-spending-period-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.main-date-spending-period-container span {
+  font-weight: 300;
+}
+
+.date-arrow {
+  width: 48px;
+  height: 48px;
+}
+
+.users-display-main-container, .spending-period-btn-main-container, .spents-main-container {
+  background-color: white;
+  margin: 16px 16px 0 16px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.main-title-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-title-display span {
+  margin: 8px 16px 0 16px;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.user-display-card, .spents-card-container {
+  display: flex;
+  flex-direction: column;
+  border: #06d6a0 solid 2px;
+  margin: 8px;
+}
+
+.user-name, .spent-card-title span {
+  font-weight: 300;
+  font-size: 24px;
+  margin-left: 16px;
+}
+
+.user-period-spent-info, .spent-card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.user-period-spent-info span, .spent-card-info span {
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.user-btn-command, .spent-card-btn-command {
+    margin: 8px 16px 8px 16px;
+}
+
+.spending-period-btn-main-container {
+  padding: 16px;
+}
+
+.user-btn-command button, .spending-period-btn-main-container button, .spent-card-btn-command button {
+  border: none;
+  width: 100%;
+  height: 48px;
+  background-color: #06d6a0;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.spending-period-btn-main-container button:nth-child(1), .spending-period-btn-main-container button:nth-child(2), .spent-card-btn-command button:nth-child(1) {
+  margin-bottom: 8px;
+}

@@ -6,6 +6,7 @@ import fr.potrunks.gestiondepensebackend.entity.SpentCategoryEntity;
 import fr.potrunks.gestiondepensebackend.entity.SpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.Spent;
+import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
 import fr.potrunks.gestiondepensebackend.repository.SpentIRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +23,8 @@ public class SpentBusiness implements SpentIBusiness {
 
     @Autowired
     private SpentIRepository spentRepository;
+    @Autowired
+    private PeriodSpentIRepository periodSpentIRepository;
 
     public SpentBusiness(SpentIRepository spentRepository) {
         this.spentRepository = spentRepository;
@@ -36,8 +39,10 @@ public class SpentBusiness implements SpentIBusiness {
     }
 
     @Override
-    public List<Spent> getSpents() {
-        List<SpentEntity> spentEntities = spentRepository.findAll();
+    public List<Spent> getSpentsByPeriodSpentInProgress() {
+        log.info("Start to search all spents by period spent in progress");
+        PeriodSpentEntity periodSpentEntityInProgress = periodSpentIRepository.findByEndDatePeriodSpentIsNull();
+        List<SpentEntity> spentEntities = spentRepository.findByPeriodSpentEntity(periodSpentEntityInProgress);
         List<Spent> spents = spentEntities
                 .stream()
                 .map(spent -> new Spent(
@@ -47,7 +52,8 @@ public class SpentBusiness implements SpentIBusiness {
                         spent.getNameSpent(),
                         spent.getCommentSpent(),
                         null,
-                        null))
+                        null,
+                        spent.getSpentCategoryEntity().getNameSpentCategory()))
                 .collect(Collectors.toList());
         return spents;
     }

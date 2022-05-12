@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpentCategoryIRepository extends JpaRepository<SpentCategoryEntity, Long> {
+    SpentCategoryEntity findByNameSpentCategory(String nameSpentCategory);
 }

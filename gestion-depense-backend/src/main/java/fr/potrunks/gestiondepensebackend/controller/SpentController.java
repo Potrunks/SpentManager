@@ -71,9 +71,10 @@ public class SpentController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getall")
-    public List<Spent> fetchSpents() {
-        return spentBusiness.getSpents();
+    @GetMapping("/getAllByPeriodSpentInProgress")
+    public List<Spent> fetchSpentsByPeriodSpentInProgress() {
+        log.info("Start to get all spents in period spent in progress...");
+        return spentBusiness.getSpentsByPeriodSpentInProgress();
     }
 
     @DeleteMapping("/delete/{id}")

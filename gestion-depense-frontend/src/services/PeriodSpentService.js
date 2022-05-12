@@ -11,6 +11,11 @@ class PeriodSpentService {
       salary
     );
   }
+
+  getPeriodSpentInProgress() {
+    console.log("Send get request to the API for the period spent in progress");
+    return axios.get(PERIOD_SPENT_API_BASE_URL + "/getInProgress/");
+  }
 }
 
 export default new PeriodSpentService();

@@ -15,4 +15,8 @@ public class User {
     private String passwordUser;
     private String adminPassword;
     private Boolean administrator;
+    private Float valueSalary;
+    private Float valueDebt;
+    private Float valueSpents;
+    private Float rateSpent;
 }
