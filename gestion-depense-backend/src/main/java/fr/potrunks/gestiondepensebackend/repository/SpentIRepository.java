@@ -18,5 +18,7 @@ public interface SpentIRepository extends JpaRepository<SpentEntity, Long> {
 
     List<SpentEntity> findByPeriodSpentEntityAndSpentCategoryEntityNot(PeriodSpentEntity periodSpentEntity, SpentCategoryEntity spentCategoryEntity);
 
+    List<SpentEntity> findByPeriodSpentEntityAndSpentCategoryEntity(PeriodSpentEntity periodSpentEntity, SpentCategoryEntity spentCategoryEntity);
+
     List<SpentEntity> findByPeriodSpentEntity(PeriodSpentEntity periodSpentEntityInProgress);
 }

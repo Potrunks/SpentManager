@@ -6,34 +6,22 @@ const UsersInPeriodSpent = ({ users }) => {
       <div className="main-title-display">
         <span>Users</span>
       </div>
-      <div className="users-display-card-container">
-        <div className="user-display-card">
-          <span className="user-name">Alexis</span>
-          <div className="user-period-spent-info">
-            <span>Debt : 2000 euros</span>
-            <span>Spent : 2000 euros</span>
-            <span>Salary : 2000 euros</span>
-            <span>Rate : 22%</span>
-          </div>
-          <div className="user-btn-command">
-            <button>Modify Salary</button>
-          </div>
-        </div>
-      </div>
-      <div className="users-display-card-container">
-        <div className="user-display-card">
-          <span className="user-name">Alexis</span>
-          <div className="user-period-spent-info">
-            <span>Debt : 2000 euros</span>
-            <span>Spent : 2000 euros</span>
-            <span>Salary : 2000 euros</span>
-            <span>Rate : 22%</span>
-          </div>
-          <div className="user-btn-command">
-            <button>Modify Salary</button>
+      {users.map((user) => (
+        <div key={user.idUser} className="users-display-card-container">
+          <div className="user-display-card">
+            <span className="user-name">{user.firstNameUser}</span>
+            <div className="user-period-spent-info">
+              <span>Debt : {user.valueDebt} euros</span>
+              <span>Spents : {user.valueSpents} euros</span>
+              <span>Salary : {user.valueSalary} euros</span>
+              <span>Rate : {user.rateSpent} %</span>
+            </div>
+            <div className="user-btn-command">
+              <button>Modify Salary</button>
+            </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

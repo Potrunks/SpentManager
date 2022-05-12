@@ -27,7 +27,7 @@ public class UserEntity {
     private Boolean administrator;
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.PERSIST)
     private List<SalaryEntity> salaryEntityList;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(name = "association_user_periodspent",
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_period_spent"))

@@ -66,7 +66,7 @@ public class UserBusiness implements UserIBusiness {
             user.setRateSpent(calculateRateSpent(user.getValueSalary(), user.getValueSpents()));
             Float householdShare = calculateHouseholdShare(sumSalaryHousehold(periodSpentEntity), user.getValueSalary());
             Float shareSpent = calculateShareSpent(sumSpentsDuringPeriodSpent(periodSpentEntity), householdShare);
-            user.setValueDebt(calculateDebt(shareSpent, user.getValueSpents(), calculateUserDepositDuringPeriodSpent(periodSpentEntity, userEntity)));
+            user.setValueDebt(calculateDebt(shareSpent, user.getValueSpents(), calculateUserDepositDuringPeriodSpent(periodSpentEntity, userEntity), sumDepositsDuringPeriodSpent(periodSpentEntity)));
             userList.add(user);
         }
         return userList;
@@ -145,9 +145,24 @@ public class UserBusiness implements UserIBusiness {
         return sumDeposit;
     }
 
-    private Float calculateDebt(Float shareSpent, Float spentAlreadyPaid, Float deposit) {
+    private Float sumDepositsDuringPeriodSpent(PeriodSpentEntity periodSpentEntity) {
+        log.info("Calculate all deposits during a period spent (all users)");
+        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Deposit");
+        List<SpentEntity> spentEntityList = spentIRepository.findByPeriodSpentEntityAndSpentCategoryEntity(periodSpentEntity, spentCategoryEntity);
+        Float sumDeposits = 0f;
+        if (spentEntityList == null) {
+            return sumDeposits;
+        }
+        for (SpentEntity spentEntity: spentEntityList
+             ) {
+            sumDeposits += spentEntity.getValueSpent();
+        }
+        return sumDeposits;
+    }
+
+    private Float calculateDebt(Float shareSpent, Float spentAlreadyPaid, Float depositDone, Float allDeposits) {
         log.info("Calculating debt...");
-        Float debt = (shareSpent - (spentAlreadyPaid - deposit)) - deposit;
+        Float debt = (shareSpent - (spentAlreadyPaid - depositDone)) - depositDone + (allDeposits - depositDone);
         return debt;
     }
 }

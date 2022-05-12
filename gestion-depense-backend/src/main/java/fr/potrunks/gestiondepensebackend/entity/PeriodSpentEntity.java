@@ -20,7 +20,7 @@ public class PeriodSpentEntity {
     private LocalDate endDatePeriodSpent;
     @OneToMany(mappedBy = "periodSpentEntity", cascade = CascadeType.PERSIST)
     private List<SalaryEntity> salaryEntityList;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(name = "association_user_periodspent",
             joinColumns = @JoinColumn(name = "id_period_spent"),
             inverseJoinColumns = @JoinColumn(name = "id_user"))
