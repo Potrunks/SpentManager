@@ -151,7 +151,7 @@ public class UserBusiness implements UserIBusiness {
      */
     public Float calculateRate(Float maxValue, Float valueToEstimate) {
         Float rate = 0f;
-        if (maxValue == null) {
+        if (maxValue == null || maxValue == 0f) {
             return rate;
         }
         if (valueToEstimate == null) {
