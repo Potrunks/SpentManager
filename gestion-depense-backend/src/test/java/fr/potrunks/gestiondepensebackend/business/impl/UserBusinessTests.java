@@ -51,6 +51,11 @@ class UserBusinessTests {
     }
 
     @Test
+    void maxValueIsZero_returnRateValueZero() {
+        assertEquals(0f, userBusiness.calculateRate(0f, 2000f));
+    }
+
+    @Test
     void twoValue_returnCorrectShareSpentValue() {
         assertEquals(1000f, userBusiness.calculateShareSpent(2000f, 50f));
     }
