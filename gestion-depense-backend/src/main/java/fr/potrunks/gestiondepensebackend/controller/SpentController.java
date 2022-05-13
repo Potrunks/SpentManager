@@ -33,6 +33,11 @@ public class SpentController {
     @Autowired
     private PeriodSpentIBusiness periodSpentIBusiness;
 
+    /**
+     * Initiate the creation of a new spent after verify some things like the user is connected, the spent category is found and the period spent in progress is found.
+     * @param spent Spent who want to add in database
+     * @return Return a Response Entity contain a Map of String (key) and Object (value) who contain all information during each step of this method
+     */
     @PostMapping("/new")
     public ResponseEntity<Map<String, Object>> newSpent(@RequestBody Spent spent) {
         log.info("Creating new spent...");
@@ -71,12 +76,17 @@ public class SpentController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Initiate the fetching of all spent during the period spent in progress
+     * @return Return a List of Spent model for the UI
+     */
     @GetMapping("/getAllByPeriodSpentInProgress")
     public List<Spent> fetchSpentsByPeriodSpentInProgress() {
         log.info("Start to get all spents in period spent in progress...");
         return spentBusiness.getSpentsByPeriodSpentInProgress();
     }
 
+    // A supprimer
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long id) {
         Boolean deleted = false;
@@ -98,4 +108,5 @@ public class SpentController {
         spent = spentBusiness.updateSpent(id, spent);
         return ResponseEntity.ok(spent);
     }
+    // A supprimer
 }

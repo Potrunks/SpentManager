@@ -104,6 +104,11 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         return periodSpentInProgress;
     }
 
+    /**
+     * Get the ID of the period spent created before the period spent in parameter
+     * @param periodSpentEntity The period spent reference
+     * @return Return the ID of the previous period spent
+     */
     private Long getIdPreviousPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Start to get the id of the previous period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
         PeriodSpentEntity previousPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentBefore(periodSpentEntity.getStartDatePeriodSpent());
@@ -113,6 +118,11 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         return previousPeriodSpentEntity.getIdPeriodSpent();
     }
 
+    /**
+     * Get the ID of the period spent created after the period spent in parameter
+     * @param periodSpentEntity The period spent reference
+     * @return Return the ID of the next period spent
+     */
     private Long getIdNextPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Start to get the id of the next period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
         PeriodSpentEntity nextPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentAfter(periodSpentEntity.getStartDatePeriodSpent());
@@ -122,6 +132,12 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         return nextPeriodSpentEntity.getIdPeriodSpent();
     }
 
+    /**
+     * Verify if the period spent in progress is closable. For that, count the number of salary present in the period spent and if the number is greater than 1, the period spent is closable
+     * @param periodSpentEntity Period spent who want to verify if is closable
+     * @param response A map of String (key) and Object (value) for the UI
+     * @return Return a Response Entity of Map of String (key) and Object (value) with each step of the verification
+     */
     private Map<String, Object> verifyPeriodSpentInProgressIsClosable(PeriodSpentEntity periodSpentEntity, Map<String, Object> response) {
         log.info("Verifying if Period Spent id {} is closable", periodSpentEntity.getIdPeriodSpent());
         Boolean periodSpentInProgressIsClosable = false;

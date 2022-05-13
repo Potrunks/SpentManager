@@ -31,14 +31,6 @@ public class SpentBusiness implements SpentIBusiness {
     }
 
     @Override
-    public Spent addSpent(Spent spent) {
-        SpentEntity spentEntity = new SpentEntity();
-        BeanUtils.copyProperties(spent, spentEntity);
-        spentRepository.save(spentEntity);
-        return spent;
-    }
-
-    @Override
     public List<Spent> getSpentsByPeriodSpentInProgress() {
         log.info("Start to search all spents by period spent in progress");
         PeriodSpentEntity periodSpentEntityInProgress = periodSpentIRepository.findByEndDatePeriodSpentIsNull();

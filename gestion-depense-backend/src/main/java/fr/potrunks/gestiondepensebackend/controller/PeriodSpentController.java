@@ -23,6 +23,14 @@ public class PeriodSpentController {
     @Autowired
     private SalaryIBusiness salaryBusiness;
 
+    /**
+     * Allow to access all the process for create a new period of spent. There are 3 level of verification, if the period spent in prgress is closable,
+     * if the new period spent is correctly added in database and if the new salary associate to the period spent is correctly added
+     *
+     * @param idUserConnected ID of the user who want to create a new period spent
+     * @param salary Salary of the user who want to create a new period spent
+     * @return Return a Response Entity of Map of String (key) and Object (value) with each step of the creation of a new period spent
+     */
     @PostMapping("/new/{idUserConnected}")
     public ResponseEntity<Map<String, Object>> createNewPeriodSpent(@PathVariable Long idUserConnected, @RequestBody Salary salary) {
         log.info("Starting creation of a new period spent");
@@ -46,6 +54,10 @@ public class PeriodSpentController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Allow to fetch the period spent in progress
+     * @return Return a Response Entity with a period spent found
+     */
     @GetMapping("/getInProgress")
     public ResponseEntity<PeriodSpent> fetchPeriodSpentInProgress() {
         log.info("Start to fetch period spent in progress");

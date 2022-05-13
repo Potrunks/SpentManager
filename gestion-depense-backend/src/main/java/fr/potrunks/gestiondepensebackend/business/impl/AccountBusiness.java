@@ -28,7 +28,6 @@ public class AccountBusiness implements AccountIBusiness {
         Boolean newAccountAdded = false;
         UserEntity userEntity = new UserEntity();
         Boolean adminPasswordOK = verifyAdminPassword(user);
-        // Boolean adminPasswordOK = true;
         response.put("adminPasswordOK", adminPasswordOK);
         Boolean mailAlreadyExist = verifyMailExist(user.getMailUser());
         response.put("mailAlreadyExist", mailAlreadyExist);
@@ -39,7 +38,6 @@ public class AccountBusiness implements AccountIBusiness {
             userEntity.setSaltUser(saltGenerator());
             userEntity.setPasswordUser(hashedPassword(userEntity.getPasswordUser() + userEntity.getSaltUser()));
             userEntity.setAdministrator(false);
-            // userEntity.setAdministrator(true);
             userEntity = userRepository.save(userEntity);
             log.info("New account User id {} successfully added", userEntity.getIdUser());
             newAccountAdded = true;
@@ -79,6 +77,11 @@ public class AccountBusiness implements AccountIBusiness {
         return userEntity;
     }
 
+    /**
+     * Verify if the mail already exist in data base
+     * @param mailUser Mail concerned
+     * @return Return true if the mail already exist else return false
+     */
     public Boolean verifyMailExist(String mailUser) {
         log.info("Start to verify if mail already exist in database");
         if (userRepository.findByMailUser(mailUser) != null) {
@@ -89,6 +92,13 @@ public class AccountBusiness implements AccountIBusiness {
         return false;
     }
 
+    /**
+     * Get the administrator password in database.
+     * Hashed the input administrator password from the UI + the administrator salt from the database (fetched before).
+     * Compare the both hashed administrator password
+     * @param user User with the input administrator password
+     * @return Return true if the input and the database are the same else return false
+     */
     public Boolean verifyAdminPassword(User user) {
         log.info("Start verification of administrator password in database against administrator password from UI");
         UserEntity userEntity = userRepository.findByAdministratorTrue();
@@ -101,8 +111,17 @@ public class AccountBusiness implements AccountIBusiness {
         return false;
     }
 
-    private Boolean verifyPassword(String password1, String password2) {
+    /**
+     * Compare 2 password and verify if are the same
+     * @param password1 First password
+     * @param password2 Second password
+     * @return Return true if the 2 password are the same else return false;
+     */
+    public Boolean verifyPassword(String password1, String password2) {
         log.info("Start to compare 2 password together");
+        if (password1 == null || password2 == null) {
+            return false;
+        }
         if (password1.equals(password2)) {
             log.info("The 2 passwords are equals");
             return true;
@@ -111,6 +130,10 @@ public class AccountBusiness implements AccountIBusiness {
         return false;
     }
 
+    /**
+     * Generate salt for the password security
+     * @return A String with the salt
+     */
     public String saltGenerator() {
         log.info("Start to generate a salt");
         Random random = new Random();
@@ -123,6 +146,11 @@ public class AccountBusiness implements AccountIBusiness {
         return salt;
     }
 
+    /**
+     * Hashed a password + a salt before to stock in database.
+     * @param passwordAndSalt The password and the salt we need to hashed
+     * @return A String who contain password and salt hashed
+     */
     public String hashedPassword(String passwordAndSalt) {
         log.info("Start to hash password and salt together");
         try {
@@ -138,11 +166,21 @@ public class AccountBusiness implements AccountIBusiness {
         return passwordAndSalt;
     }
 
+    /**
+     * Format the first name in order to contain the first letter in UpperCase
+     * @param firstNameToFormat First name to format
+     * @return A String with the first name formatted
+     */
     public String formatFirstName(String firstNameToFormat) {
         String firstNameFormatted = firstNameToFormat.substring(0, 1).toUpperCase() + firstNameToFormat.substring(1).toLowerCase();
         return firstNameFormatted;
     }
 
+    /**
+     * Format the last name in order to full UpperCase
+     * @param lastNameToFormat Last name to format
+     * @return A String with the last name formatted
+     */
     public String formatLastName(String lastNameToFormat) {
         String lastNameFormatted = lastNameToFormat.toUpperCase();
         return lastNameFormatted;
