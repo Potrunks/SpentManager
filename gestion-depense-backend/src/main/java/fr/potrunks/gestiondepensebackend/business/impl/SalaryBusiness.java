@@ -58,6 +58,13 @@ public class SalaryBusiness implements SalaryIBusiness {
         return response;
     }
 
+    /**
+     * Set the new salary with all information in parameters
+     * @param userEntity User concerning by the salary
+     * @param periodSpentEntity Period spent concerning by the salary
+     * @param salaryInput Salary value input by the user
+     * @return Return a Salary Entity ready to be added at the database
+     */
     public SalaryEntity setNewSalary(UserEntity userEntity, PeriodSpentEntity periodSpentEntity, Float salaryInput) {
         log.info("Start to set a new salary");
         SalaryEntity salaryEntity = new SalaryEntity();

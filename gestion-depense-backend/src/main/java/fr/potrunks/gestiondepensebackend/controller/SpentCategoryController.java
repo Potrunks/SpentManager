@@ -21,6 +21,10 @@ public class SpentCategoryController {
     @Autowired
     private SpentCategoryIBusiness spentCategoryIBusiness;
 
+    /**
+     * Fetch all the spent category from the database for the UI
+     * @return Return a Response Entity with a List of Spent Category model
+     */
     @GetMapping("/getall")
     public ResponseEntity<List<SpentCategory>> getAll() {
         List<SpentCategory> spentCategories = spentCategoryIBusiness.getAll();

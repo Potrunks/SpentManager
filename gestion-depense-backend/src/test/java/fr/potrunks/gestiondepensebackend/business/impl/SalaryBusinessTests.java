@@ -15,6 +15,9 @@ public class SalaryBusinessTests {
     @Autowired
     private SalaryBusiness salaryBusiness;
 
+    /**
+     * When set a new salary, the salary value must be not null
+     */
     @Test
     public void setNewSalary_returnSalaryValueNotNull() {
         UserEntity userEntity = new UserEntity();
@@ -25,6 +28,9 @@ public class SalaryBusinessTests {
         assertNotNull(salaryBusiness.setNewSalary(userEntity, periodSpentEntity, salaryValue).getValueSalary());
     }
 
+    /**
+     * When set a new salary, the user must be not null
+     */
     @Test
     public void setNewSalary_returnUserNotNull() {
         UserEntity userEntity = new UserEntity();
@@ -35,6 +41,9 @@ public class SalaryBusinessTests {
         assertNotNull(salaryBusiness.setNewSalary(userEntity, periodSpentEntity, salaryValue).getUserEntity());
     }
 
+    /**
+     * When set a new salary, the period of spent must be not null
+     */
     @Test
     public void setNewSalary_returnPeriodSpentNotNull() {
         UserEntity userEntity = new UserEntity();
@@ -45,6 +54,9 @@ public class SalaryBusinessTests {
         assertNotNull(salaryBusiness.setNewSalary(userEntity, periodSpentEntity, salaryValue).getPeriodSpentEntity());
     }
 
+    /**
+     * When set a new salary, the creation date of the salary must be not null
+     */
     @Test
     public void setNewSalary_returnCreationDateNotNull() {
         UserEntity userEntity = new UserEntity();
@@ -55,6 +67,9 @@ public class SalaryBusinessTests {
         assertNotNull(salaryBusiness.setNewSalary(userEntity, periodSpentEntity, salaryValue).getDateSalary());
     }
 
+    /**
+     * When set a new salary, the ID of the salary must be null (don't added in the database yet)
+     */
     @Test
     public void setNewSalary_returnIdSalaryNull() {
         UserEntity userEntity = new UserEntity();

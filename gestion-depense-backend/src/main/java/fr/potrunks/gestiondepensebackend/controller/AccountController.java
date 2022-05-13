@@ -21,6 +21,11 @@ public class AccountController {
     @Autowired
     private AccountIBusiness accountBusiness;
 
+    /**
+     * Allow to create a new account in the database after verification if administrator password is OK and if the mail doesn't exist yet
+     * @param user User will be add to the database
+     * @return Return a Response Entity with a Map of String (key) and Boolean (value) for each step of the creation
+     */
     @PostMapping("/new")
     public ResponseEntity<Map<String, Boolean>> createNewAccount(@RequestBody User user) {
         log.info("Start create new account from createNewAccount of AccountController");
@@ -30,6 +35,11 @@ public class AccountController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Allow to verify authentification then return to the UI the user authenticate
+     * @param user User who want to authenticate
+     * @return Return User successfully authenticate to the UI
+     */
     @PostMapping("/connect")
     public ResponseEntity<Map<String, Object>> connectAccount(@RequestBody User user) {
         log.info("Start to attempt the account connection for user : {}", user.getMailUser());

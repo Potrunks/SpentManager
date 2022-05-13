@@ -20,6 +20,10 @@ public class UserController {
     @Autowired
     private UserIBusiness userIBusiness;
 
+    /**
+     * Fetch all users in the period spent in progress
+     * @return List of User model
+     */
     @GetMapping("/getusersbyperiodspentinprogress")
     public List<User> fetchUsersByPeriodSpentInProgress() {
         log.info("Start to fetch all users in period spent in progress");
