@@ -1,5 +1,6 @@
 package fr.potrunks.gestiondepensebackend.repository;
 
+import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +42,6 @@ public interface UserIRepository extends JpaRepository<UserEntity, Long> {
             "inner join association_user_periodspent aup on u.id_user = aup.id_user " +
             "inner join period_spent ps on aup.id_period_spent = ps.id_period_spent where ps.id_period_spent = :idPeriodSpent", nativeQuery = true)
     List<UserEntity> findByIdPeriodSpentInProgress(@Param("idPeriodSpent") Long idPeriodSpent);
+
+    List<UserEntity> findByPeriodSpentEntityList(PeriodSpentEntity periodSpentEntityList);
 }
