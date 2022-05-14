@@ -29,18 +29,18 @@ const LoginAccount = () => {
         .then((response) => {
           if (response.data.mailExisted === false) {
             document.getElementById("API-error-box").firstChild.innerHTML =
-              "This mail have no account";
+              "Cet e-mail n'a pas de compte";
             document.getElementById("API-error-box").style.display = "flex";
           } else {
             if (response.data.authenticated === false) {
               document.getElementById("API-error-box").firstChild.innerHTML =
-                "Mail or password is not correct";
+                "E-mail ou mot de passe incorrect";
               document.getElementById("API-error-box").style.display = "flex";
             } else {
               console.log("User authenticated successfully");
               sessionStorage.setItem("idUserConnected", response.data.idUserConnected);
               sessionStorage.setItem("firstNameUserConnected", response.data.firstNameUserConnected);
-              document.getElementById("main-app-title").innerHTML = "Welcome " + response.data.firstNameUserConnected;
+              document.getElementById("main-app-title").innerHTML = "Bienvenue " + response.data.firstNameUserConnected;
               navigate(`/menu`);
             }
           }
@@ -65,14 +65,14 @@ const LoginAccount = () => {
     <div className="app-main-container">
       <div className="main-form-container">
         <div className="main-title-form">
-          <span>Log In</span>
+          <span>Se connecter</span>
         </div>
         <div className="API-error-box" id="API-error-box">
           <span></span>
         </div>
         <div className="main-input-field" id="form">
           <div className="input-field">
-            <span>Mail</span>
+            <span>E-mail</span>
             <input
               type="text"
               placeholder=""
@@ -83,7 +83,7 @@ const LoginAccount = () => {
             ></input>
           </div>
           <div className="input-field">
-            <span>Password</span>
+            <span>Mot de passe</span>
             <input
               type="password"
               placeholder=""
@@ -95,10 +95,10 @@ const LoginAccount = () => {
           </div>
         </div>
         <div className="main-button-container">
-          <button onClick={logIn}>Log In</button>
-          <button onClick={clearInput}>Clear</button>
+          <button onClick={logIn}>Se connecter</button>
+          <button onClick={clearInput}>Effacer les champs</button>
           <button onClick={() => navigate("/createAccount")}>
-            Create an account
+            Je n'ai pas de compte
           </button>
         </div>
       </div>

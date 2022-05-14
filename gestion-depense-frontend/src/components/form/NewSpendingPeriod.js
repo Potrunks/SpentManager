@@ -10,7 +10,7 @@ const NewSpendingPeriod = () => {
   });
 
   const confirmMessage =
-    "Are you sure to create a new spending period ? This action will close the previous spending period in progress";
+    "Etes-vous sur de vouloir ajouter un nouveau salaire ?";
 
   const [confirmPopup, setConfirmPopup] = useState(false);
 
@@ -78,14 +78,14 @@ const NewSpendingPeriod = () => {
     <div className="app-main-container">
       <div className="main-form-container">
         <div className="main-title-form">
-          <span>New spending period</span>
+          <span>Nouveau salaire reçu</span>
         </div>
         <div className="API-error-box" id="API-error-box">
           <span></span>
         </div>
         <div className="main-input-field" id="form">
           <div className="input-field">
-            <span>Salary (euros)</span>
+            <span>Salaire (euros)</span>
             <input
               placeholder=""
               id="valueSalary"
@@ -102,10 +102,10 @@ const NewSpendingPeriod = () => {
               displayConfirmPopup();
             }}
           >
-            Create
+            Ajouter
           </button>
-          <button onClick={clearInput}>Clear</button>
-          <button onClick={() => navigate("/menu")}>Cancel</button>
+          <button onClick={clearInput}>Effacer le champ</button>
+          <button onClick={() => navigate("/menu")}>Annuler</button>
         </div>
       </div>
       {confirmPopup && (

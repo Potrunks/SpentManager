@@ -20,7 +20,7 @@ const Success = () => {
           <span>Success</span>
         </div>
         <div className="text-container">
-          <span>Your action have been save successfully</span>
+          <span>Votre action a bien été enregistré</span>
         </div>
         <div className="img-container">
           <img src={successImage} alt="Success"></img>

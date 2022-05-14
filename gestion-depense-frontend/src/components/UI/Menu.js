@@ -20,14 +20,14 @@ const Menu = () => {
         </div>
         <div className="main-button-container">
           <button onClick={() => navigate("/newSpendingPeriod")}>
-            Received Salary
+            Nouveau salaire reçu
           </button>
           <button onClick={() => navigate("/displayspendingperiodinprogress")}>
-            See Expenses
+            Voir les dépenses
           </button>
-          <button onClick={() => navigate("/newspent")}>New Expense</button>
-          <button>Configure Monthly Expenses</button>
-          <button onClick={() => navigate("/")}>Log Out</button>
+          <button onClick={() => navigate("/newspent")}>Ajouter une dépense</button>
+          <button>Mes dépenses mensuelles</button>
+          <button onClick={() => navigate("/")}>Se deconnecter</button>
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
 .main-date-spending-period-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  margin: 0 4px 0 4px;
 }
 
 .main-date-spending-period-container span {
@@ -57,6 +57,11 @@
 .user-period-spent-info span, .spent-card-info span {
   font-weight: 300;
   font-size: 20px;
+  text-align: center;
+}
+
+.spent-card-info .spent-comment {
+  font-size: 16px;
 }
 
 .user-btn-command, .spent-card-btn-command {

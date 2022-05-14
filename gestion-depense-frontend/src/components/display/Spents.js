@@ -4,7 +4,7 @@ const Spents = ({ spents }) => {
   return (
     <div className="spents-main-container">
       <div className="main-title-display">
-        <span>Spents</span>
+        <span>Les dépenses</span>
       </div>
       {spents.map((spent) => (
         <div key={spent.idSpent} className="spents-card-container">
@@ -13,15 +13,17 @@ const Spents = ({ spents }) => {
               <span>{spent.nameSpent}</span>
             </div>
             <div className="spent-card-info">
-              <span>Date : {spent.dateSpent}</span>
-              <span>Price : {spent.valueSpent} euros</span>
-              <span>By : {spent.nameUserWhoCreate}</span>
-              <span>Category : {spent.nameSpentCategory}</span>
-              <span>Comment : {spent.commentSpent}</span>
+              <span>Fait le {spent.dateSpent}</span>
+              <span>Prix : {spent.valueSpent} euros</span>
+              <span>Par {spent.nameUserWhoCreate}</span>
+              <span>Catégorie : {spent.nameSpentCategory}</span>
+              {spent.commentSpent !== "" && (
+                <span className="spent-comment">Commentaire : {spent.commentSpent}</span>
+              )}
             </div>
             <div className="spent-card-btn-command">
-              <button>Modify</button>
-              <button>Delete</button>
+              <button>Modifier</button>
+              <button>Supprimer</button>
             </div>
           </div>
         </div>
