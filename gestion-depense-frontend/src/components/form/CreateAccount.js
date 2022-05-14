@@ -68,14 +68,14 @@ const CreateAccount = () => {
     <div className="app-main-container">
       <div className="main-form-container">
         <div className="main-title-form">
-          <span>New Account</span>
+          <span>Creer un compte</span>
         </div>
         <div className="API-error-box" id="API-error-box">
           <span></span>
         </div>
         <div className="main-input-field" id="form">
           <div className="input-field">
-            <span>First Name</span>
+            <span>Prénom</span>
             <input
               placeholder=""
               id="firstNameUser"
@@ -86,7 +86,7 @@ const CreateAccount = () => {
             ></input>
           </div>
           <div className="input-field">
-            <span>Last Name</span>
+            <span>Nom</span>
             <input
               type="text"
               placeholder=""
@@ -97,7 +97,7 @@ const CreateAccount = () => {
             ></input>
           </div>
           <div className="input-field">
-            <span>Mail</span>
+            <span>E-mail</span>
             <input
               type="text"
               placeholder=""
@@ -108,7 +108,7 @@ const CreateAccount = () => {
             ></input>
           </div>
           <div className="input-field">
-            <span>Password (First time)</span>
+            <span>Mot de passe</span>
             <input
               type="password"
               placeholder=""
@@ -119,7 +119,7 @@ const CreateAccount = () => {
             ></input>
           </div>
           <div className="input-field">
-            <span>Password (Second time)</span>
+            <span>Re-taper le mot de passe</span>
             <input
               id="secondPasswordUser"
               placeholder=""
@@ -130,7 +130,7 @@ const CreateAccount = () => {
             ></input>
           </div>
           <div className="input-field">
-            <span>Administrator Password</span>
+            <span>Mot de passe administrateur</span>
             <input
               id="adminPassword"
               placeholder=""
@@ -142,9 +142,9 @@ const CreateAccount = () => {
           </div>
         </div>
         <div className="main-button-container">
-          <button onClick={createNewAccount}>Create</button>
-          <button onClick={clearInput}>Clear</button>
-          <button onClick={() => navigate("/")}>Cancel</button>
+          <button onClick={createNewAccount}>Créer</button>
+          <button onClick={clearInput}>Effacer les champs</button>
+          <button onClick={() => navigate("/")}>Annuler</button>
         </div>
       </div>
     </div>

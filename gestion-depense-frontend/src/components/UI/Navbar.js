@@ -9,7 +9,7 @@ const Navbar = () => {
   useEffect(() => {
     setLoading(true);
     if (sessionStorage.getItem("firstNameUserConnected") !== null) {
-      setNavbarText("Welcome " + sessionStorage.getItem("firstNameUserConnected"));
+      setNavbarText("Bienvenue " + sessionStorage.getItem("firstNameUserConnected"));
     } else {
       setNavbarText("Spent Manager v1.0.0");
     }

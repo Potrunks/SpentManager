@@ -16,7 +16,7 @@ const NewSpent = () => {
   });
   const [loading, setLoading] = useState(true);
   const [spentCategories, setSpentCategories] = useState(null);
-  const confirmMessage = "Are you sure to create a new spent ?";
+  const confirmMessage = "Etes-vous sur de vouloir ajouter une nouvelle dépense ?";
   const [confirmPopup, setConfirmPopup] = useState(false);
 
   const navigate = useNavigate();
@@ -97,14 +97,14 @@ const NewSpent = () => {
       {!loading && (
         <div className="main-form-container">
           <div className="main-title-form">
-            <span>New Spent</span>
+            <span>Ajouter une dépense</span>
           </div>
           <div className="API-error-box" id="API-error-box">
             <span></span>
           </div>
           <div className="main-input-field" id="form">
             <div className="input-field">
-              <span>Value (euros)</span>
+              <span>Prix (euros)</span>
               <input
                 type="number"
                 placeholder=""
@@ -115,7 +115,7 @@ const NewSpent = () => {
               ></input>
             </div>
             <div className="input-field">
-              <span>Name</span>
+              <span>Nom</span>
               <input
                 type="text"
                 placeholder=""
@@ -126,7 +126,7 @@ const NewSpent = () => {
               ></input>
             </div>
             <div className="input-field">
-              <span>Comment</span>
+              <span>Commentaire</span>
               <input
                 type="text"
                 placeholder=""
@@ -137,13 +137,14 @@ const NewSpent = () => {
               ></input>
             </div>
             <div className="main-select-container">
-              <span>Spent Category</span>
+              <span>Catégorie de la dépense</span>
               <select
                 id="idSpentCategorySelected"
                 name="idSpentCategorySelected"
                 onChange={(e) => handleChange(e)}
                 className="select-form"
               >
+                <option value="">Choisissez une catégorie...</option>
                 {spentCategories.map((spentCategory) => (
                   <option
                     key={spentCategory.idSpentCategory}
@@ -161,10 +162,10 @@ const NewSpent = () => {
                 displayConfirmPopup(e);
               }}
             >
-              Create
+              Ajouter
             </button>
-            <button onClick={clearInput}>Clear</button>
-            <button onClick={() => navigate("/menu")}>Cancel</button>
+            <button onClick={clearInput}>Effacer les champs</button>
+            <button onClick={() => navigate("/menu")}>Annuler</button>
           </div>
         </div>
       )}

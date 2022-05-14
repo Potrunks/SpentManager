@@ -4,7 +4,7 @@ const UsersInPeriodSpent = ({ users }) => {
   return (
     <div className="users-display-main-container">
       <div className="main-title-display">
-        <span>Users</span>
+        <span>Les utilisateurs</span>
       </div>
       {users.map((user) => (
         <div key={user.idUser} className="users-display-card-container">
@@ -12,16 +12,16 @@ const UsersInPeriodSpent = ({ users }) => {
             <span className="user-name">{user.firstNameUser}</span>
             <div className="user-period-spent-info">
               {user.valueDebt > 0 ? (
-                <span>Debt : {Math.round(user.valueDebt)} euros</span>
+                <span>Dette : {Math.round(user.valueDebt)} euros</span>
               ) : (
-                <span>No Debt</span>
+                <span>Pas de dette</span>
               )}
-              <span>Spents : {user.valueSpents} euros</span>
-              <span>Salary : {user.valueSalary} euros</span>
-              <span>Rate : {Math.round(user.rateSpent)} %</span>
+              <span>{user.valueSpents} euros dépensés</span>
+              <span>Salaire : {user.valueSalary} euros</span>
+              <span>Taux de dépense : {Math.round(user.rateSpent)} %</span>
             </div>
             <div className="user-btn-command">
-              <button>Modify Salary</button>
+              <button>Modifier le salaire</button>
             </div>
           </div>
         </div>

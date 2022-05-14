@@ -46,7 +46,9 @@ class InputTestService {
     document
       .getElementById("idSpentCategorySelected")
       .classList.remove("select-error");
-    document.getElementById("idSpentCategorySelected").placeholder = "";
+      document.getElementById(
+        "idSpentCategorySelected"
+      ).firstChild.textContent = "Choisissez une catégorie...";
     document.getElementById("API-error-box").style.display = "none";
   }
 

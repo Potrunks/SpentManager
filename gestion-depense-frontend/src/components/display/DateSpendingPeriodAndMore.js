@@ -12,10 +12,10 @@ const DateSpendingPeriodAndMore = ({ periodSpent }) => {
       ></img>
       {periodSpent.endDatePeriodSpent !== null ? (
         <span>
-          {periodSpent.startDatePeriodSpent} to {periodSpent.endDatePeriodSpent}
+          {periodSpent.startDatePeriodSpent} / {periodSpent.endDatePeriodSpent}
         </span>
       ) : (
-        <span>{periodSpent.startDatePeriodSpent} to in progress</span>
+        <span>{periodSpent.startDatePeriodSpent} / "En cours"</span>
       )}
       <img
         className="date-arrow"

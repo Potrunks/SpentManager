@@ -28,14 +28,14 @@ const Confirm = ({
               parentMethodToConfirm();
             }}
           >
-            Confirm
+            Confirmer
           </button>
           <button
             onClick={() => {
               parentSetConfirmPopup(false);
             }}
           >
-            Cancel
+            Annuler
           </button>
         </div>
       </div>
