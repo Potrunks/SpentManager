@@ -78,6 +78,7 @@ public class PeriodSpentController {
     @GetMapping("/get/{idPeriodSpent}")
     public ResponseEntity<PeriodSpent> fetchPeriodSpentById(@PathVariable Long idPeriodSpent) {
         log.info("Start to fetch period spent id {}", idPeriodSpent);
-        return periodSpentBusiness.getPeriodSpentById(idPeriodSpent);
+        PeriodSpent periodSpentFetchById = periodSpentBusiness.getPeriodSpentById(idPeriodSpent);
+        return ResponseEntity.ok(periodSpentFetchById);
     }
 }

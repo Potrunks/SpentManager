@@ -2,6 +2,7 @@ package fr.potrunks.gestiondepensebackend.business;
 
 import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
 import fr.potrunks.gestiondepensebackend.model.PeriodSpent;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
@@ -33,4 +34,11 @@ public interface PeriodSpentIBusiness {
      * @return Return a Period Spent model for the UI
      */
     PeriodSpent getPeriodSpentInProgress();
+
+    /**
+     * Get the period spent by ID in the database
+     * @param idPeriodSpent ID Period spent to get in the database
+     * @return Return a period spent with the ID wanted
+     */
+    PeriodSpent getPeriodSpentById(Long idPeriodSpent);
 }
