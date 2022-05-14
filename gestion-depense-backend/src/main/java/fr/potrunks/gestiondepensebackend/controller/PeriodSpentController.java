@@ -69,4 +69,15 @@ public class PeriodSpentController {
         PeriodSpent periodSpentInProgress = periodSpentBusiness.getPeriodSpentInProgress();
         return ResponseEntity.ok(periodSpentInProgress);
     }
+
+    /**
+     * Controller fetch the period spent by id for the UI
+     * @param idPeriodSpent ID Period Spent to fetch data
+     * @return Return a Period Spent model to the UI
+     */
+    @GetMapping("/get/{idPeriodSpent}")
+    public ResponseEntity<PeriodSpent> fetchPeriodSpentById(@PathVariable Long idPeriodSpent) {
+        log.info("Start to fetch period spent id {}", idPeriodSpent);
+        return periodSpentBusiness.getPeriodSpentById(idPeriodSpent);
+    }
 }
