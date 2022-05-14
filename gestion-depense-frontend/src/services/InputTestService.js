@@ -79,7 +79,7 @@ class InputTestService {
         .classList.add("select-error");
       document.getElementById(
         "idSpentCategorySelected"
-      ).firstChild.textContent = "Selection required";
+      ).firstChild.textContent = "Selection obligatoire";
       return false;
     }
     return true;
@@ -97,7 +97,7 @@ class InputTestService {
   nameSpentIsEmpty(name) {
     if (name.length === 0) {
       document.getElementById("nameSpent").classList.add("error");
-      document.getElementById("nameSpent").placeholder = "Input required";
+      document.getElementById("nameSpent").placeholder = "Champ requis";
       return true;
     }
     return false;
@@ -107,7 +107,7 @@ class InputTestService {
     if (!regexFullWhiteSpace.test(name)) {
       document.getElementById("nameSpent").value = "";
       document.getElementById("nameSpent").classList.add("error");
-      document.getElementById("nameSpent").placeholder = "Name format invalid";
+      document.getElementById("nameSpent").placeholder = "Format nom invalide";
       return true;
     }
     return false;
@@ -125,7 +125,7 @@ class InputTestService {
   valueSpentIsEmpty(value) {
     if (value.length === 0) {
       document.getElementById("valueSpent").classList.add("error");
-      document.getElementById("valueSpent").placeholder = "Input required";
+      document.getElementById("valueSpent").placeholder = "Champ requis";
       return true;
     }
     return false;
@@ -135,7 +135,7 @@ class InputTestService {
     if (value === "0") {
       document.getElementById("valueSpent").value = "";
       document.getElementById("valueSpent").classList.add("error");
-      document.getElementById("valueSpent").placeholder = "Value cannot be 0";
+      document.getElementById("valueSpent").placeholder = "Valeur peut pas être 0";
       return true;
     }
     return false;
@@ -176,13 +176,13 @@ class InputTestService {
     if (salary.valueSalary.length === 0 || salary.valueSalary === "0") {
       if (salary.valueSalary.length === 0) {
         document.getElementById("valueSalary").classList.add("error");
-        document.getElementById("valueSalary").placeholder = "Input required";
+        document.getElementById("valueSalary").placeholder = "Champ requis";
       }
       if (salary.valueSalary === "0") {
         document.getElementById("valueSalary").value = "";
         document.getElementById("valueSalary").classList.add("error");
         document.getElementById("valueSalary").placeholder =
-          "Value cannot be 0";
+          "Valeur peut pas être 0";
       }
       return false;
     } else {
@@ -194,11 +194,11 @@ class InputTestService {
     if ((user.mailUser.length && user.passwordUser.length) === 0) {
       if (user.mailUser.length === 0) {
         document.getElementById("mailUser").classList.add("error");
-        document.getElementById("mailUser").placeholder = "Input required";
+        document.getElementById("mailUser").placeholder = "Champ requis";
       }
       if (user.passwordUser.length === 0) {
         document.getElementById("passwordUser").classList.add("error");
-        document.getElementById("passwordUser").placeholder = "Input required";
+        document.getElementById("passwordUser").placeholder = "Champ requis";
       }
       return false;
     } else {
@@ -217,28 +217,28 @@ class InputTestService {
     ) {
       if (user.adminPassword.length === 0) {
         document.getElementById("adminPassword").classList.add("error");
-        document.getElementById("adminPassword").placeholder = "Input required";
+        document.getElementById("adminPassword").placeholder = "Champ requis";
       }
       if (user.firstNameUser.length === 0) {
         document.getElementById("firstNameUser").classList.add("error");
-        document.getElementById("firstNameUser").placeholder = "Input required";
+        document.getElementById("firstNameUser").placeholder = "Champ requis";
       }
       if (user.lastNameUser.length === 0) {
         document.getElementById("lastNameUser").classList.add("error");
-        document.getElementById("lastNameUser").placeholder = "Input required";
+        document.getElementById("lastNameUser").placeholder = "Champ requis";
       }
       if (user.mailUser.length === 0) {
         document.getElementById("mailUser").classList.add("error");
-        document.getElementById("mailUser").placeholder = "Input required";
+        document.getElementById("mailUser").placeholder = "Champ requis";
       }
       if (user.passwordUser.length === 0) {
         document.getElementById("passwordUser").classList.add("error");
-        document.getElementById("passwordUser").placeholder = "Input required";
+        document.getElementById("passwordUser").placeholder = "Champ requis";
       }
       if (user.secondPasswordUser.length === 0) {
         document.getElementById("secondPasswordUser").classList.add("error");
         document.getElementById("secondPasswordUser").placeholder =
-          "Input required";
+          "Champ requis";
       }
       return false;
     } else {
@@ -252,7 +252,7 @@ class InputTestService {
     }
     document.getElementById("mailUser").value = "";
     document.getElementById("mailUser").classList.add("error");
-    document.getElementById("mailUser").placeholder = "Mail invalid";
+    document.getElementById("mailUser").placeholder = "E-mail invalid";
     return false;
   }
 
@@ -266,12 +266,12 @@ class InputTestService {
     if (regexNameFormat.test(user.firstNameUser) === false) {
       document.getElementById("firstNameUser").value = "";
       document.getElementById("firstNameUser").classList.add("error");
-      document.getElementById("firstNameUser").placeholder = "Invalid format";
+      document.getElementById("firstNameUser").placeholder = "Format invalide";
     }
     if (regexNameFormat.test(user.lastNameUser) === false) {
       document.getElementById("lastNameUser").value = "";
       document.getElementById("lastNameUser").classList.add("error");
-      document.getElementById("lastNameUser").placeholder = "Invalid format";
+      document.getElementById("lastNameUser").placeholder = "Format invalide";
     }
     return false;
   }
@@ -283,7 +283,7 @@ class InputTestService {
     document.getElementById("secondPasswordUser").value = "";
     document.getElementById("secondPasswordUser").classList.add("error");
     document.getElementById("secondPasswordUser").placeholder =
-      "Not equal to password";
+      "Pas égale au mot de passe";
     return false;
   }
 
@@ -298,13 +298,13 @@ class InputTestService {
       document.getElementById("passwordUser").value = "";
       document.getElementById("passwordUser").classList.add("error");
       document.getElementById("passwordUser").placeholder =
-        "8 char max with 1 digit and 1 uppercase";
+        "8 carac. min avec 1 chiffre, 1 maj.";
     }
     if (regexPasswordFormat.test(user.secondPasswordUser) === false) {
       document.getElementById("secondPasswordUser").value = "";
       document.getElementById("secondPasswordUser").classList.add("error");
       document.getElementById("secondPasswordUser").placeholder =
-        "8 char max with 1 digit and 1 uppercase";
+        "8 carac. min avec 1 chiffre, 1 maj.";
     }
     return false;
   }
