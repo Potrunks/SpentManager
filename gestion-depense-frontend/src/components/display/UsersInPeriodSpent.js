@@ -11,10 +11,14 @@ const UsersInPeriodSpent = ({ users }) => {
           <div className="user-display-card">
             <span className="user-name">{user.firstNameUser}</span>
             <div className="user-period-spent-info">
-              <span>Debt : {user.valueDebt} euros</span>
+              {user.valueDebt > 0 ? (
+                <span>Debt : {Math.round(user.valueDebt)} euros</span>
+              ) : (
+                <span>No Debt</span>
+              )}
               <span>Spents : {user.valueSpents} euros</span>
               <span>Salary : {user.valueSalary} euros</span>
-              <span>Rate : {user.rateSpent} %</span>
+              <span>Rate : {Math.round(user.rateSpent)} %</span>
             </div>
             <div className="user-btn-command">
               <button>Modify Salary</button>
