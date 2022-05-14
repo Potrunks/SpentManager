@@ -62,7 +62,7 @@ public class GestionDepenseBackendApplication {
 			userEntityList.add(userEntity);
 			userEntityList.add(userEntity2);
 			PeriodSpentEntity periodSpentEntity = new PeriodSpentEntity();
-			periodSpentEntity.setStartDatePeriodSpent(LocalDate.now());
+			periodSpentEntity.setStartDatePeriodSpent(LocalDate.now().minusDays(30));
 			periodSpentEntity.setUserEntityList(userEntityList);
 			periodSpentEntity = periodSpentIRepository.save(periodSpentEntity);
 			SalaryEntity salaryEntity = new SalaryEntity();
