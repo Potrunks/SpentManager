@@ -15,6 +15,8 @@ const Spents = ({ spents }) => {
             <div className="spent-card-info">
               <span>Date : {spent.dateSpent}</span>
               <span>Price : {spent.valueSpent} euros</span>
+              <span>By : {spent.nameUserWhoCreate}</span>
+              <span>Category : {spent.nameSpentCategory}</span>
               <span>Comment : {spent.commentSpent}</span>
             </div>
             <div className="spent-card-btn-command">

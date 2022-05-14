@@ -48,6 +48,7 @@ public class SpentBusiness implements SpentIBusiness {
                         spent.getNameSpent(),
                         spent.getCommentSpent(),
                         null,
+                        spent.getUserEntity().getFirstNameUser(),
                         null,
                         spent.getSpentCategoryEntity().getNameSpentCategory()))
                 .collect(Collectors.toList());
