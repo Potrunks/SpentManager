@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import InputTestService from "../../services/InputTestService";
 import SpentCategoryService from "../../services/SpentCategoryService";
 import SpentService from "../../services/SpentService";
+import Loading from "../page/Loading";
 import Confirm from "../Popup/Confirm";
 
 const NewSpent = () => {
@@ -92,58 +93,57 @@ const NewSpent = () => {
 
   return (
     <div className="app-main-container">
-      <div className="main-form-container">
-        <div className="main-title-form">
-          <span>New Spent</span>
-        </div>
-        <div className="API-error-box" id="API-error-box">
-          <span></span>
-        </div>
-        <div className="main-input-field" id="form">
-          <div className="input-field">
-            <span>Value (euros)</span>
-            <input
-              type="number"
-              placeholder=""
-              id="valueSpent"
-              name="valueSpent"
-              value={spent.valueSpent}
-              onChange={(e) => handleChange(e)}
-            ></input>
+      {loading && <Loading />}
+      {!loading && (
+        <div className="main-form-container">
+          <div className="main-title-form">
+            <span>New Spent</span>
           </div>
-          <div className="input-field">
-            <span>Name</span>
-            <input
-              type="text"
-              placeholder=""
-              id="nameSpent"
-              name="nameSpent"
-              value={spent.nameSpent}
-              onChange={(e) => handleChange(e)}
-            ></input>
+          <div className="API-error-box" id="API-error-box">
+            <span></span>
           </div>
-          <div className="input-field">
-            <span>Comment</span>
-            <input
-              type="text"
-              placeholder=""
-              id="commentSpent"
-              name="commentSpent"
-              value={spent.commentSpent}
-              onChange={(e) => handleChange(e)}
-            ></input>
-          </div>
-          <div className="main-select-container">
-            <span>Spent Category</span>
-            {loading && <span className="loading-span">Loading...</span>}
-            {!loading && (
+          <div className="main-input-field" id="form">
+            <div className="input-field">
+              <span>Value (euros)</span>
+              <input
+                type="number"
+                placeholder=""
+                id="valueSpent"
+                name="valueSpent"
+                value={spent.valueSpent}
+                onChange={(e) => handleChange(e)}
+              ></input>
+            </div>
+            <div className="input-field">
+              <span>Name</span>
+              <input
+                type="text"
+                placeholder=""
+                id="nameSpent"
+                name="nameSpent"
+                value={spent.nameSpent}
+                onChange={(e) => handleChange(e)}
+              ></input>
+            </div>
+            <div className="input-field">
+              <span>Comment</span>
+              <input
+                type="text"
+                placeholder=""
+                id="commentSpent"
+                name="commentSpent"
+                value={spent.commentSpent}
+                onChange={(e) => handleChange(e)}
+              ></input>
+            </div>
+            <div className="main-select-container">
+              <span>Spent Category</span>
               <select
                 id="idSpentCategorySelected"
                 name="idSpentCategorySelected"
                 onChange={(e) => handleChange(e)}
                 className="select-form"
               >
-                <option>Choose a category . . .</option>
                 {spentCategories.map((spentCategory) => (
                   <option
                     key={spentCategory.idSpentCategory}
@@ -153,21 +153,21 @@ const NewSpent = () => {
                   </option>
                 ))}
               </select>
-            )}
+            </div>
+          </div>
+          <div className="main-button-container">
+            <button
+              onClick={(e) => {
+                displayConfirmPopup(e);
+              }}
+            >
+              Create
+            </button>
+            <button onClick={clearInput}>Clear</button>
+            <button onClick={() => navigate("/menu")}>Cancel</button>
           </div>
         </div>
-        <div className="main-button-container">
-          <button
-            onClick={(e) => {
-              displayConfirmPopup(e);
-            }}
-          >
-            Create
-          </button>
-          <button onClick={clearInput}>Clear</button>
-          <button onClick={() => navigate("/menu")}>Cancel</button>
-        </div>
-      </div>
+      )}
       {confirmPopup && (
         <Confirm
           parentSetConfirmPopup={setConfirmPopup}

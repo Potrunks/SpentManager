@@ -9,6 +9,7 @@ import "./style/form.css";
 import "./style/popup.css";
 import "./style/successPage.css";
 import "./style/display.css";
+import "./style/loading.css";
 import LoginAccount from "./components/form/LoginAccount";
 import Menu from "./components/UI/Menu";
 import NewSpendingPeriod from "./components/form/NewSpendingPeriod";
