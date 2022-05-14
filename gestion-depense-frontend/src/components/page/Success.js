@@ -1,17 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import successImage from "./success.png";
 
 const Success = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (sessionStorage.getItem("idUserConnected") === null) {
-      console.log("User no connected");
-      navigate("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="app-main-container">
