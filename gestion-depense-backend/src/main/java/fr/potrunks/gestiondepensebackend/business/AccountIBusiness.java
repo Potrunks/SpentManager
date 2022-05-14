@@ -29,4 +29,10 @@ public interface AccountIBusiness {
      * @return A user with the mail wanted
      */
     UserEntity getUserByMailUser(User user);
+
+    /**
+     * Verify if there are already 2 accounts in the database
+     * @return Return a Map of String (key) and Boolean (value) who contain the information of the step of the method
+     */
+    Map<String, Boolean> verifyIfThereAreAlready2Accounts(Map<String, Boolean> response);
 }

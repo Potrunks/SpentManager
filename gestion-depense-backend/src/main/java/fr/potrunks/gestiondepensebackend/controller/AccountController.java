@@ -22,7 +22,7 @@ public class AccountController {
     private AccountIBusiness accountBusiness;
 
     /**
-     * Allow to create a new account in the database after verification if administrator password is OK and if the mail doesn't exist yet
+     * Allow to create a new account in the database after verification if there are already 2 accounts in the database if administrator password is OK and if the mail doesn't exist yet
      * @param user User will be add to the database
      * @return Return a Response Entity with a Map of String (key) and Boolean (value) for each step of the creation
      */
@@ -30,6 +30,10 @@ public class AccountController {
     public ResponseEntity<Map<String, Boolean>> createNewAccount(@RequestBody User user) {
         log.info("Start create new account from createNewAccount of AccountController");
         Map<String, Boolean> response = new HashMap<>();
+        response = accountBusiness.verifyIfThereAreAlready2Accounts(response);
+        if (response.get("already2Accounts") == true) {
+            return ResponseEntity.ok(response);
+        }
         response = accountBusiness.addNewAccount(user, response);
         log.info("Return response to the front app");
         return ResponseEntity.ok(response);
