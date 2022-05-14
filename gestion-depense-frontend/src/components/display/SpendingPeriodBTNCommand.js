@@ -5,8 +5,8 @@ const SpendingPeriodBTNCommand = () => {
     const navigate = useNavigate();
   return (
     <div className='spending-period-btn-main-container'>
-        <button onClick={() => navigate("/newspent")}>Add spent</button>
-        <button>Add user</button>
+        <button onClick={() => navigate("/newspent")}>New Expense</button>
+        <button onClick={() => navigate("/newSpendingPeriod")}>Received Salary</button>
         <button onClick={() => navigate("/menu")}>Back</button>
     </div>
   )

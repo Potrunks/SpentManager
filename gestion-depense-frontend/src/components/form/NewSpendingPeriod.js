@@ -54,7 +54,13 @@ const NewSpendingPeriod = () => {
       salary
     )
       .then((response) => {
-        if (response.data.periodSpentAdded === true) {
+        if (
+          response.data.salaryCreatedOrUpdated === true &&
+          response.data.periodSpentCreated === false
+        ) {
+          console.log("New salary created or updated");
+          navigate("/success");
+        } else if (response.data.periodSpentAdded === true) {
           console.log("New period spent created");
           navigate("/success");
         } else if (response.data.periodSpentInProgressIsClosable === false) {

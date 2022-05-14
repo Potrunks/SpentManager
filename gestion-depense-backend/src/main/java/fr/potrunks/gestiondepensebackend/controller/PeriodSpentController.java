@@ -24,7 +24,7 @@ public class PeriodSpentController {
     private SalaryIBusiness salaryBusiness;
 
     /**
-     * Allow to access all the process for create a new period of spent. There are 3 level of verification, if the period spent in prgress is closable,
+     * Allow to access all the process for create a new period of spent. There are 4 level of verification, if a new salary has been created or updated, if the period spent in progress is closable,
      * if the new period spent is correctly added in database and if the new salary associate to the period spent is correctly added
      *
      * @param idUserConnected ID of the user who want to create a new period spent
@@ -36,6 +36,11 @@ public class PeriodSpentController {
         log.info("Starting creation of a new period spent");
         Map<String, Object> response = new HashMap<>();
         Boolean periodSpentCreated = false;
+        response = salaryBusiness.addSalaryInPeriodSpentInProgress(response, idUserConnected, salary);
+        if ((Boolean) response.get("salaryCreatedOrUpdated") == true) {
+            response.put("periodSpentCreated", periodSpentCreated);
+            return ResponseEntity.ok(response);
+        }
         response = periodSpentBusiness.closePeriodSpentInProgress(response);
         if ((Boolean) response.get("periodSpentInProgressClosed") == true) {
             response = periodSpentBusiness.addNewPeriodSpent(idUserConnected, response);
