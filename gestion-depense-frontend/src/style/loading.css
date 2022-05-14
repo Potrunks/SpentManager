@@ -1,0 +1,9 @@
+.loading-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-main-container img {
+    width: 100%;
+}
