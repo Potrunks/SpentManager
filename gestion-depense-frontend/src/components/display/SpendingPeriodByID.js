@@ -26,7 +26,7 @@ const SpendingPeriodByID = () => {
         try {
           console.log("Start to fetch data");
           const responsePeriodSpent =
-            await PeriodSpentService.getPeriodSpentInProgress();
+            await PeriodSpentService.getPeriodSpentByID(idPeriodSpent);
           const responseUsers =
             await UserService.getUsersInPeriodSpentInProgress();
           const responseSpents = await SpentService.getSpentsPeriodInProgress();
