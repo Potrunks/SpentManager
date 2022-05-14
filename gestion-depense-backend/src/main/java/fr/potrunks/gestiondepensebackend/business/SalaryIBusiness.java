@@ -1,5 +1,7 @@
 package fr.potrunks.gestiondepensebackend.business;
 
+import fr.potrunks.gestiondepensebackend.model.Salary;
+
 import java.util.Map;
 
 public interface SalaryIBusiness {
@@ -13,4 +15,13 @@ public interface SalaryIBusiness {
      * @return Map of String (key) and Object (value) who contain information during all the step of this method
      */
     Map<String, Object> addNewSalary(Long idUserConnected, Long idPeriodSpentCreated, Float salaryInput, Map<String, Object> response);
+
+    /**
+     * Add new salary or update if value is zero
+     * @param response Map of String (Key) and Object (Value)
+     * @param idUserConnected ID of the user connected
+     * @param salary Salary to add
+     * @return Return a Map String (Key) and Object (Value) contain informations of each step of this method
+     */
+    Map<String, Object> addSalaryInPeriodSpentInProgress(Map<String, Object> response, Long idUserConnected, Salary salary);
 }

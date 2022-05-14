@@ -4,6 +4,7 @@ import fr.potrunks.gestiondepensebackend.business.SalaryIBusiness;
 import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
 import fr.potrunks.gestiondepensebackend.entity.SalaryEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
+import fr.potrunks.gestiondepensebackend.model.Salary;
 import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
 import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
 import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -55,6 +57,34 @@ public class SalaryBusiness implements SalaryIBusiness {
         }
         log.info("End to addition new salary");
         response.put("newSalaryCreated", newSalaryCreated);
+        return response;
+    }
+
+    @Override
+    public Map<String, Object> addSalaryInPeriodSpentInProgress(Map<String, Object> response, Long idUserConnected, Salary salary) {
+        log.info("Start to verify if we need to add salary in the period spent");
+        Boolean salaryCreatedOrUpdated = false;
+        UserEntity userEntity = userRepository.getById(idUserConnected);
+        PeriodSpentEntity periodSpentEntity = periodSpentRepository.findByEndDatePeriodSpentIsNull();
+        SalaryEntity salaryEntity = salaryRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity);
+        if (salaryEntity == null) {
+            log.info("Salary in period spent in progress is null");
+            salaryRepository.save(setNewSalary(userEntity, periodSpentEntity, salary.getValueSalary()));
+            List<UserEntity> userEntityList = periodSpentEntity.getUserEntityList();
+            userEntityList.add(userEntity);
+            periodSpentEntity.setUserEntityList(userEntityList);
+            periodSpentRepository.save(periodSpentEntity);
+            salaryCreatedOrUpdated = true;
+        } else if (salaryEntity.getValueSalary() == 0f) {
+            log.info("The salary in period in progress exist but the value is zero");
+            log.info("Salary is updating with new value...");
+            salaryEntity.setValueSalary(salary.getValueSalary());
+            salaryEntity.setDateSalary(LocalDate.now());
+            salaryRepository.save(salaryEntity);
+            salaryCreatedOrUpdated = true;
+            log.info("Salary updated");
+        }
+        response.put("salaryCreatedOrUpdated", salaryCreatedOrUpdated);
         return response;
     }
 
