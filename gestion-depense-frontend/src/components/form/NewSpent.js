@@ -43,11 +43,11 @@ const NewSpent = () => {
       .then((response) => {
         if (response.data.periodSpentInProgressExist === false) {
           document.getElementById("API-error-box").firstChild.innerHTML =
-            "Cannot find a spending period in progress. Please create a new spending period.";
+            "Aucune période de dépense en cours. Veuillez créer une période de dépense.";
           document.getElementById("API-error-box").style.display = "flex";
         } else if (response.data.newSpentAdded === false) {
           document.getElementById("API-error-box").firstChild.innerHTML =
-            "Problem during creation of the new spent. Please contact the administrator.";
+            "Probléme pendant l'ajout de la dépense. Veuillez contacter l'administrateur.";
           document.getElementById("API-error-box").style.display = "flex";
         } else {
           console.log("New spent successfully added to the API");

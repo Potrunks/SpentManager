@@ -77,6 +77,18 @@ public class AccountBusiness implements AccountIBusiness {
         return userEntity;
     }
 
+    @Override
+    public Map<String, Boolean> verifyIfThereAreAlready2Accounts(Map<String, Boolean> response) {
+        log.info("Start to count the number of users in the database");
+        Boolean already2Accounts = false;
+        if (userRepository.count() >= 2L) {
+            log.info("There are already 2 users in the database");
+            already2Accounts = true;
+        }
+        response.put("already2Accounts", already2Accounts);
+        return response;
+    }
+
     /**
      * Verify if the mail already exist in data base
      * @param mailUser Mail concerned
