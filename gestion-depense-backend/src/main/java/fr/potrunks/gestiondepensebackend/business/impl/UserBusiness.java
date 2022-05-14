@@ -53,6 +53,25 @@ public class UserBusiness implements UserIBusiness {
         return userList;
     }
 
+    @Override
+    public List<User> getAllByIdPeriodSpent(Long idPeriodSpent) {
+        log.info("Start to get all users in period spent id {}", idPeriodSpent);
+        log.info("Start to find the period spent id {}", idPeriodSpent);
+        PeriodSpentEntity periodSpentById = periodSpentIRepository.getById(idPeriodSpent);
+        if (periodSpentById == null) {
+            log.warn("No period spent id {} in the database", idPeriodSpent);
+            return null;
+        }
+        log.info("Start to get all users in period spent id {}", idPeriodSpent);
+        List<UserEntity> userEntityList = userIRepository.findByIdPeriodSpentInProgress(periodSpentById.getIdPeriodSpent());
+        if (userEntityList == null) {
+            log.warn("No user in period spent id {}", idPeriodSpent);
+            return null;
+        }
+        List<User> userList = copyUserEntityListToUserList(userEntityList, periodSpentById);
+        return userList;
+    }
+
     /**
      * Copy the User Entity list to the User model list. During the copy, the salary attach to the period spent,
      * all the spents and the debt of the user for this period spent is add to the user model
