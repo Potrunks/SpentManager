@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AccountService from "../../services/AccountService";
 import InputTestService from "../../services/InputTestService";
+import Confirm from "../Popup/Confirm";
 
 const CreateAccount = () => {
+  const confirmMessage = "Etes-vous sur de vouloir créer un nouveau compte ?";
   const [user, setUser] = useState({
     lastNameUser: "",
     firstNameUser: "",
@@ -19,37 +21,45 @@ const CreateAccount = () => {
   }, []);
 
   const navigate = useNavigate();
-
+  const [confirmPopup, setConfirmPopup] = useState(false);
   const handleChange = (e) => {
     const value = e.target.value;
     setUser({ ...user, [e.target.name]: value });
   };
 
-  const createNewAccount = (e) => {
-    e.preventDefault();
-    console.log("Start to create new account");
-    if (InputTestService.verifyIntegrityNewAccount(user) === true) {
-      AccountService.postNewUser(user)
-        .then((response) => {
-          if (response.data.newAccountAdded === true) {
-            console.log("New account created");
-            navigate("/");
-          } else {
-            if (response.data.adminPasswordOK === false) {
-              document.getElementById("API-error-box").firstChild.innerHTML =
-                "The admin password is not correct";
-              document.getElementById("API-error-box").style.display = "flex";
-            } else if (response.data.mailAlreadyExist === true) {
-              document.getElementById("API-error-box").firstChild.innerHTML =
-                "This mail have already an account";
-              document.getElementById("API-error-box").style.display = "flex";
-            }
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+  const displayConfirmPopup = (e) => {
+    if (
+      InputTestService.verifyIntegrityNewAccount(user) === true &&
+      confirmPopup === false
+    ) {
+      setConfirmPopup(true);
     }
+  };
+
+  const createNewAccount = (e) => {
+    //e.preventDefault();
+    setConfirmPopup(false);
+    console.log("Start to create new account");
+    AccountService.postNewUser(user)
+      .then((response) => {
+        if (response.data.newAccountAdded === true) {
+          console.log("New account created");
+          navigate("/success");
+        } else {
+          if (response.data.adminPasswordOK === false) {
+            document.getElementById("API-error-box").firstChild.innerHTML =
+              "Le mot de passe administrateur est incorrect";
+            document.getElementById("API-error-box").style.display = "flex";
+          } else if (response.data.mailAlreadyExist === true) {
+            document.getElementById("API-error-box").firstChild.innerHTML =
+              "Cet e-mail a déjà un compte";
+            document.getElementById("API-error-box").style.display = "flex";
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const clearInput = (e) => {
@@ -142,11 +152,24 @@ const CreateAccount = () => {
           </div>
         </div>
         <div className="main-button-container">
-          <button onClick={createNewAccount}>Créer</button>
+          <button
+            onClick={(e) => {
+              displayConfirmPopup(e);
+            }}
+          >
+            Créer
+          </button>
           <button onClick={clearInput}>Effacer les champs</button>
           <button onClick={() => navigate("/")}>Annuler</button>
         </div>
       </div>
+      {confirmPopup && (
+        <Confirm
+          parentSetConfirmPopup={setConfirmPopup}
+          parentMethodToConfirm={createNewAccount}
+          parentConfirmMessage={confirmMessage}
+        />
+      )}
     </div>
   );
 };
