@@ -90,7 +90,7 @@ public class SpentBusiness implements SpentIBusiness {
         SpentEntity spentEntity = new SpentEntity();
         spentEntity.setValueSpent(spent.getValueSpent());
         spentEntity.setDateSpent(LocalDate.now());
-        spentEntity.setNameSpent(spent.getNameSpent());
+        spentEntity.setNameSpent(formatSpentName(spent));
         spentEntity.setCommentSpent(spent.getCommentSpent());
         spentEntity.setSpentCategoryEntity(spentCategorySelected);
         spentEntity.setUserEntity(userConnected);
@@ -174,5 +174,19 @@ public class SpentBusiness implements SpentIBusiness {
         userEntityList.add(userEntity);
         periodSpentEntity.setUserEntityList(userEntityList);
         periodSpentIRepository.save(periodSpentEntity);
+    }
+
+    /**
+     * Format the first char in Uppercase of the spent name
+     * @param spentToFormatTheName
+     * @return Return a String with the first char is Uppercase
+     */
+    public String formatSpentName(Spent spentToFormatTheName) {
+        String nameSpentFormatted = "No name";
+        if (spentToFormatTheName == null || spentToFormatTheName.getNameSpent() == null) {
+            return nameSpentFormatted;
+        }
+        nameSpentFormatted = spentToFormatTheName.getNameSpent().substring(0, 1).toUpperCase() + spentToFormatTheName.getNameSpent().substring(1);
+        return nameSpentFormatted;
     }
 }
