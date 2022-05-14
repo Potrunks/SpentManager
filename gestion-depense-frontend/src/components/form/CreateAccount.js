@@ -46,7 +46,11 @@ const CreateAccount = () => {
           console.log("New account created");
           navigate("/success");
         } else {
-          if (response.data.adminPasswordOK === false) {
+          if (response.data.already2Accounts === true) {
+            document.getElementById("API-error-box").firstChild.innerHTML =
+              "La création d'un nouveau compte est désactivé";
+            document.getElementById("API-error-box").style.display = "flex";
+          } else if (response.data.adminPasswordOK === false) {
             document.getElementById("API-error-box").firstChild.innerHTML =
               "Le mot de passe administrateur est incorrect";
             document.getElementById("API-error-box").style.display = "flex";
