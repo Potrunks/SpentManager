@@ -12,6 +12,11 @@ class UserService {
     console.log("Start to fetch all users in period spent id " + idPeriodSpent);
     return axios.get(USER_API_BASE_URL + "/getUsersByPeriodSpent/" + idPeriodSpent);
   }
+
+  getAllUsers() {
+    console.log("Start to fetch all users in database");
+    return axios.get(USER_API_BASE_URL + "/getAll/");
+  }
 }
 
 export default new UserService();

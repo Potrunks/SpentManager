@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import InputTestService from "../../services/InputTestService";
 import SpentCategoryService from "../../services/SpentCategoryService";
 import SpentService from "../../services/SpentService";
+import UserService from "../../services/UserService";
 import Loading from "../page/Loading";
 import Confirm from "../Popup/Confirm";
 
@@ -11,13 +12,14 @@ const NewSpent = () => {
     valueSpent: "",
     nameSpent: "",
     commentSpent: "",
-    idUserConnected: sessionStorage.getItem("idUserConnected"),
+    idUserExpenser: "",
     idSpentCategorySelected: "",
   });
   const [loading, setLoading] = useState(true);
   const [spentCategories, setSpentCategories] = useState(null);
   const confirmMessage = "Etes-vous sur de vouloir ajouter une nouvelle dépense ?";
   const [confirmPopup, setConfirmPopup] = useState(false);
+  const [users, setUsers] = useState(null);
 
   const navigate = useNavigate();
 
@@ -65,7 +67,7 @@ const NewSpent = () => {
       valueSpent: "",
       nameSpent: "",
       commentSpent: "",
-      idUserConnected: sessionStorage.getItem("idUserConnected"),
+      idUserExpenser: "",
       idSpentCategorySelected: "",
     });
   };
@@ -80,7 +82,9 @@ const NewSpent = () => {
         console.log("Start loading...");
         try {
           const response = await SpentCategoryService.getAllSpentCategories();
+          const responseUsers = await UserService.getAllUsers();
           setSpentCategories(response.data);
+          setUsers(responseUsers.data);
         } catch (error) {
           console.log(error);
         }
@@ -151,6 +155,25 @@ const NewSpent = () => {
                     value={spentCategory.idSpentCategory}
                   >
                     {spentCategory.nameSpentCategory}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="main-select-container">
+              <span>Par qui ?</span>
+              <select
+                id="idUserExpenser"
+                name="idUserExpenser"
+                onChange={(e) => handleChange(e)}
+                className="select-form"
+              >
+                <option value="">Choisissez un utilisateur...</option>
+                {users.map((user) => (
+                  <option
+                    key={user.idUser}
+                    value={user.idUser}
+                  >
+                    {user.firstNameUser}
                   </option>
                 ))}
               </select>
