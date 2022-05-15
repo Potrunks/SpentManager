@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PeriodSpentService from "../../services/PeriodSpentService";
 import SpentService from "../../services/SpentService";
 import UserService from "../../services/UserService";
@@ -9,7 +9,8 @@ import SpendingPeriodBTNCommand from "./SpendingPeriodBTNCommand";
 import Spents from "./Spents";
 import UsersInPeriodSpent from "./UsersInPeriodSpent";
 
-const SpendingPeriodInProgress = () => {
+const SpendingPeriodByID = () => {
+  const { idPeriodSpent } = useParams();
   const navigate = useNavigate();
   const [periodSpent, setPeriodSpent] = useState(null);
   const [users, setUsers] = useState(null);
@@ -25,10 +26,10 @@ const SpendingPeriodInProgress = () => {
         try {
           console.log("Start to fetch data");
           const responsePeriodSpent =
-            await PeriodSpentService.getPeriodSpentInProgress();
+            await PeriodSpentService.getPeriodSpentByID(idPeriodSpent);
           const responseUsers =
-            await UserService.getUsersInPeriodSpentInProgress();
-          const responseSpents = await SpentService.getSpentsPeriodInProgress();
+            await UserService.getUsersInPeriodSpentByID(idPeriodSpent);
+          const responseSpents = await SpentService.getSpentsPeriodByID(idPeriodSpent);
           setPeriodSpent(responsePeriodSpent.data);
           setUsers(responseUsers.data);
           setSpents(responseSpents.data);
@@ -40,7 +41,7 @@ const SpendingPeriodInProgress = () => {
       };
       fetchData();
     }
-  }, [loading]);
+  }, [loading, idPeriodSpent]);
 
   return (
     <div className="app-main-container">
@@ -53,4 +54,4 @@ const SpendingPeriodInProgress = () => {
   );
 };
 
-export default SpendingPeriodInProgress;
+export default SpendingPeriodByID;

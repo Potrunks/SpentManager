@@ -19,4 +19,11 @@ public interface UserIBusiness {
      * @return Return a list of User model in the period spent in progress if the period spent in progress exist
      */
     List<User> getAllByPeriodSpentInProgress();
+
+    /**
+     * Get all users by id perdiod spent
+     * @param idPeriodSpent ID period spent wanted
+     * @return Return a list of user model in the period spent id wanted
+     */
+    List<User> getAllByIdPeriodSpent(Long idPeriodSpent);
 }

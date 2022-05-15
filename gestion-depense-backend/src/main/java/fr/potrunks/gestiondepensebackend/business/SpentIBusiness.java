@@ -33,4 +33,11 @@ public interface SpentIBusiness {
      * @return Return a Spent Entity after added in database
      */
     SpentEntity create(UserEntity userConnected, SpentCategoryEntity spentCategorySelected, PeriodSpentEntity periodSpentInProgress, Spent spent);
+
+    /**
+     * Get all spents in period spent id wanted
+     * @param idPeriodSpent ID of the period spent wanted
+     * @return Return a list of spent model in the period spent id wanted
+     */
+    List<Spent> getSpentsByIdPeriodSpent(Long idPeriodSpent);
 }

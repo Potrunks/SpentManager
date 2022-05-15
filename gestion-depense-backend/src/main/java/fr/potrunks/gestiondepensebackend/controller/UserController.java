@@ -4,10 +4,7 @@ import fr.potrunks.gestiondepensebackend.business.UserIBusiness;
 import fr.potrunks.gestiondepensebackend.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,16 @@ public class UserController {
     public List<User> fetchUsersByPeriodSpentInProgress() {
         log.info("Start to fetch all users in period spent in progress");
         return userIBusiness.getAllByPeriodSpentInProgress();
+    }
+
+    /**
+     * Fetch a list of user present in the period spent wanted
+     * @param idPeriodSpent ID of the period spent wanted
+     * @return Return a List of User model present in the period spent wanted
+     */
+    @GetMapping("/getUsersByPeriodSpent/{idPeriodSpent}")
+    public List<User> fetchUsersByPeriodSpentByID(@PathVariable Long idPeriodSpent) {
+        log.info("Start to fetch all users in period spent id {}", idPeriodSpent);
+        return userIBusiness.getAllByIdPeriodSpent(idPeriodSpent);
     }
 }

@@ -16,6 +16,11 @@ class PeriodSpentService {
     console.log("Send get request to the API for the period spent in progress");
     return axios.get(PERIOD_SPENT_API_BASE_URL + "/getInProgress/");
   }
+
+  getPeriodSpentByID(idPeriodSpent) {
+    console.log("Send get request to the API for the period spent id : " + idPeriodSpent);
+    return axios.get(PERIOD_SPENT_API_BASE_URL + "/get/" + idPeriodSpent);
+  }
 }
 
 export default new PeriodSpentService();

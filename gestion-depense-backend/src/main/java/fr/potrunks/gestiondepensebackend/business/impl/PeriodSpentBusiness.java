@@ -10,6 +10,7 @@ import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -93,15 +94,31 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
     public PeriodSpent getPeriodSpentInProgress() {
         log.info("Start to get period spent in progress");
         PeriodSpentEntity periodSpentEntityInProgress = periodSpentRepository.findByEndDatePeriodSpentIsNull();
-        if (periodSpentEntityInProgress == null) {
-            log.warn("No period spent in progress");
+        return copyPeriodSpentEntityToPeriodSpent(periodSpentEntityInProgress);
+    }
+
+    @Override
+    public PeriodSpent getPeriodSpentById(Long idPeriodSpent) {
+        log.info("Start to get the period spent id {} in the data base", idPeriodSpent);
+        PeriodSpentEntity periodSpentEntityGetById = periodSpentRepository.getById(idPeriodSpent);
+        return copyPeriodSpentEntityToPeriodSpent(periodSpentEntityGetById);
+    }
+
+    /**
+     * Copy properties of a Period Spent Entity to a Period Spent. Get the ID of the previous and before Period Spent Entity for the Period Spent
+     * @param periodSpentEntityToCopy Period Spent source
+     * @return Return a Period Spent copy from the Period Spent Entity in the parameter
+     */
+    public PeriodSpent copyPeriodSpentEntityToPeriodSpent(PeriodSpentEntity periodSpentEntityToCopy) {
+        if (periodSpentEntityToCopy == null) {
+            log.warn("No period spent found");
             return null;
         }
-        PeriodSpent periodSpentInProgress = new PeriodSpent();
-        BeanUtils.copyProperties(periodSpentEntityInProgress, periodSpentInProgress);
-        periodSpentInProgress.setIdNextPeriodSpent(getIdNextPeriodSpent(periodSpentEntityInProgress));
-        periodSpentInProgress.setIdPreviousPeriodSpent(getIdPreviousPeriodSpent(periodSpentEntityInProgress));
-        return periodSpentInProgress;
+        PeriodSpent periodSpentClone = new PeriodSpent();
+        BeanUtils.copyProperties(periodSpentEntityToCopy, periodSpentClone);
+        periodSpentClone.setIdNextPeriodSpent(getIdNextPeriodSpent(periodSpentEntityToCopy));
+        periodSpentClone.setIdPreviousPeriodSpent(getIdPreviousPeriodSpent(periodSpentEntityToCopy));
+        return periodSpentClone;
     }
 
     /**
@@ -111,7 +128,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
      */
     private Long getIdPreviousPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Start to get the id of the previous period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
-        PeriodSpentEntity previousPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentBefore(periodSpentEntity.getStartDatePeriodSpent());
+        PeriodSpentEntity previousPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentBeforeOrderByStartDatePeriodSpentDesc(periodSpentEntity.getStartDatePeriodSpent());
         if (previousPeriodSpentEntity == null) {
             return null;
         }
@@ -125,7 +142,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
      */
     private Long getIdNextPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Start to get the id of the next period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
-        PeriodSpentEntity nextPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentAfter(periodSpentEntity.getStartDatePeriodSpent());
+        PeriodSpentEntity nextPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentAfterOrderByStartDatePeriodSpentAsc(periodSpentEntity.getStartDatePeriodSpent());
         if (nextPeriodSpentEntity == null) {
             return null;
         }

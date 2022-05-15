@@ -86,6 +86,17 @@ public class SpentController {
         return spentBusiness.getSpentsByPeriodSpentInProgress();
     }
 
+    /**
+     * Fetch all spents in period spent id wanted
+     * @param idPeriodSpent ID of the period spent wanted
+     * @return Return a list of Spent model in the period spent id wanted
+     */
+    @GetMapping("/getAllByPeriodSpent/{idPeriodSpent}")
+    public List<Spent> fetchSpentsByPeriodSpent(@PathVariable Long idPeriodSpent) {
+        log.info("Start to get all spents by period spent id {}", idPeriodSpent);
+        return spentBusiness.getSpentsByIdPeriodSpent(idPeriodSpent);
+    }
+
     // A supprimer
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long id) {
