@@ -48,6 +48,7 @@ public class SpentBusiness implements SpentIBusiness {
                         spent.getNameSpent(),
                         spent.getCommentSpent(),
                         null,
+                        null,
                         spent.getUserEntity().getFirstNameUser(),
                         null,
                         spent.getSpentCategoryEntity().getNameSpentCategory()))
@@ -112,6 +113,7 @@ public class SpentBusiness implements SpentIBusiness {
                         spent.getDateSpent(),
                         spent.getNameSpent(),
                         spent.getCommentSpent(),
+                        null,
                         null,
                         spent.getUserEntity().getFirstNameUser(),
                         null,
