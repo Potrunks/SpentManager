@@ -28,7 +28,8 @@ const SpendingPeriodByID = () => {
           const responsePeriodSpent =
             await PeriodSpentService.getPeriodSpentByID(idPeriodSpent);
           const responseUsers =
-            await UserService.getUsersInPeriodSpentInProgress();
+            await UserService.getUsersInPeriodSpentByID(idPeriodSpent);
+          // A changer
           const responseSpents = await SpentService.getSpentsPeriodInProgress();
           setPeriodSpent(responsePeriodSpent.data);
           setUsers(responseUsers.data);

@@ -7,6 +7,11 @@ class UserService {
     console.log("Start to fetch all users in period spent in progress");
     return axios.get(USER_API_BASE_URL + "/getusersbyperiodspentinprogress/");
   }
+
+  getUsersInPeriodSpentByID(idPeriodSpent) {
+    console.log("Start to fetch all users in period spent id " + idPeriodSpent);
+    return axios.get(USER_API_BASE_URL + "/getUsersByPeriodSpent/" + idPeriodSpent);
+  }
 }
 
 export default new UserService();
