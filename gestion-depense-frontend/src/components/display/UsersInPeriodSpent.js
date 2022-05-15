@@ -16,9 +16,21 @@ const UsersInPeriodSpent = ({ users }) => {
               ) : (
                 <span>Pas de dette</span>
               )}
-              <span>{user.valueSpents} euros dépensés</span>
-              <span>Salaire : {user.valueSalary} euros</span>
-              <span>Taux de dépense : {Math.round(user.rateSpent)} %</span>
+              {user.valueSpents > 0 ? (
+                <span>{user.valueSpents} euros dépensés</span>
+              ) : (
+                <span>Pas de dépense</span>
+              )}
+              {user.valueSalary > 0 ? (
+                <span>Salaire : {user.valueSalary} euros</span>
+              ) : (
+                <span>Pas de salaire</span>
+              )}
+              {user.rateSpent > 0 ? (
+                <span>Taux de dépense : {Math.round(user.rateSpent)} %</span>
+              ) : (
+                <span>Pas de taux de dépense</span>
+              )}
             </div>
             <div className="user-btn-command">
               <button>Modifier le salaire</button>
