@@ -100,6 +100,26 @@ public class SpentBusiness implements SpentIBusiness {
         return spentEntity;
     }
 
+    @Override
+    public List<Spent> getSpentsByIdPeriodSpent(Long idPeriodSpent) {
+        log.info("Start to search all spents by period spent id {}", idPeriodSpent);
+        List<SpentEntity> spentEntities = spentRepository.findByPeriodSpentEntity(periodSpentIRepository.getById(idPeriodSpent));
+        List<Spent> spents = spentEntities
+                .stream()
+                .map(spent -> new Spent(
+                        spent.getIdSpent(),
+                        spent.getValueSpent(),
+                        spent.getDateSpent(),
+                        spent.getNameSpent(),
+                        spent.getCommentSpent(),
+                        null,
+                        spent.getUserEntity().getFirstNameUser(),
+                        null,
+                        spent.getSpentCategoryEntity().getNameSpentCategory()))
+                .collect(Collectors.toList());
+        return spents;
+    }
+
     /**
      * Verify if user is in the period of spent
      * @param userToTest User to verify
