@@ -37,4 +37,14 @@ public class UserController {
         log.info("Start to fetch all users in period spent id {}", idPeriodSpent);
         return userIBusiness.getAllByIdPeriodSpent(idPeriodSpent);
     }
+
+    /**
+     * Fetch a list of users model in the database for the UI
+     * @return Return a list of users model for the UI
+     */
+    @GetMapping("/getAll")
+    public List<User> fetchAllUsers() {
+        log.info("Start to fetch all users in database");
+        return userIBusiness.getAllUsers();
+    }
 }

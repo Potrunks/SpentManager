@@ -26,4 +26,10 @@ public interface UserIBusiness {
      * @return Return a list of user model in the period spent id wanted
      */
     List<User> getAllByIdPeriodSpent(Long idPeriodSpent);
+
+    /**
+     * Get all users in database
+     * @return Return a list of users model
+     */
+    List<User> getAllUsers();
 }

@@ -7,10 +7,12 @@ import fr.potrunks.gestiondepensebackend.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -69,6 +71,28 @@ public class UserBusiness implements UserIBusiness {
             return null;
         }
         List<User> userList = copyUserEntityListToUserList(userEntityList, periodSpentById);
+        return userList;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        log.info("Start to get all users in database");
+        List<UserEntity> userEntityInDatabase = userIRepository.findAll(Sort.by(Sort.Direction.ASC, "firstNameUser"));
+        List<User> userList = userEntityInDatabase
+                .stream()
+                .map(user -> new User(
+                        user.getIdUser(),
+                        null,
+                        user.getFirstNameUser(),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null))
+                .collect(Collectors.toList());
         return userList;
     }
 
