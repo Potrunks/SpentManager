@@ -2,6 +2,7 @@ package fr.potrunks.gestiondepensebackend.business.impl;
 
 import fr.potrunks.gestiondepensebackend.business.PeriodSpentIBusiness;
 import fr.potrunks.gestiondepensebackend.entity.PeriodSpentEntity;
+import fr.potrunks.gestiondepensebackend.entity.SalaryEntity;
 import fr.potrunks.gestiondepensebackend.entity.UserEntity;
 import fr.potrunks.gestiondepensebackend.model.PeriodSpent;
 import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
@@ -106,6 +107,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
 
     /**
      * Copy properties of a Period Spent Entity to a Period Spent. Get the ID of the previous and before Period Spent Entity for the Period Spent
+     *
      * @param periodSpentEntityToCopy Period Spent source
      * @return Return a Period Spent copy from the Period Spent Entity in the parameter
      */
@@ -123,6 +125,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
 
     /**
      * Get the ID of the period spent created before the period spent in parameter
+     *
      * @param periodSpentEntity The period spent reference
      * @return Return the ID of the previous period spent
      */
@@ -137,6 +140,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
 
     /**
      * Get the ID of the period spent created after the period spent in parameter
+     *
      * @param periodSpentEntity The period spent reference
      * @return Return the ID of the next period spent
      */
@@ -151,18 +155,28 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
 
     /**
      * Verify if the period spent in progress is closable. For that, count the number of salary present in the period spent and if the number is greater than 1, the period spent is closable
+     *
      * @param periodSpentEntity Period spent who want to verify if is closable
-     * @param response A map of String (key) and Object (value) for the UI
+     * @param response          A map of String (key) and Object (value) for the UI
      * @return Return a Response Entity of Map of String (key) and Object (value) with each step of the verification
      */
     private Map<String, Object> verifyPeriodSpentInProgressIsClosable(PeriodSpentEntity periodSpentEntity, Map<String, Object> response) {
         log.info("Verifying if Period Spent id {} is closable", periodSpentEntity.getIdPeriodSpent());
         Boolean periodSpentInProgressIsClosable = false;
-        if (salaryRepository.countByPeriodSpentEntity(periodSpentEntity) > 1) {
+        List<SalaryEntity> salaryEntityListByPeriodSpent = salaryRepository.findByPeriodSpentEntity(periodSpentEntity);
+        if (salaryEntityListByPeriodSpent.size() > 1) {
+            for (SalaryEntity salary : salaryEntityListByPeriodSpent
+            ) {
+                if (salary.getValueSalary() == 0f) {
+                    log.warn("Period Spent not closable because one or more salary is zero value");
+                    response.put("periodSpentInProgressIsClosable", periodSpentInProgressIsClosable);
+                    return response;
+                }
+            }
             log.info("Period Spent is closable");
             periodSpentInProgressIsClosable = true;
         } else {
-            log.warn("Period Spent not closable");
+            log.warn("Period Spent not closable because there is only one salary");
         }
         response.put("periodSpentInProgressIsClosable", periodSpentInProgressIsClosable);
         return response;

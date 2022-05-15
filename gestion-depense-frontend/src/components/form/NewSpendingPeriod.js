@@ -65,7 +65,7 @@ const NewSpendingPeriod = () => {
           navigate("/success");
         } else if (response.data.periodSpentInProgressIsClosable === false) {
           document.getElementById("API-error-box").firstChild.innerHTML =
-            "Ne peut pas fermer la periode de dépense précédente car il y a qu'un seul salaire";
+            "Ne peut pas fermer la periode de dépense précédente car il n'y a qu'un seul salaire";
           document.getElementById("API-error-box").style.display = "flex";
         }
       })
