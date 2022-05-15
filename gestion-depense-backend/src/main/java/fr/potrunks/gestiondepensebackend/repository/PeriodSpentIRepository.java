@@ -21,12 +21,12 @@ public interface PeriodSpentIRepository extends JpaRepository<PeriodSpentEntity,
      * @param startDatePeriodSpent Creation date of the period spent that we want to find the period spent create after
      * @return PeriodSpentEntity with a start date just after the date given in parameter
      */
-    PeriodSpentEntity findFirstByStartDatePeriodSpentAfter(LocalDate startDatePeriodSpent);
+    PeriodSpentEntity findFirstByStartDatePeriodSpentAfterOrderByStartDatePeriodSpentAsc(LocalDate startDatePeriodSpent);
 
     /**
      * Find in database the period spent create at the date just before the date given in parameter
      * @param startDatePeriodSpent Creation date of the period spent that we want to find the period spent create before
      * @return PeriodSpentEntity with a start date just before the date given in parameter
      */
-    PeriodSpentEntity findFirstByStartDatePeriodSpentBefore(LocalDate startDatePeriodSpent);
+    PeriodSpentEntity findFirstByStartDatePeriodSpentBeforeOrderByStartDatePeriodSpentDesc(LocalDate startDatePeriodSpent);
 }

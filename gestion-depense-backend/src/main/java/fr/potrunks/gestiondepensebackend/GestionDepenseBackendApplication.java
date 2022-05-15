@@ -58,19 +58,24 @@ public class GestionDepenseBackendApplication {
 			}
 
 			// Add new period spent
+			// 1st period spent
 			List<UserEntity> userEntityList = new ArrayList<>();
 			userEntityList.add(userEntity);
 			userEntityList.add(userEntity2);
+
 			PeriodSpentEntity periodSpentEntity = new PeriodSpentEntity();
-			periodSpentEntity.setStartDatePeriodSpent(LocalDate.now().minusDays(30));
+			periodSpentEntity.setStartDatePeriodSpent(LocalDate.now().minusDays(60));
+			periodSpentEntity.setEndDatePeriodSpent(LocalDate.now().minusDays(30));
 			periodSpentEntity.setUserEntityList(userEntityList);
 			periodSpentEntity = periodSpentIRepository.save(periodSpentEntity);
+
 			SalaryEntity salaryEntity = new SalaryEntity();
 			salaryEntity.setUserEntity(userEntity);
 			salaryEntity.setValueSalary(7000f);
 			salaryEntity.setPeriodSpentEntity(periodSpentEntity);
 			salaryEntity.setDateSalary(LocalDate.now());
 			salaryIRepository.save(salaryEntity);
+
 			SalaryEntity salaryEntity2 = new SalaryEntity();
 			salaryEntity2.setUserEntity(userEntity2);
 			salaryEntity2.setValueSalary(3000f);
@@ -78,18 +83,52 @@ public class GestionDepenseBackendApplication {
 			salaryEntity2.setDateSalary(LocalDate.now());
 			salaryIRepository.save(salaryEntity2);
 
+			// 2nd period spent
+			PeriodSpentEntity periodSpentEntity2 = new PeriodSpentEntity();
+			periodSpentEntity2.setStartDatePeriodSpent(LocalDate.now().minusDays(30));
+			periodSpentEntity2.setUserEntityList(userEntityList);
+			periodSpentEntity2 = periodSpentIRepository.save(periodSpentEntity2);
+
+			SalaryEntity salaryEntity3 = new SalaryEntity();
+			salaryEntity3.setUserEntity(userEntity);
+			salaryEntity3.setValueSalary(7000f);
+			salaryEntity3.setPeriodSpentEntity(periodSpentEntity2);
+			salaryEntity3.setDateSalary(LocalDate.now());
+			salaryIRepository.save(salaryEntity3);
+
+			SalaryEntity salaryEntity4 = new SalaryEntity();
+			salaryEntity4.setUserEntity(userEntity2);
+			salaryEntity4.setValueSalary(3000f);
+			salaryEntity4.setPeriodSpentEntity(periodSpentEntity2);
+			salaryEntity4.setDateSalary(LocalDate.now());
+			salaryIRepository.save(salaryEntity4);
+
 			// Add spents
+			// For 1st Period Spent
 			List<SpentEntity> spentEntityList = new ArrayList<>();
 			SpentEntity spentEntity = new SpentEntity();
 			spentEntity.setValueSpent(100f);
 			spentEntity.setSpentCategoryEntity(spentCategoryIRepository.getById(1L));
-			spentEntity.setDateSpent(LocalDate.now());
+			spentEntity.setDateSpent(LocalDate.now().minusDays(25));
 			spentEntity.setNameSpent("Mc DO");
 			spentEntity.setUserEntity(userEntity);
 			spentEntity.setCommentSpent("C pas bien");
 			spentEntity.setPeriodSpentEntity(periodSpentEntity);
 			spentEntityList.add(spentEntity);
 			spentIRepository.saveAll(spentEntityList);
+
+			// For 2nd Period Spent
+			List<SpentEntity> spentEntityList2 = new ArrayList<>();
+			SpentEntity spentEntity2 = new SpentEntity();
+			spentEntity2.setValueSpent(350f);
+			spentEntity2.setSpentCategoryEntity(spentCategoryIRepository.getById(5L));
+			spentEntity2.setDateSpent(LocalDate.now());
+			spentEntity2.setNameSpent("XBOX");
+			spentEntity2.setUserEntity(userEntity);
+			spentEntity2.setCommentSpent("C bien");
+			spentEntity2.setPeriodSpentEntity(periodSpentEntity2);
+			spentEntityList2.add(spentEntity2);
+			spentIRepository.saveAll(spentEntityList2);
 		};
 	}
 

@@ -28,7 +28,7 @@ const SpendingPeriodInProgress = () => {
             await PeriodSpentService.getPeriodSpentInProgress();
           const responseUsers =
             await UserService.getUsersInPeriodSpentInProgress();
-            const responseSpents = await SpentService.getSpentsPeriodInProgress();
+          const responseSpents = await SpentService.getSpentsPeriodInProgress();
           setPeriodSpent(responsePeriodSpent.data);
           setUsers(responseUsers.data);
           setSpents(responseSpents.data);

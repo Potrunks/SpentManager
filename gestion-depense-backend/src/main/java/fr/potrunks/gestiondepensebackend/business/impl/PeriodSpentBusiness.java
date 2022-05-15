@@ -128,7 +128,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
      */
     private Long getIdPreviousPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Start to get the id of the previous period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
-        PeriodSpentEntity previousPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentBefore(periodSpentEntity.getStartDatePeriodSpent());
+        PeriodSpentEntity previousPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentBeforeOrderByStartDatePeriodSpentDesc(periodSpentEntity.getStartDatePeriodSpent());
         if (previousPeriodSpentEntity == null) {
             return null;
         }
@@ -142,7 +142,7 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
      */
     private Long getIdNextPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Start to get the id of the next period spent close to the period spent id {}", periodSpentEntity.getIdPeriodSpent());
-        PeriodSpentEntity nextPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentAfter(periodSpentEntity.getStartDatePeriodSpent());
+        PeriodSpentEntity nextPeriodSpentEntity = periodSpentRepository.findFirstByStartDatePeriodSpentAfterOrderByStartDatePeriodSpentAsc(periodSpentEntity.getStartDatePeriodSpent());
         if (nextPeriodSpentEntity == null) {
             return null;
         }

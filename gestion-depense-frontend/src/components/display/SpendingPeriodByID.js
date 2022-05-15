@@ -29,8 +29,7 @@ const SpendingPeriodByID = () => {
             await PeriodSpentService.getPeriodSpentByID(idPeriodSpent);
           const responseUsers =
             await UserService.getUsersInPeriodSpentByID(idPeriodSpent);
-          // A changer
-          const responseSpents = await SpentService.getSpentsPeriodInProgress();
+          const responseSpents = await SpentService.getSpentsPeriodByID(idPeriodSpent);
           setPeriodSpent(responsePeriodSpent.data);
           setUsers(responseUsers.data);
           setSpents(responseSpents.data);
@@ -42,7 +41,7 @@ const SpendingPeriodByID = () => {
       };
       fetchData();
     }
-  }, [loading]);
+  }, [loading, idPeriodSpent]);
 
   return (
     <div className="app-main-container">

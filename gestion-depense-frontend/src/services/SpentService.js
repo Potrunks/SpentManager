@@ -12,6 +12,11 @@ class SpentService {
     return axios.get(SPENT_API_BASE_URL + "/getAllByPeriodSpentInProgress/");
   }
 
+  getSpentsPeriodByID(idPeriodSpent) {
+    console.log("Get all the spents during period spent by id : " + idPeriodSpent)
+    return axios.get(SPENT_API_BASE_URL + "/getAllByPeriodSpent/" + idPeriodSpent);
+  }
+
   deleteSpent(id) {
     return axios.delete(SPENT_API_BASE_URL + "/delete/" + id);
   }
