@@ -42,19 +42,19 @@ public class SpentController {
     public ResponseEntity<Map<String, Object>> newSpent(@RequestBody Spent spent) {
         log.info("Creating new spent...");
         Map<String, Object> response = new HashMap<>();
-        UserEntity userConnected;
+        UserEntity userExpenser;
         SpentCategoryEntity spentCategorySelected;
         PeriodSpentEntity periodSpentInProgress;
         SpentEntity newSpent;
         Boolean newSpentAdded = false;
         Boolean periodSpentInProgressExist = true;
-        userConnected = userIBusiness.findById(spent.getIdUserConnected());
-        if (userConnected.getIdUser() != null) {
+        userExpenser = userIBusiness.findById(spent.getIdUserExpenser());
+        if (userExpenser.getIdUser() != null) {
             spentCategorySelected = spentCategoryIBusiness.findById(spent.getIdSpentCategorySelected());
             if (spentCategorySelected.getIdSpentCategory() != null) {
                 periodSpentInProgress = periodSpentIBusiness.findInProgress();
                 if (periodSpentInProgress != null) {
-                    newSpent = spentBusiness.create(userConnected, spentCategorySelected, periodSpentInProgress, spent);
+                    newSpent = spentBusiness.create(userExpenser, spentCategorySelected, periodSpentInProgress, spent);
                     if (newSpent.getIdSpent() != null) {
                         newSpentAdded = true;
                         log.info("New spent created successfully");
