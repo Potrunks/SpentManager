@@ -57,8 +57,30 @@ class InputTestService {
     if (
       this.verifyIntegrityValueSpent(spent.valueSpent) === false ||
       this.verifyIntegrityNameSpent(spent.nameSpent) === false ||
-      this.verifyIntegritySpentCategory(spent.idSpentCategorySelected) === false
+      this.verifyIntegritySpentCategory(spent.idSpentCategorySelected) === false ||
+      this.verifyIntegrityUserChoice(spent.idUserExpenser) === false
     ) {
+      return false;
+    }
+    return true;
+  }
+
+  verifyIntegrityUserChoice(idUserExpenser) {
+    if (this.idUserExpenserIsSelected(idUserExpenser) === true) {
+      return true;
+    }
+    return false;
+  }
+
+  idUserExpenserIsSelected(idUserExpenser) {
+    if(idUserExpenser === "") {
+      document.getElementById("idUserExpenser").classList.add("error");
+      document
+        .getElementById("idUserExpenser")
+        .classList.add("select-error");
+      document.getElementById(
+        "idUserExpenser"
+      ).firstChild.textContent = "Selection obligatoire";
       return false;
     }
     return true;

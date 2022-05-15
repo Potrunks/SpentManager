@@ -16,6 +16,7 @@ public class Spent {
     private String nameSpent;
     private String commentSpent;
     private Long idUserConnected;
+    private Long idUserExpenser;
     private String nameUserWhoCreate;
     private Long idSpentCategorySelected;
     private String nameSpentCategory;
