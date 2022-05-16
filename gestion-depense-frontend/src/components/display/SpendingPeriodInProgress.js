@@ -60,7 +60,7 @@ const SpendingPeriodInProgress = () => {
       {!loading && <DateSpendingPeriodAndMore periodSpent={periodSpent} />}
       {!loading && <UsersInPeriodSpent users={users} />}
       {!loading && <SpendingPeriodBTNCommand />}
-      {!loading && <Spents spents={spents} />}
+      {!loading && <Spents spents={spents} deleteSpentMethod={deleteExpenseByID} />}
     </div>
   );
 };

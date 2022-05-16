@@ -23,7 +23,7 @@ const Spents = ({ spents, deleteSpentMethod }) => {
             </div>
             <div className="spent-card-btn-command">
               <button>Modifier</button>
-              <button onClick={(e, idSpent) => deleteSpentMethod(e, idSpent)}>Supprimer</button>
+              <button onClick={(e, idSpent) => deleteSpentMethod(e, spent.idSpent)}>Supprimer</button>
             </div>
           </div>
         </div>
