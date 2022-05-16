@@ -104,10 +104,12 @@ public class SpentController {
      */
     @DeleteMapping("/delete/{idSpent}")
     public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long idSpent) {
+        log.info("Start process to delete spent id {}", idSpent);
         Boolean deleted = false;
         deleted = spentBusiness.deleteSpent(idSpent);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", deleted);
+        log.info("Delete process is over");
         return ResponseEntity.ok(response);
     }
 
