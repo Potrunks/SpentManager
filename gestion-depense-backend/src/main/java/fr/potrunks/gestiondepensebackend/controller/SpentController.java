@@ -97,6 +97,11 @@ public class SpentController {
         return spentBusiness.getSpentsByIdPeriodSpent(idPeriodSpent);
     }
 
+    /**
+     * Delete a Spent Entity by ID
+     * @param idSpent ID of the spent to delete
+     * @return Return a Map of String (key) and Boolean (value) with the result of the deletion
+     */
     @DeleteMapping("/delete/{idSpent}")
     public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long idSpent) {
         Boolean deleted = false;
