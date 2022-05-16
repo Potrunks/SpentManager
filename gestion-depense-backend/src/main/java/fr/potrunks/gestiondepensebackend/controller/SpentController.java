@@ -97,16 +97,16 @@ public class SpentController {
         return spentBusiness.getSpentsByIdPeriodSpent(idPeriodSpent);
     }
 
-    // A supprimer
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long id) {
+    @DeleteMapping("/delete/{idSpent}")
+    public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long idSpent) {
         Boolean deleted = false;
-        deleted = spentBusiness.deleteSpent(id);
+        deleted = spentBusiness.deleteSpent(idSpent);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", deleted);
         return ResponseEntity.ok(response);
     }
 
+    // A supprimer
     @GetMapping("/get/{id}")
     public ResponseEntity<Spent> getSpent(@PathVariable Long id) {
         Spent spent = null;
