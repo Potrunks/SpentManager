@@ -17,6 +17,11 @@ class SpentService {
     return axios.get(SPENT_API_BASE_URL + "/getAllByPeriodSpent/" + idPeriodSpent);
   }
 
+  deleteExpenseById(idSpent) {
+    console.log("Start to post the spent id " + idSpent + " to the API");
+    return axios.delete(SPENT_API_BASE_URL + "/delete/" + idSpent);
+  }
+
   deleteSpent(id) {
     return axios.delete(SPENT_API_BASE_URL + "/delete/" + id);
   }

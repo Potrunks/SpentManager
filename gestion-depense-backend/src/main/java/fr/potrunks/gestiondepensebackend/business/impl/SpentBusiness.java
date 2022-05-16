@@ -57,8 +57,10 @@ public class SpentBusiness implements SpentIBusiness {
     }
 
     @Override
-    public Boolean deleteSpent(Long id) {
-        SpentEntity spentEntity = spentRepository.findById(id).get();
+    public Boolean deleteSpent(Long idSpent) {
+        log.info("Start to find spent by ID {}", idSpent);
+        SpentEntity spentEntity = spentRepository.findById(idSpent).get();
+        log.info("Start to delete spent by ID {}", idSpent);
         spentRepository.delete(spentEntity);
         return true;
     }

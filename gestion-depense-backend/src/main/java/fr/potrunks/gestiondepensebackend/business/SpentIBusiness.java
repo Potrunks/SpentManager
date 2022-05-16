@@ -16,9 +16,14 @@ public interface SpentIBusiness {
      */
     List<Spent> getSpentsByPeriodSpentInProgress();
 
-    // A sup
-    Boolean deleteSpent(Long id);
+    /**
+     * Delete Spent by ID in the database
+     * @param idSpent ID of the spent who want delete
+     * @return Return a Boolean with the result of the deletion
+     */
+    Boolean deleteSpent(Long idSpent);
 
+    // A sup
     Spent getSpent(Long id);
 
     Spent updateSpent(Long id, Spent spent);

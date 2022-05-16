@@ -97,16 +97,23 @@ public class SpentController {
         return spentBusiness.getSpentsByIdPeriodSpent(idPeriodSpent);
     }
 
-    // A supprimer
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long id) {
+    /**
+     * Delete a Spent Entity by ID
+     * @param idSpent ID of the spent to delete
+     * @return Return a Map of String (key) and Boolean (value) with the result of the deletion
+     */
+    @DeleteMapping("/delete/{idSpent}")
+    public ResponseEntity<Map<String, Boolean>> deleteSpent(@PathVariable Long idSpent) {
+        log.info("Start process to delete spent id {}", idSpent);
         Boolean deleted = false;
-        deleted = spentBusiness.deleteSpent(id);
+        deleted = spentBusiness.deleteSpent(idSpent);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", deleted);
+        log.info("Delete process is over");
         return ResponseEntity.ok(response);
     }
 
+    // A supprimer
     @GetMapping("/get/{id}")
     public ResponseEntity<Spent> getSpent(@PathVariable Long id) {
         Spent spent = null;
