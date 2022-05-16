@@ -17,7 +17,7 @@ const SpendingPeriodInProgress = () => {
   const [loading, setLoading] = useState(true);
 
   const deleteExpenseByID = (e, idSpent) => {
-    console.log("Start to delete the expense by id :" + idSpent)
+    console.log("Start to delete the expense by id :" + idSpent);
     e.preventDefault();
     SpentService.deleteExpenseById(idSpent).then((response) => {
       if (spents) {
@@ -60,7 +60,9 @@ const SpendingPeriodInProgress = () => {
       {!loading && <DateSpendingPeriodAndMore periodSpent={periodSpent} />}
       {!loading && <UsersInPeriodSpent users={users} />}
       {!loading && <SpendingPeriodBTNCommand />}
-      {!loading && <Spents spents={spents} deleteSpentMethod={deleteExpenseByID} />}
+      {!loading && (
+        <Spents spents={spents} deleteSpentMethod={deleteExpenseByID} />
+      )}
     </div>
   );
 };

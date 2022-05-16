@@ -1,6 +1,7 @@
 import React from "react";
 
 const Spents = ({ spents, deleteSpentMethod }) => {
+
   return (
     <div className="spents-main-container">
       <div className="main-title-display">
@@ -18,12 +19,16 @@ const Spents = ({ spents, deleteSpentMethod }) => {
               <span>Par {spent.nameUserWhoCreate}</span>
               <span>Catégorie : {spent.nameSpentCategory}</span>
               {spent.commentSpent !== "" && (
-                <span className="spent-comment">Commentaire : {spent.commentSpent}</span>
+                <span className="spent-comment">
+                  Commentaire : {spent.commentSpent}
+                </span>
               )}
             </div>
             <div className="spent-card-btn-command">
               <button>Modifier</button>
-              <button onClick={(e, idSpent) => deleteSpentMethod(e, spent.idSpent)}>Supprimer</button>
+              <button onClick={(e, idSpent) => deleteSpentMethod(e, spent.idSpent)}>
+                Supprimer
+              </button>
             </div>
           </div>
         </div>
