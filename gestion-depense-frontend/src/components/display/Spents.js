@@ -1,6 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Spents = ({ spents, deleteSpentMethod }) => {
+
+  const navigate = useNavigate();
+
+  const modifySpentByID = (e, idSpent) => {
+    e.preventDefault();
+    // Faire le navigate vers le composant modify spent
+  }
 
   return (
     <div className="spents-main-container">
