@@ -1,6 +1,6 @@
 import React from "react";
 
-const Spents = ({ spents }) => {
+const Spents = ({ spents, deleteSpentMethod }) => {
   return (
     <div className="spents-main-container">
       <div className="main-title-display">
@@ -23,7 +23,7 @@ const Spents = ({ spents }) => {
             </div>
             <div className="spent-card-btn-command">
               <button>Modifier</button>
-              <button>Supprimer</button>
+              <button onClick={(e, idSpent) => deleteSpentMethod(e, idSpent)}>Supprimer</button>
             </div>
           </div>
         </div>
