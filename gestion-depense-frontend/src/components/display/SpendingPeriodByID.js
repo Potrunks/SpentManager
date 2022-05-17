@@ -17,18 +17,6 @@ const SpendingPeriodByID = () => {
   const [spents, setSpents] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const deleteExpenseByID = (e, idSpent) => {
-    console.log("Start to delete the expense by id :" + idSpent)
-    e.preventDefault();
-    SpentService.deleteExpenseById(idSpent).then((response) => {
-      if (spents) {
-        setSpents((previousElement) => {
-          return previousElement.filter((spent) => spent.idSpent !== idSpent);
-        });
-      }
-    });
-  };
-
   useEffect(() => {
     if (sessionStorage.getItem("idUserConnected") === null) {
       console.log("User no connected");
@@ -59,9 +47,9 @@ const SpendingPeriodByID = () => {
     <div className="app-main-container">
       {loading && <Loading />}
       {!loading && <DateSpendingPeriodAndMore periodSpent={periodSpent} />}
-      {!loading && <UsersInPeriodSpent users={users} />}
-      {!loading && <SpendingPeriodBTNCommand />}
-      {!loading && <Spents spents={spents} deleteSpentMethod={deleteExpenseByID} periodSpent={periodSpent} />}
+      {!loading && <UsersInPeriodSpent users={users} periodSpent={periodSpent} />}
+      {!loading && <SpendingPeriodBTNCommand periodSpent={periodSpent} />}
+      {!loading && <Spents spents={spents} periodSpent={periodSpent} />}
     </div>
   );
 };
