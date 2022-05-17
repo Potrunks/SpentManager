@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import CreateAccount from "./components/form/CreateAccount";
-import DisplaySpents from "./components/spent/DisplaySpents";
-import ModifySpent from "./components/spent/ModifySpent";
+import ModifySpent from "./components/form/ModifySpent";
 import Navbar from "./components/UI/Navbar";
 import "./style/navbar.css";
 import "./style/form.css";
@@ -39,8 +38,7 @@ function App() {
             path="/displayspendingperiod/:idPeriodSpent"
             element={<SpendingPeriodByID />}
           />
-          <Route path="/displaySpents" element={<DisplaySpents />} />
-          <Route path="/modifySpent/:id" element={<ModifySpent />} />
+          <Route path="/modifySpent/:idSpent" element={<ModifySpent />} />
         </Routes>
       </BrowserRouter>
     </>

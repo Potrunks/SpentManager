@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InputTestService from "../../services/InputTestService";
 import SpentCategoryService from "../../services/SpentCategoryService";
 import SpentService from "../../services/SpentService";
@@ -7,8 +7,10 @@ import UserService from "../../services/UserService";
 import Loading from "../page/Loading";
 import Confirm from "../Popup/Confirm";
 
-const NewSpent = () => {
+const ModifySpent = () => {
+  const { idSpent } = useParams();
   const [spent, setSpent] = useState({
+    idSpent: idSpent,
     valueSpent: "",
     nameSpent: "",
     commentSpent: "",
@@ -17,10 +19,9 @@ const NewSpent = () => {
   });
   const [loading, setLoading] = useState(true);
   const [spentCategories, setSpentCategories] = useState(null);
-  const confirmMessage = "Etes-vous sur de vouloir ajouter une nouvelle dépense ?";
+  const confirmMessage = "Etes-vous sur de vouloir modifier la dépense ?";
   const [confirmPopup, setConfirmPopup] = useState(false);
   const [users, setUsers] = useState(null);
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -37,24 +38,11 @@ const NewSpent = () => {
     }
   };
 
-  const createNewSpent = (e) => {
+  const modifySpent = (e) => {
     //e.preventDefault();
-    setConfirmPopup(false);
-    console.log("Start to post a new spent for the API");
-    SpentService.newSpent(spent)
+    SpentService.updateSpentByID(idSpent, spent)
       .then((response) => {
-        if (response.data.periodSpentInProgressExist === false) {
-          document.getElementById("API-error-box").firstChild.innerHTML =
-            "Aucune période de dépense en cours. Veuillez créer une période de dépense.";
-          document.getElementById("API-error-box").style.display = "flex";
-        } else if (response.data.newSpentAdded === false) {
-          document.getElementById("API-error-box").firstChild.innerHTML =
-            "Probléme pendant l'ajout de la dépense. Veuillez contacter l'administrateur.";
-          document.getElementById("API-error-box").style.display = "flex";
-        } else {
-          console.log("New spent successfully added to the API");
-          navigate("/success");
-        }
+        navigate("/success");
       })
       .catch((error) => {
         console.log(error);
@@ -79,8 +67,10 @@ const NewSpent = () => {
         setLoading(true);
         console.log("Start loading...");
         try {
+          const responseSpent = await SpentService.getSpentByID(idSpent);
           const response = await SpentCategoryService.getAllSpentCategories();
           const responseUsers = await UserService.getAllUsers();
+          setSpent(responseSpent.data);
           setSpentCategories(response.data);
           setUsers(responseUsers.data);
         } catch (error) {
@@ -145,6 +135,7 @@ const NewSpent = () => {
                 name="idSpentCategorySelected"
                 onChange={(e) => handleChange(e)}
                 className="select-form"
+                defaultValue={spent.idSpentCategorySelected}
               >
                 <option value="">Choisissez une catégorie...</option>
                 {spentCategories.map((spentCategory) => (
@@ -164,13 +155,11 @@ const NewSpent = () => {
                 name="idUserExpenser"
                 onChange={(e) => handleChange(e)}
                 className="select-form"
+                defaultValue={spent.idUserExpenser}
               >
                 <option value="">Choisissez un utilisateur...</option>
                 {users.map((user) => (
-                  <option
-                    key={user.idUser}
-                    value={user.idUser}
-                  >
+                  <option key={user.idUser} value={user.idUser}>
                     {user.firstNameUser}
                   </option>
                 ))}
@@ -183,7 +172,7 @@ const NewSpent = () => {
                 displayConfirmPopup(e);
               }}
             >
-              Ajouter
+              Modifier
             </button>
             <button onClick={clearInput}>Effacer les champs</button>
             <button onClick={() => navigate("/menu")}>Annuler</button>
@@ -193,7 +182,7 @@ const NewSpent = () => {
       {confirmPopup && (
         <Confirm
           parentSetConfirmPopup={setConfirmPopup}
-          parentMethodToConfirm={createNewSpent}
+          parentMethodToConfirm={modifySpent}
           parentConfirmMessage={confirmMessage}
         />
       )}
@@ -201,4 +190,4 @@ const NewSpent = () => {
   );
 };
 
-export default NewSpent;
+export default ModifySpent;

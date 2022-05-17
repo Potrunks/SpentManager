@@ -113,18 +113,28 @@ public class SpentController {
         return ResponseEntity.ok(response);
     }
 
-    // A supprimer
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Spent> getSpent(@PathVariable Long id) {
-        Spent spent = null;
-        spent = spentBusiness.getSpent(id);
+    /**
+     * Get spent by ID
+     * @param idSpent ID of the spent wanted
+     * @return Return a spent model for UI
+     */
+    @GetMapping("/get/{idSpent}")
+    public ResponseEntity<Spent> getSpent(@PathVariable Long idSpent) {
+        log.info("Start spent get process by id {}", idSpent);
+        Spent spent = spentBusiness.getSpent(idSpent);
+        log.info("End spent get process by id {}", idSpent);
         return ResponseEntity.ok(spent);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Spent> updateSpent(@PathVariable Long id, @RequestBody Spent spent) {
-        spent = spentBusiness.updateSpent(id, spent);
+    /**
+     * Update spent by ID
+     * @param idSpent ID of the spent wanted
+     * @param spent Spent modified from the UI
+     * @return Return the spent modified to the UI
+     */
+    @PutMapping("/update/{idSpent}")
+    public ResponseEntity<Spent> updateSpent(@PathVariable Long idSpent, @RequestBody Spent spent) {
+        spent = spentBusiness.updateSpent(idSpent, spent);
         return ResponseEntity.ok(spent);
     }
-    // A supprimer
 }
