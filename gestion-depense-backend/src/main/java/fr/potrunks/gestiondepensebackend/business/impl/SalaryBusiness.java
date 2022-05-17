@@ -9,6 +9,7 @@ import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
 import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
 import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,6 +87,27 @@ public class SalaryBusiness implements SalaryIBusiness {
         }
         response.put("salaryCreatedOrUpdated", salaryCreatedOrUpdated);
         return response;
+    }
+
+    @Override
+    public Boolean updateSalary(Salary salary) {
+        log.info("Start to update salary id {}", salary.getIdSalary());
+        log.info("Start to get salary entity by id {}", salary.getIdSalary());
+        SalaryEntity salaryEntityToUpdate = salaryRepository.getById(salary.getIdSalary());
+        log.info("Start to change value salary entity with new salary value");
+        salaryEntityToUpdate.setValueSalary(salary.getValueSalary());
+        salaryEntityToUpdate.setDateSalary(LocalDate.now());
+        salaryRepository.save(salaryEntityToUpdate);
+        return true;
+    }
+
+    @Override
+    public Salary getByIdSalary(Long idSalary) {
+        log.info("Start to get salary id {}", idSalary);
+        SalaryEntity salaryEntity = salaryRepository.getById(idSalary);
+        Salary salary = new Salary();
+        BeanUtils.copyProperties(salaryEntity, salary);
+        return salary;
     }
 
     /**

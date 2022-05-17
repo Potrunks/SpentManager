@@ -24,4 +24,18 @@ public interface SalaryIBusiness {
      * @return Return a Map String (Key) and Object (Value) contain informations of each step of this method
      */
     Map<String, Object> addSalaryInPeriodSpentInProgress(Map<String, Object> response, Long idUserConnected, Salary salary);
+
+    /**
+     * Update a Salary
+     * @param salary Salary to update
+     * @return Return a boolean true if the salary is updated and false if it's not
+     */
+    Boolean updateSalary(Salary salary);
+
+    /**
+     * Get Salary by ID salary
+     * @param idSalary ID of the salary wanted
+     * @return Return a salary with the ID wanted
+     */
+    Salary getByIdSalary(Long idSalary);
 }
