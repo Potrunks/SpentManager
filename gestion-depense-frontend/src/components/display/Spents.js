@@ -5,11 +5,6 @@ const Spents = ({ spents, deleteSpentMethod }) => {
 
   const navigate = useNavigate();
 
-  const modifySpentByID = (e, idSpent) => {
-    e.preventDefault();
-    // Faire le navigate vers le composant modify spent
-  }
-
   return (
     <div className="spents-main-container">
       <div className="main-title-display">
@@ -33,7 +28,7 @@ const Spents = ({ spents, deleteSpentMethod }) => {
               )}
             </div>
             <div className="spent-card-btn-command">
-              <button>Modifier</button>
+              <button onClick={() => navigate(`/modifySpent/${spent.idSpent}`)}>Modifier</button>
               <button onClick={(e, idSpent) => deleteSpentMethod(e, spent.idSpent)}>
                 Supprimer
               </button>

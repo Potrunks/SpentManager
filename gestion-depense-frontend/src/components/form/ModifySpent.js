@@ -57,7 +57,7 @@ const ModifySpent = () => {
         setLoading(true);
         console.log("Start loading...");
         try {
-          const responseSpent = SpentService.getSpentByID(idSpent);
+          const responseSpent = await SpentService.getSpentByID(idSpent);
           const response = await SpentCategoryService.getAllSpentCategories();
           const responseUsers = await UserService.getAllUsers();
           setSpent(responseSpent.data);
@@ -125,6 +125,7 @@ const ModifySpent = () => {
                 name="idSpentCategorySelected"
                 onChange={(e) => handleChange(e)}
                 className="select-form"
+                defaultValue={spent.idSpentCategorySelected}
               >
                 <option value="">Choisissez une catégorie...</option>
                 {spentCategories.map((spentCategory) => (
@@ -144,6 +145,7 @@ const ModifySpent = () => {
                 name="idUserExpenser"
                 onChange={(e) => handleChange(e)}
                 className="select-form"
+                defaultValue={spent.idUserExpenser}
               >
                 <option value="">Choisissez un utilisateur...</option>
                 {users.map((user) => (
