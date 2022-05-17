@@ -30,7 +30,10 @@ const ModifySpent = () => {
   };
 
   const displayConfirmPopup = (e) => {
-    if (confirmPopup === false) {
+    if (
+      InputTestService.verifyIntegrityNewSpent(spent) === true &&
+      confirmPopup === false
+    ) {
       setConfirmPopup(true);
     }
   };
@@ -162,7 +165,7 @@ const ModifySpent = () => {
                 displayConfirmPopup(e);
               }}
             >
-              Ajouter
+              Modifier
             </button>
             <button onClick={clearInput}>Effacer les champs</button>
             <button onClick={() => navigate("/menu")}>Annuler</button>
