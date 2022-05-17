@@ -3,10 +3,7 @@ package fr.potrunks.gestiondepensebackend.business.impl;
 import fr.potrunks.gestiondepensebackend.business.SpentIBusiness;
 import fr.potrunks.gestiondepensebackend.entity.*;
 import fr.potrunks.gestiondepensebackend.model.Spent;
-import fr.potrunks.gestiondepensebackend.repository.PeriodSpentIRepository;
-import fr.potrunks.gestiondepensebackend.repository.SalaryIRepository;
-import fr.potrunks.gestiondepensebackend.repository.SpentIRepository;
-import fr.potrunks.gestiondepensebackend.repository.UserIRepository;
+import fr.potrunks.gestiondepensebackend.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,8 @@ public class SpentBusiness implements SpentIBusiness {
     private SalaryIRepository salaryIRepository;
     @Autowired
     private UserIRepository userIRepository;
+    @Autowired
+    private SpentCategoryIRepository spentCategoryIRepository;
 
     public SpentBusiness(SpentIRepository spentRepository) {
         this.spentRepository = spentRepository;
@@ -77,10 +76,14 @@ public class SpentBusiness implements SpentIBusiness {
     }
 
     @Override
-    public Spent updateSpent(Long id, Spent spent) {
-        SpentEntity spentEntity = spentRepository.findById(id).get();
-        spentEntity.setDateSpent(spent.getDateSpent());
+    public Spent updateSpent(Long idSpent, Spent spent) {
+        SpentEntity spentEntity = spentRepository.findById(idSpent).get();
+        spentEntity.setDateSpent(LocalDate.now());
         spentEntity.setValueSpent(spent.getValueSpent());
+        spentEntity.setNameSpent(spent.getNameSpent());
+        spentEntity.setCommentSpent(spent.getCommentSpent());
+        spentEntity.setUserEntity(userIRepository.getById(spent.getIdUserExpenser()));
+        spentEntity.setSpentCategoryEntity(spentCategoryIRepository.getById(spent.getIdSpentCategorySelected()));
         spentRepository.save(spentEntity);
         return spent;
     }

@@ -30,9 +30,13 @@ public interface SpentIBusiness {
      */
     Spent getSpent(Long idSpent);
 
-    // A sup
-    Spent updateSpent(Long id, Spent spent);
-    // A sup
+    /**
+     * Update spent by ID in the database
+     * @param idSpent ID of the spent to update
+     * @param spent Spent modified
+     * @return Return a spent model modified and updated
+     */
+    Spent updateSpent(Long idSpent, Spent spent);
 
     /**
      * Set a new spent and add it to the database

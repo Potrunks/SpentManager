@@ -39,7 +39,7 @@ const ModifySpent = () => {
   };
 
   const modifySpent = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     SpentService.updateSpentByID(idSpent, spent)
       .then((response) => {
         navigate("/success");
