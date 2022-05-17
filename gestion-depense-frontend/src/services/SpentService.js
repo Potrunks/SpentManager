@@ -33,6 +33,11 @@ class SpentService {
     return axios.get(SPENT_API_BASE_URL + "/get/" + idSpent);
   }
 
+  updateSpentByID(idSpent, spent) {
+    console.log("Start to send spent id " + idSpent + " to the API for update");
+    return axios.put(SPENT_API_BASE_URL + "/update/" + idSpent, spent);
+  }
+
   // a sup
   deleteSpent(id) {
     return axios.delete(SPENT_API_BASE_URL + "/delete/" + id);

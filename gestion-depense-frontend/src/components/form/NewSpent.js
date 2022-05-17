@@ -67,8 +67,6 @@ const NewSpent = () => {
       valueSpent: "",
       nameSpent: "",
       commentSpent: "",
-      idUserExpenser: "",
-      idSpentCategorySelected: "",
     });
   };
 

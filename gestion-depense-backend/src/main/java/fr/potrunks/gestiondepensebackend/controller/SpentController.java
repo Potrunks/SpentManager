@@ -125,12 +125,10 @@ public class SpentController {
         log.info("End spent get process by id {}", idSpent);
         return ResponseEntity.ok(spent);
     }
-
-    // A supprimer
+    
     @PutMapping("/update/{id}")
     public ResponseEntity<Spent> updateSpent(@PathVariable Long id, @RequestBody Spent spent) {
         spent = spentBusiness.updateSpent(id, spent);
         return ResponseEntity.ok(spent);
     }
-    // A supprimer
 }

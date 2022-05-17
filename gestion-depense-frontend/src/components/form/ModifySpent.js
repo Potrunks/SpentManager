@@ -38,7 +38,16 @@ const ModifySpent = () => {
     }
   };
 
-  const modifySpent = (e) => {};
+  const modifySpent = (e) => {
+    e.preventDefault();
+    SpentService.updateSpentByID(idSpent, spent)
+      .then((response) => {
+        navigate("/success");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const clearInput = (e) => {
     e.preventDefault();
@@ -46,8 +55,6 @@ const ModifySpent = () => {
       valueSpent: "",
       nameSpent: "",
       commentSpent: "",
-      idUserExpenser: "",
-      idSpentCategorySelected: "",
     });
   };
 
