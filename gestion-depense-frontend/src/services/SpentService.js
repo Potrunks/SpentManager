@@ -8,13 +8,17 @@ class SpentService {
   }
 
   getSpentsPeriodInProgress() {
-    console.log("Get all the spents during period spent in progress")
+    console.log("Get all the spents during period spent in progress");
     return axios.get(SPENT_API_BASE_URL + "/getAllByPeriodSpentInProgress/");
   }
 
   getSpentsPeriodByID(idPeriodSpent) {
-    console.log("Get all the spents during period spent by id : " + idPeriodSpent)
-    return axios.get(SPENT_API_BASE_URL + "/getAllByPeriodSpent/" + idPeriodSpent);
+    console.log(
+      "Get all the spents during period spent by id : " + idPeriodSpent
+    );
+    return axios.get(
+      SPENT_API_BASE_URL + "/getAllByPeriodSpent/" + idPeriodSpent
+    );
   }
 
   deleteExpenseById(idSpent) {
@@ -22,6 +26,14 @@ class SpentService {
     return axios.delete(SPENT_API_BASE_URL + "/delete/" + idSpent);
   }
 
+  getSpentByID(idSpent) {
+    console.log(
+      "Start to send the spent " + idSpent + " to the API for fetch data"
+    );
+    return axios.get(SPENT_API_BASE_URL + "/get/" + idSpent);
+  }
+
+  // a sup
   deleteSpent(id) {
     return axios.delete(SPENT_API_BASE_URL + "/delete/" + id);
   }

@@ -23,9 +23,14 @@ public interface SpentIBusiness {
      */
     Boolean deleteSpent(Long idSpent);
 
-    // A sup
-    Spent getSpent(Long id);
+    /**
+     * Get spent by ID in database
+     * @param idSpent ID of the spent wanted
+     * @return Return a Spent model
+     */
+    Spent getSpent(Long idSpent);
 
+    // A sup
     Spent updateSpent(Long id, Spent spent);
     // A sup
 

@@ -66,10 +66,13 @@ public class SpentBusiness implements SpentIBusiness {
     }
 
     @Override
-    public Spent getSpent(Long id) {
-        SpentEntity spentEntity = spentRepository.findById(id).get();
+    public Spent getSpent(Long idSpent) {
+        log.info("Start to get spent id {} in database", idSpent);
+        SpentEntity spentEntity = spentRepository.findById(idSpent).get();
         Spent spent = new Spent();
         BeanUtils.copyProperties(spentEntity, spent);
+        spent.setIdUserExpenser(spentEntity.getUserEntity().getIdUser());
+        spent.setIdSpentCategorySelected(spentEntity.getSpentCategoryEntity().getIdSpentCategory());
         return spent;
     }
 

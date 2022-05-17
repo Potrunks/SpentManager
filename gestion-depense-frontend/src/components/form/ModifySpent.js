@@ -48,6 +48,31 @@ const ModifySpent = () => {
     });
   };
 
+  useEffect(() => {
+    if (sessionStorage.getItem("idUserConnected") === null) {
+      console.log("User no connected");
+      navigate("/");
+    } else {
+      const fetchData = async () => {
+        setLoading(true);
+        console.log("Start loading...");
+        try {
+          const responseSpent = SpentService.getSpentByID(idSpent);
+          const response = await SpentCategoryService.getAllSpentCategories();
+          const responseUsers = await UserService.getAllUsers();
+          setSpent(responseSpent.data);
+          setSpentCategories(response.data);
+          setUsers(responseUsers.data);
+        } catch (error) {
+          console.log(error);
+        }
+        setLoading(false);
+        console.log("Data loaded");
+      };
+      fetchData();
+    }
+  }, []);
+
   return (
     <div className="app-main-container">
       {loading && <Loading />}
