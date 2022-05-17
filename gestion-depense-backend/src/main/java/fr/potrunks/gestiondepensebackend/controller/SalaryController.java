@@ -22,10 +22,10 @@ public class SalaryController {
      * @param salary Salary to update
      * @return Return a boolean true if the salary is updated and false if it's not
      */
-    @PutMapping("/update")
-    public ResponseEntity<Boolean> updateSalary(@RequestBody Salary salary) {
+    @PutMapping("/update/{idUserConnected}")
+    public ResponseEntity<Boolean> updateSalary(@PathVariable Long idUserConnected, @RequestBody Salary salary) {
         log.info("Start updating process for salary id {}", salary.getIdSalary());
-        Boolean salaryIsUpdated = salaryIBusiness.updateSalary(salary);
+        Boolean salaryIsUpdated = salaryIBusiness.updateSalary(idUserConnected, salary);
         log.info("End of updating process for salary id {}", salary.getIdSalary());
         return ResponseEntity.ok(salaryIsUpdated);
     }

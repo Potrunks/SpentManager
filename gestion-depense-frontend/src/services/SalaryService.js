@@ -9,9 +9,9 @@ class SalaryService {
         return axios.get(SALARY_API_BASE_URL + "/get/" + idSalary);
     }
 
-    updateSalary(salary) {
+    updateSalary(idUserConnected, salary) {
         console.log("Send salary id " + salary.idSalary + " request to the API");
-        return axios.put(SALARY_API_BASE_URL + "/update", salary);
+        return axios.put(SALARY_API_BASE_URL + "/update/" + idUserConnected, salary);
     }
 }
 

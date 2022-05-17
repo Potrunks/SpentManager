@@ -38,12 +38,18 @@ const ModifySalary = () => {
   };
 
   const modifySalary = (e) => {
-    SalaryService.updateSalary(salary).then((response) => {
+    setConfirmPopup(false);
+    SalaryService.updateSalary(
+      sessionStorage.getItem("idUserConnected"),
+      salary
+    ).then((response) => {
       if (response.data === true) {
-          console.log("Salary id " + idSalaryToModify + " updated successfully");
-        navigate("/menu");
+        console.log("Salary id " + idSalaryToModify + " updated successfully");
+        navigate("/success");
       } else {
-          console.log("Problem during updating of the salary id " + idSalaryToModify)
+        document.getElementById("API-error-box").firstChild.innerHTML =
+          "Vous ne pouvez pas modifier un salaire qui n'est pas le votre !!!";
+        document.getElementById("API-error-box").style.display = "flex";
       }
     });
   };

@@ -90,10 +90,14 @@ public class SalaryBusiness implements SalaryIBusiness {
     }
 
     @Override
-    public Boolean updateSalary(Salary salary) {
+    public Boolean updateSalary(Long idUserConnected, Salary salary) {
         log.info("Start to update salary id {}", salary.getIdSalary());
         log.info("Start to get salary entity by id {}", salary.getIdSalary());
         SalaryEntity salaryEntityToUpdate = salaryRepository.getById(salary.getIdSalary());
+        if (salaryEntityToUpdate.getUserEntity().getIdUser() != idUserConnected) {
+            log.warn("The user connected are not the owner of the salary id {}", salary.getIdSalary());
+            return false;
+        }
         log.info("Start to change value salary entity with new salary value");
         salaryEntityToUpdate.setValueSalary(salary.getValueSalary());
         salaryEntityToUpdate.setDateSalary(LocalDate.now());

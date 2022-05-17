@@ -71,14 +71,14 @@ public class GestionDepenseBackendApplication {
 
 			SalaryEntity salaryEntity = new SalaryEntity();
 			salaryEntity.setUserEntity(userEntity);
-			salaryEntity.setValueSalary(7000f);
+			salaryEntity.setValueSalary(7001f);
 			salaryEntity.setPeriodSpentEntity(periodSpentEntity);
 			salaryEntity.setDateSalary(LocalDate.now());
 			salaryIRepository.save(salaryEntity);
 
 			SalaryEntity salaryEntity2 = new SalaryEntity();
 			salaryEntity2.setUserEntity(userEntity2);
-			salaryEntity2.setValueSalary(3000f);
+			salaryEntity2.setValueSalary(3002f);
 			salaryEntity2.setPeriodSpentEntity(periodSpentEntity);
 			salaryEntity2.setDateSalary(LocalDate.now());
 			salaryIRepository.save(salaryEntity2);
@@ -91,14 +91,14 @@ public class GestionDepenseBackendApplication {
 
 			SalaryEntity salaryEntity3 = new SalaryEntity();
 			salaryEntity3.setUserEntity(userEntity);
-			salaryEntity3.setValueSalary(7000f);
+			salaryEntity3.setValueSalary(7003f);
 			salaryEntity3.setPeriodSpentEntity(periodSpentEntity2);
 			salaryEntity3.setDateSalary(LocalDate.now());
 			salaryIRepository.save(salaryEntity3);
 
 			SalaryEntity salaryEntity4 = new SalaryEntity();
 			salaryEntity4.setUserEntity(userEntity2);
-			salaryEntity4.setValueSalary(3000f);
+			salaryEntity4.setValueSalary(3004f);
 			salaryEntity4.setPeriodSpentEntity(periodSpentEntity2);
 			salaryEntity4.setDateSalary(LocalDate.now());
 			salaryIRepository.save(salaryEntity4);

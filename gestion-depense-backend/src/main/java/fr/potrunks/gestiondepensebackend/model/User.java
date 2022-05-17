@@ -19,4 +19,5 @@ public class User {
     private Float valueDebt;
     private Float valueSpents;
     private Float rateSpent;
+    private Long idSalary;
 }

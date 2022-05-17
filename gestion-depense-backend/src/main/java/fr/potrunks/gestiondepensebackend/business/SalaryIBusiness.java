@@ -30,7 +30,7 @@ public interface SalaryIBusiness {
      * @param salary Salary to update
      * @return Return a boolean true if the salary is updated and false if it's not
      */
-    Boolean updateSalary(Salary salary);
+    Boolean updateSalary(Long idUserConnected, Salary salary);
 
     /**
      * Get Salary by ID salary

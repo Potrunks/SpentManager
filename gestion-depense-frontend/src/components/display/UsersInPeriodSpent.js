@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const UsersInPeriodSpent = ({ users, periodSpent }) => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="users-display-main-container">
       <div className="main-title-display">
@@ -34,7 +38,7 @@ const UsersInPeriodSpent = ({ users, periodSpent }) => {
             </div>
             {periodSpent.endDatePeriodSpent === null && (
               <div className="user-btn-command">
-                <button>Modifier le salaire</button>
+                <button onClick={() => navigate(`/modifySalary/${user.idSalary}`)}>Modifier le salaire</button>
               </div>
             )}
           </div>
