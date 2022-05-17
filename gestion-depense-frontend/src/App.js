@@ -17,6 +17,7 @@ import NewSpent from "./components/form/NewSpent";
 import SpendingPeriodInProgress from "./components/display/SpendingPeriodInProgress";
 import SpendingPeriodByID from "./components/display/SpendingPeriodByID";
 import DeleteSpentConfirm from "./components/page/DeleteSpentConfirm";
+import ModifySalary from "./components/form/ModifySalary";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           />
           <Route path="/modifySpent/:idSpent" element={<ModifySpent />} />
           <Route path="/deleteSpent/:idSpentToDelete" element={<DeleteSpentConfirm />} />
+          <Route path="/modifySalary/:idSalaryToModify" element={<ModifySalary />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -26,7 +26,7 @@ const Menu = () => {
             Voir les dépenses
           </button>
           <button onClick={() => navigate("/newspent")}>Ajouter une dépense</button>
-          <button>Mes dépenses mensuelles</button>
+          <button>*Mes dépenses mensuelles*</button>
           <button onClick={() => navigate("/")}>Se deconnecter</button>
         </div>
       </div>

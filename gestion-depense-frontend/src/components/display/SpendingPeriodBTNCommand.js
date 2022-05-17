@@ -10,9 +10,6 @@ const SpendingPeriodBTNCommand = ({ periodSpent }) => {
           <button onClick={() => navigate("/newspent")}>
             Nouvelle dépense
           </button>
-          <button onClick={() => navigate("/newSpendingPeriod")}>
-            Salaire reçu
-          </button>
         </div>
       )}
       <button onClick={() => navigate("/menu")}>Retour</button>

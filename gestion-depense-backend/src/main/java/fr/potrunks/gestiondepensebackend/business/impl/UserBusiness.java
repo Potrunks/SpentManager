@@ -91,6 +91,7 @@ public class UserBusiness implements UserIBusiness {
                         null,
                         null,
                         null,
+                        null,
                         null))
                 .collect(Collectors.toList());
         return userList;
@@ -112,7 +113,9 @@ public class UserBusiness implements UserIBusiness {
             User user = new User();
             BeanUtils.copyProperties(userEntity, user);
             log.info("Search the salary of the user id {} during the period spent id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
-            user.setValueSalary(salaryIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity).getValueSalary());
+            SalaryEntity salaryEntity = salaryIRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity);
+            user.setIdSalary(salaryEntity.getIdSalary());
+            user.setValueSalary(salaryEntity.getValueSalary());
             user.setValueSpents(sumValueSpentsByUserAndPeriodSpent(userEntity, periodSpentEntity));
             user.setRateSpent(calculateRateSpent(user.getValueSalary(), user.getValueSpents()));
             Float householdShare = calculateHouseholdShare(sumSalaryHousehold(periodSpentEntity), user.getValueSalary());
