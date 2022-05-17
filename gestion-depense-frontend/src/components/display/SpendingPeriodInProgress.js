@@ -61,7 +61,7 @@ const SpendingPeriodInProgress = () => {
       {!loading && <UsersInPeriodSpent users={users} />}
       {!loading && <SpendingPeriodBTNCommand />}
       {!loading && (
-        <Spents spents={spents} deleteSpentMethod={deleteExpenseByID} />
+        <Spents spents={spents} deleteSpentMethod={deleteExpenseByID} periodSpent={periodSpent} />
       )}
     </div>
   );

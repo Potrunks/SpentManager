@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Spents = ({ spents, deleteSpentMethod }) => {
-
+const Spents = ({ spents, deleteSpentMethod, periodSpent }) => {
   const navigate = useNavigate();
 
   return (
@@ -27,12 +26,20 @@ const Spents = ({ spents, deleteSpentMethod }) => {
                 </span>
               )}
             </div>
-            <div className="spent-card-btn-command">
-              <button onClick={() => navigate(`/modifySpent/${spent.idSpent}`)}>Modifier</button>
-              <button onClick={(e, idSpent) => deleteSpentMethod(e, spent.idSpent)}>
-                Supprimer
-              </button>
-            </div>
+            {periodSpent.endDatePeriodSpent === null && (
+              <div className="spent-card-btn-command">
+                <button
+                  onClick={() => navigate(`/modifySpent/${spent.idSpent}`)}
+                >
+                  Modifier
+                </button>
+                <button
+                  onClick={(e, idSpent) => deleteSpentMethod(e, spent.idSpent)}
+                >
+                  Supprimer
+                </button>
+              </div>
+            )}
           </div>
         </div>
       ))}
