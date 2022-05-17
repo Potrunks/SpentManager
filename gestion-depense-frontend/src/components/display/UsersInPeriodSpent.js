@@ -1,6 +1,6 @@
 import React from "react";
 
-const UsersInPeriodSpent = ({ users }) => {
+const UsersInPeriodSpent = ({ users, periodSpent }) => {
   return (
     <div className="users-display-main-container">
       <div className="main-title-display">
@@ -32,9 +32,11 @@ const UsersInPeriodSpent = ({ users }) => {
                 <span>Pas de taux de dépense</span>
               )}
             </div>
-            <div className="user-btn-command">
-              <button>Modifier le salaire</button>
-            </div>
+            {periodSpent.endDatePeriodSpent === null && (
+              <div className="user-btn-command">
+                <button>Modifier le salaire</button>
+              </div>
+            )}
           </div>
         </div>
       ))}

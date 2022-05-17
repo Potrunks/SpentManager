@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Spents = ({ spents, deleteSpentMethod, periodSpent }) => {
+const Spents = ({ spents, periodSpent }) => {
   const navigate = useNavigate();
 
   return (
@@ -34,7 +34,7 @@ const Spents = ({ spents, deleteSpentMethod, periodSpent }) => {
                   Modifier
                 </button>
                 <button
-                  onClick={(e, idSpent) => deleteSpentMethod(e, spent.idSpent)}
+                  onClick={() => navigate(`/deleteSpent/${spent.idSpent}`)}
                 >
                   Supprimer
                 </button>
