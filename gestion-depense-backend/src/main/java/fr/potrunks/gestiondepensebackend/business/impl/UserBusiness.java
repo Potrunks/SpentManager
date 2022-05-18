@@ -215,7 +215,7 @@ public class UserBusiness implements UserIBusiness {
      */
     private Float sumSpentsDuringPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Calculating sum of all the spents during period spent id {}", periodSpentEntity.getIdPeriodSpent());
-        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Deposit");
+        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Avance");
         List<SpentEntity> spentEntityList = spentIRepository.findByPeriodSpentEntityAndSpentCategoryEntityNot(periodSpentEntity, spentCategoryEntity);
         Float sumSpentsDuringPeriodSpent = 0f;
         if (spentEntityList == null) {
@@ -254,7 +254,7 @@ public class UserBusiness implements UserIBusiness {
      */
     private Float calculateUserDepositDuringPeriodSpent(PeriodSpentEntity periodSpentEntity, UserEntity userEntity) {
         log.info("Calculating deposit by user id {} during spent period id {}", userEntity.getIdUser(), periodSpentEntity.getIdPeriodSpent());
-        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Deposit");
+        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Avance");
         List<SpentEntity> spentEntityList = spentIRepository.findByUserEntityAndPeriodSpentEntityAndSpentCategoryEntity(userEntity, periodSpentEntity, spentCategoryEntity);
         Float sumDeposit = 0f;
         if (spentEntityList == null) {
@@ -275,7 +275,7 @@ public class UserBusiness implements UserIBusiness {
      */
     private Float sumDepositsDuringPeriodSpent(PeriodSpentEntity periodSpentEntity) {
         log.info("Calculate all deposits during a period spent (all users)");
-        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Deposit");
+        SpentCategoryEntity spentCategoryEntity = spentCategoryIRepository.findByNameSpentCategory("Avance");
         List<SpentEntity> spentEntityList = spentIRepository.findByPeriodSpentEntityAndSpentCategoryEntity(periodSpentEntity, spentCategoryEntity);
         Float sumDeposits = 0f;
         if (spentEntityList == null) {

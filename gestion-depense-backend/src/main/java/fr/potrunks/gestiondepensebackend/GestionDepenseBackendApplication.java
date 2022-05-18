@@ -31,7 +31,7 @@ public class GestionDepenseBackendApplication {
 			userEntity.setAdministrator(true);
 			userEntity = userIRepository.save(userEntity);
 
-			/*
+
 			UserEntity userEntity2 = new UserEntity();
 			userEntity2.setFirstNameUser("Valerie");
 			userEntity2.setLastNameUser("PAUCHET");
@@ -40,19 +40,19 @@ public class GestionDepenseBackendApplication {
 			userEntity2.setSaltUser("uqk");
 			userEntity2.setAdministrator(false);
 			userEntity2 = userIRepository.save(userEntity2);
-			*/
+
 
 			// Add spent category
 			List<String> categoryList = new ArrayList<>();
 			categoryList.add("Fast-Food");
-			categoryList.add("Gasoline");
-			categoryList.add("Grocery");
-			categoryList.add("Energy");
+			categoryList.add("Essence");
+			categoryList.add("Courses");
+			categoryList.add("Energie");
 			categoryList.add("Multimedia");
 			categoryList.add("Restaurant");
-			categoryList.add("Tax");
-			categoryList.add("Other");
-			categoryList.add("Deposit");
+			categoryList.add("Impôt");
+			categoryList.add("Autre");
+			categoryList.add("Avance");
 			for (String category : categoryList
 				 ) {
 				SpentCategoryEntity spentCategoryEntity = new SpentCategoryEntity();
@@ -60,7 +60,7 @@ public class GestionDepenseBackendApplication {
 				spentCategoryIRepository.save(spentCategoryEntity);
 			}
 
-			/*
+
 			// Add new period spent
 			// 1st period spent
 			List<UserEntity> userEntityList = new ArrayList<>();
@@ -133,7 +133,7 @@ public class GestionDepenseBackendApplication {
 			spentEntity2.setPeriodSpentEntity(periodSpentEntity2);
 			spentEntityList2.add(spentEntity2);
 			spentIRepository.saveAll(spentEntityList2);
-			*/
+
 		};
 	}
 
