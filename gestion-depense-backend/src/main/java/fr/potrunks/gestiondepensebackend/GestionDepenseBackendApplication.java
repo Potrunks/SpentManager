@@ -30,6 +30,8 @@ public class GestionDepenseBackendApplication {
 			userEntity.setSaltUser("uqk");
 			userEntity.setAdministrator(true);
 			userEntity = userIRepository.save(userEntity);
+
+			/*
 			UserEntity userEntity2 = new UserEntity();
 			userEntity2.setFirstNameUser("Valerie");
 			userEntity2.setLastNameUser("PAUCHET");
@@ -38,6 +40,7 @@ public class GestionDepenseBackendApplication {
 			userEntity2.setSaltUser("uqk");
 			userEntity2.setAdministrator(false);
 			userEntity2 = userIRepository.save(userEntity2);
+			*/
 
 			// Add spent category
 			List<String> categoryList = new ArrayList<>();
@@ -57,6 +60,7 @@ public class GestionDepenseBackendApplication {
 				spentCategoryIRepository.save(spentCategoryEntity);
 			}
 
+			/*
 			// Add new period spent
 			// 1st period spent
 			List<UserEntity> userEntityList = new ArrayList<>();
@@ -129,6 +133,7 @@ public class GestionDepenseBackendApplication {
 			spentEntity2.setPeriodSpentEntity(periodSpentEntity2);
 			spentEntityList2.add(spentEntity2);
 			spentIRepository.saveAll(spentEntityList2);
+			*/
 		};
 	}
 
