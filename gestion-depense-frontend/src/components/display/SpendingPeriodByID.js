@@ -41,7 +41,7 @@ const SpendingPeriodByID = () => {
       };
       fetchData();
     }
-  }, [loading, idPeriodSpent]);
+  }, [idPeriodSpent]);
 
   return (
     <div className="app-main-container">

@@ -32,7 +32,6 @@ const SpendingPeriodInProgress = () => {
           setPeriodSpent(responsePeriodSpent.data);
           setUsers(responseUsers.data);
           setSpents(responseSpents.data);
-          console.log("Data fetched successfully");
           setLoading(false);
         } catch (error) {
           console.log(error);
@@ -40,17 +39,17 @@ const SpendingPeriodInProgress = () => {
       };
       fetchData();
     }
-  }, [loading]);
+  }, []);
 
   return (
     <div className="app-main-container">
       {loading && <Loading />}
       {!loading && <DateSpendingPeriodAndMore periodSpent={periodSpent} />}
-      {!loading && <UsersInPeriodSpent users={users} periodSpent={periodSpent} />}
-      {!loading && <SpendingPeriodBTNCommand periodSpent={periodSpent} />}
       {!loading && (
-        <Spents spents={spents} periodSpent={periodSpent} />
+        <UsersInPeriodSpent users={users} periodSpent={periodSpent} />
       )}
+      {!loading && <SpendingPeriodBTNCommand periodSpent={periodSpent} />}
+      {!loading && <Spents spents={spents} periodSpent={periodSpent} />}
     </div>
   );
 };
