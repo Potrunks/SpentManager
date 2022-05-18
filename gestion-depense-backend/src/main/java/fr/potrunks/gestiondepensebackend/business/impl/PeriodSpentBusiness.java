@@ -105,6 +105,17 @@ public class PeriodSpentBusiness implements PeriodSpentIBusiness {
         return copyPeriodSpentEntityToPeriodSpent(periodSpentEntityGetById);
     }
 
+    @Override
+    public Boolean checkPeriodSpentInProgressExist() {
+        log.info("Start to check if period spent in progress exist in database");
+        PeriodSpentEntity periodSpentEntityInProgress = periodSpentRepository.findByEndDatePeriodSpentIsNull();
+        if (periodSpentEntityInProgress == null) {
+            log.warn("No period spent in progress in the database");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Copy properties of a Period Spent Entity to a Period Spent. Get the ID of the previous and before Period Spent Entity for the Period Spent
      *

@@ -67,6 +67,10 @@ public class SalaryBusiness implements SalaryIBusiness {
         Boolean salaryCreatedOrUpdated = false;
         UserEntity userEntity = userRepository.getById(idUserConnected);
         PeriodSpentEntity periodSpentEntity = periodSpentRepository.findByEndDatePeriodSpentIsNull();
+        if (periodSpentEntity == null) {
+            response.put("salaryCreatedOrUpdated", salaryCreatedOrUpdated);
+            return response;
+        }
         SalaryEntity salaryEntity = salaryRepository.findByPeriodSpentEntityAndUserEntity(periodSpentEntity, userEntity);
         if (salaryEntity == null) {
             log.info("Salary in period spent in progress is null");

@@ -41,4 +41,10 @@ public interface PeriodSpentIBusiness {
      * @return Return a period spent with the ID wanted
      */
     PeriodSpent getPeriodSpentById(Long idPeriodSpent);
+
+    /**
+     * Check if period spent in progress in database exist
+     * @return Return a boolean true if exist and false if is not exist
+     */
+    Boolean checkPeriodSpentInProgressExist();
 }

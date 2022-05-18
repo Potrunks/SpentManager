@@ -18,8 +18,15 @@ class PeriodSpentService {
   }
 
   getPeriodSpentByID(idPeriodSpent) {
-    console.log("Send get request to the API for the period spent id : " + idPeriodSpent);
+    console.log(
+      "Send get request to the API for the period spent id : " + idPeriodSpent
+    );
     return axios.get(PERIOD_SPENT_API_BASE_URL + "/get/" + idPeriodSpent);
+  }
+
+  checkPeriodSpentInProgressExist() {
+    console.log("Send request to check if period spent in progress exist");
+    return axios.get(PERIOD_SPENT_API_BASE_URL + "/getInProgress/exist");
   }
 }
 

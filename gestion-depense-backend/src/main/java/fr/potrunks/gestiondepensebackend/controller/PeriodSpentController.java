@@ -81,4 +81,16 @@ public class PeriodSpentController {
         PeriodSpent periodSpentFetchById = periodSpentBusiness.getPeriodSpentById(idPeriodSpent);
         return ResponseEntity.ok(periodSpentFetchById);
     }
+
+    /**
+     * Check if period spent in progress exist
+     * @return Return a boolean true if exist and false if is not exist
+     */
+    @GetMapping("/getInProgress/exist")
+    public ResponseEntity<Boolean> checkPeriodSpentInProgressExist() {
+        log.info("Start checking process for period spent in progress exist");
+        Boolean exist = periodSpentBusiness.checkPeriodSpentInProgressExist();
+        log.info("End checking process for period spent in progress exist");
+        return ResponseEntity.ok(exist);
+    }
 }

@@ -69,6 +69,7 @@
   height: 48px;
   background-color: #06d6a0;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 100%;
 }
 
 .main-button-container button:active {
