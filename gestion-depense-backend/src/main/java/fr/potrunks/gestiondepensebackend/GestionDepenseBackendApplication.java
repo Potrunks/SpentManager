@@ -21,6 +21,7 @@ public class GestionDepenseBackendApplication {
 	@Bean
 	CommandLineRunner run(UserIRepository userIRepository, SpentCategoryIRepository spentCategoryIRepository, PeriodSpentIRepository periodSpentIRepository, SalaryIRepository salaryIRepository, SpentIRepository spentIRepository) {
 		return args -> {
+
 			// Add user
 			UserEntity userEntity = new UserEntity();
 			userEntity.setFirstNameUser("Alexis");
