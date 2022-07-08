@@ -2,6 +2,7 @@ package fr.potrunks.gestiondepensebackend;
 
 import fr.potrunks.gestiondepensebackend.entity.*;
 import fr.potrunks.gestiondepensebackend.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+@Slf4j
 public class GestionDepenseBackendApplication {
 
 	public static void main(String[] args) {
@@ -21,17 +23,12 @@ public class GestionDepenseBackendApplication {
 	@Bean
 	CommandLineRunner run(UserIRepository userIRepository, SpentCategoryIRepository spentCategoryIRepository, PeriodSpentIRepository periodSpentIRepository, SalaryIRepository salaryIRepository, SpentIRepository spentIRepository) {
 		return args -> {
-			// Add user
-			UserEntity userEntity = new UserEntity();
-			userEntity.setFirstNameUser("Alexis");
-			userEntity.setLastNameUser("ARRIAL");
-			userEntity.setMailUser("potrunks@hotmail.com");
-			userEntity.setPasswordUser("��P��3���i���e\u0002���*�\u001A\u0019�+��ғ2\u0018�");
-			userEntity.setSaltUser("uqk");
-			userEntity.setAdministrator(true);
-			userEntity = userIRepository.save(userEntity);
 
+			StartApplicationMessage("1.0.0");
+			
+			CreateAdministratorAccount(userIRepository);
 
+			/*
 			UserEntity userEntity2 = new UserEntity();
 			userEntity2.setFirstNameUser("Valerie");
 			userEntity2.setLastNameUser("PAUCHET");
@@ -40,27 +37,11 @@ public class GestionDepenseBackendApplication {
 			userEntity2.setSaltUser("uqk");
 			userEntity2.setAdministrator(false);
 			userEntity2 = userIRepository.save(userEntity2);
+			*/
 
+			CreateSpentCategory(spentCategoryIRepository);
 
-			// Add spent category
-			List<String> categoryList = new ArrayList<>();
-			categoryList.add("Fast-Food");
-			categoryList.add("Essence");
-			categoryList.add("Courses");
-			categoryList.add("Energie");
-			categoryList.add("Multimedia");
-			categoryList.add("Restaurant");
-			categoryList.add("Impôt");
-			categoryList.add("Autre");
-			categoryList.add("Avance");
-			for (String category : categoryList
-				 ) {
-				SpentCategoryEntity spentCategoryEntity = new SpentCategoryEntity();
-				spentCategoryEntity.setNameSpentCategory(category);
-				spentCategoryIRepository.save(spentCategoryEntity);
-			}
-
-
+			/*
 			// Add new period spent
 			// 1st period spent
 			List<UserEntity> userEntityList = new ArrayList<>();
@@ -133,8 +114,117 @@ public class GestionDepenseBackendApplication {
 			spentEntity2.setPeriodSpentEntity(periodSpentEntity2);
 			spentEntityList2.add(spentEntity2);
 			spentIRepository.saveAll(spentEntityList2);
+			*/
 
 		};
+	}
+
+	/**
+	 * Display a message at the start to the application
+	 * @param version
+	 */
+	private void StartApplicationMessage(String version) {
+		System.out.println("SPENT MANAGER v" + version);
+	}
+
+	/**
+	 * Create the administrator account after verify if this account already exist
+	 * @param userIRepository
+	 */
+	private void CreateAdministratorAccount(UserIRepository userIRepository) {
+		log.warn("Start process administrator account creation...");
+		if (!AdministratorAccountExist(userIRepository)) {
+			SetAdministratorAccount(userIRepository);
+		}
+		log.warn("End process administrator account creation !!!");
+	}
+
+	/**
+	 * Verify if Administrator account exist in database
+	 * @param userIRepository
+	 * @return Return a Boolean true if the account exist else return false
+	 */
+	private Boolean AdministratorAccountExist(UserIRepository userIRepository) {
+		log.warn("Verification if administrator account already exist...");
+		UserEntity userToVerifyIfAdmin = userIRepository.findByAdministratorTrue();
+		if (userToVerifyIfAdmin == null) {
+			log.warn("Administrator account don't exist !!!");
+			return false;
+		}
+		log.warn("Administrator account already existed !!!");
+		return true;
+	}
+
+	/**
+	 * Setup the Administrator account
+	 * @param userIRepository
+	 */
+	private void SetAdministratorAccount(UserIRepository userIRepository) {
+		log.warn("Create the administrator account...");
+		UserEntity userEntity = new UserEntity();
+		userEntity.setFirstNameUser("Alexis");
+		userEntity.setLastNameUser("ARRIAL");
+		userEntity.setMailUser("potrunks@hotmail.com");
+		userEntity.setPasswordUser("��P��3���i���e\u0002���*�\u001A\u0019�+��ғ2\u0018�");
+		userEntity.setSaltUser("uqk");
+		userEntity.setAdministrator(true);
+		userIRepository.save(userEntity);
+		log.warn("Administrator account created !!!");
+	}
+
+	/**
+	 * Add spent category in the database if this don't already exist
+	 * @param spentCategoryIRepository
+	 */
+	private void CreateSpentCategory(SpentCategoryIRepository spentCategoryIRepository) {
+		log.warn("Start process spent category creation...");
+		log.warn("Add list of spent category in the database...");
+		for (String category : GetSpentCategoryList()
+		) {
+			if (!SpentCategoryExist(category, spentCategoryIRepository)) {
+				log.warn("Add the spent category " + category + "...");
+				SpentCategoryEntity spentCategoryEntity = new SpentCategoryEntity();
+				spentCategoryEntity.setNameSpentCategory(category);
+				spentCategoryIRepository.save(spentCategoryEntity);
+				log.warn("The spent category " + category + " created !!!");
+			}
+		}
+		log.warn("End process spent category creation !!!");
+	}
+
+	/**
+	 * Get a spent category list. Can be modified
+	 * @return Return a list of spent category
+	 */
+	private List<String> GetSpentCategoryList() {
+		log.warn("Create list of spent category...");
+		List<String> categoryList = new ArrayList<>();
+		categoryList.add("Fast-Food");
+		categoryList.add("Essence");
+		categoryList.add("Courses");
+		categoryList.add("Energie");
+		categoryList.add("Multimedia");
+		categoryList.add("Restaurant");
+		categoryList.add("Impôt");
+		categoryList.add("Autre");
+		categoryList.add("Avance");
+		return categoryList;
+	}
+
+	/**
+	 * Verify if the spent category by name already exist in the database
+	 * @param spentCategoryName Spent category name wanted
+	 * @param spentCategoryIRepository
+	 * @return Return a boolean true if the spent category already exist in database else return a false
+	 */
+	private Boolean SpentCategoryExist(String spentCategoryName, SpentCategoryIRepository spentCategoryIRepository) {
+		log.warn("Start to verify if spent category " + spentCategoryName + " already exist in database...");
+		if (spentCategoryIRepository.findByNameSpentCategory(spentCategoryName) == null) {
+			log.warn("The spent category " + spentCategoryName + " don't exist !!!");
+			return false;
+		}
+		log.warn("The spent category " + spentCategoryName + " already exist !!!");
+		return true;
 	}
 
 }
